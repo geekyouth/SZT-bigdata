@@ -27,7 +27,9 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 - Redis-3.2
 - SpringBoot-2.13
 - knife4j-2.0 （前身为 swagger-bootstrap-ui）
-- 
+- kafka-0.11 (最佳 CP kafka-eagle)
+- CDH-6.2
+
 
 ## 快速开始🛩🥇：
 1- 获取数据源的 appKey：https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
@@ -47,9 +49,54 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ![](.file/.pic/api-debug.png)   
 
+6- `cn.java666.etlflink.source.MyRedisSourceFun` 清洗数据发现 133.7 万数据中，有小部分元数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
+
+合格元数据示例：
+```json
+{
+    "deal_date": "2018-08-31 21:15:55",
+    "close_date": "2018-09-01 00:00:00",
+    "card_no": "CBHGDEEJB",
+    "deal_value": "0",
+    "deal_type": "地铁入站",
+    "company_name": "地铁五号线",
+    "car_no": "IGT-104",
+    "station": "布吉",
+    "conn_mark": "0",
+    "deal_money": "0",
+    "equ_no": "263032104"
+}
+```
+不合格的元数据示例：
+```json
+{
+    "deal_date": "2018-09-01 05:24:22",
+    "close_date": "2018-09-01 00:00:00",
+    "card_no": "HHAAABGEH",
+    "deal_value": "0",
+    "deal_type": "地铁入站",
+    "company_name": "地铁一号线",
+    "conn_mark": "0",
+    "deal_money": "0",
+    "equ_no": "268005140"
+}
+```
+7- 根据需求推送满足业务要求的元数据到 kafka：`cn.java666.etlflink.source.MyRedisSource#main`；`topic-flink-szt-all`保留了所有元数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的元数据 1266039 条。
+
+8- kafka-eagle 监控查看 topic：
+![](.file/.pic/kafka-eagle02.png)
+![](.file/.pic/kafka-eagle01.png)
+
+ksql 命令：  
+`select * from "topic-flink-szt" where "partition" in (0) limit 1000`
+![](.file/.pic/ksql.png)
+
+9- ...
+
+
 ## TODO🔔🔔🔔:
 - [ ] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
-- [ ] 推送 kafka，使用队列传输数据；
+- [x] 推送 kafka，使用队列传输数据；
 - [ ] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
 
 
@@ -58,4 +105,6 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
     - 项目初始化；
     - 完成数据源清洗去重，存到 redis；
     - 完成 redis 查询 REST API 的开发；
+    - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗元数据；
+    - 完成 推送元数据到 kafka；
     
