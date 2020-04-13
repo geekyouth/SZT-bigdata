@@ -34,9 +34,9 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 ## 快速开始🛩🥇：
 1- 获取数据源的 appKey：https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
-2- 调用 ETL-SpringBoot 模块获取原始数据存盘，`cn/java666/etlspringboot/source/SZTData.saveData()`；
+2- 调用 ETL-SpringBoot 模块获取原始数据存盘`2018record.jsons`，`cn/java666/etlspringboot/source/SZTData.saveData()`；
 
-3- 调用 ETL-Flink 模块，实现 etl 清洗，去除重复数据，redis 天然去重排序，保证数据干净有序，`cn.java666.etlflink.sink.MyRedisSink.main()`。
+3- 调用 ETL-Flink 模块，实现 etl 清洗，去除重复数据，redis 天然去重排序，保证数据干净有序，`cn.java666.etlflink.sink.RedisSinkPageJson.main()`。
 
 4- redis 查询，redis-cli 登录:  
 `> hget szt:pageJson 1`  
@@ -49,7 +49,7 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ![](.file/.pic/api-debug.png)   
 
-6- `cn.java666.etlflink.source.MyRedisSourceFun` 清洗数据发现 133.7 万数据中，有小部分元数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
+6- `cn.java666.etlflink.source.MyRedisSourceFun.run()` 清洗数据发现 133.7 万数据中，有小部分元数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
 
 合格元数据示例：
 ```json
@@ -81,7 +81,7 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
     "equ_no": "268005140"
 }
 ```
-7- 根据需求推送满足业务要求的元数据到 kafka：`cn.java666.etlflink.source.MyRedisSource#main`；`topic-flink-szt-all`保留了所有元数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的元数据 1266039 条。
+7- 根据需求推送满足业务要求的元数据到 kafka：`cn.java666.etlflink.app.Redis2Kafka.main()`；`topic-flink-szt-all`保留了所有元数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的元数据 1266039 条。
 
 8- kafka-eagle 监控查看 topic：
 ![](.file/.pic/kafka-eagle02.png)
@@ -92,20 +92,28 @@ ksql 命令：
 
 ![](.file/.pic/ksql.png)
 
-9- ...
+9- `cn.java666.etlflink.app.Redis2Csv.main()` 实现了 flink sink csv 格式文件。
+![](.file/.pic/csv.png)
+
+10- ...
 
 
 ## TODO🔔🔔🔔:
-- [ ] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
+- [x] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
 - [x] 推送 kafka，使用队列传输数据；
 - [ ] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
 
 
 ## 更新日志🌥：
+- 2020-04-14
+    - 重构
+    - 完成 csv 格式文件的抽取；
+    
 - 2020-04-13 
     - 项目初始化；
     - 完成数据源清洗去重，存到 redis；
     - 完成 redis 查询 REST API 的开发；
     - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗元数据；
     - 完成 推送元数据到 kafka；
+
     
