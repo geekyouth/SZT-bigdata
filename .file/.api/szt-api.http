@@ -1,0 +1,5 @@
+### appKey 自己申请 https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
+GET https://opendata.sz.gov.cn/api/29200_00403601/1/service.xhtml?page=1&rows=100&appKey={换成你的appKey}
+
+### 133,7000 理论总数，单次返回 1000 条会很慢
+GET https://opendata.sz.gov.cn/api/29200_00403601/1/service.xhtml?page=1337&rows=1000&appKey={换成你的appKey}
