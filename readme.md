@@ -17,7 +17,7 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 
 ## 数据源🌍：
 - 深圳市政府数据开放平台，深圳通刷卡数据 133.7 万条【离线数据】，
-    <https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601>
+<a href="https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601" target="_blank">https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601</a>
     
 理论上可以当作实时数据，但是这个接口响应太慢了，于是本项目采用离线思路处理。当然，如果采用 kafka 队列方式，也可以模拟出实时效果。
     
@@ -29,7 +29,7 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 - 
 
 ## 快速开始🛩🥇：
-1- 获取数据源的 appKey：<https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601>
+1- 获取数据源的 appKey：https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 2- 调用 ETL-SpringBoot 模块获取原始数据存盘，`cn/java666/etlspringboot/source/SZTData.saveData()`；
 
