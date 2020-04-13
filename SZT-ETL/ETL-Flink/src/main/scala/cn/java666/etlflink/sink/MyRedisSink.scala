@@ -14,11 +14,13 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.{RedisCommand, 
  *
  */
 object MyRedisSink {
+	val SVAE_PATH = "/tmp/SZTData/2018record.jsons"
+	
 	def main(args: Array[String]): Unit = {
 		val env = StreamExecutionEnvironment.getExecutionEnvironment
 		env.setParallelism(1)
 		
-		val s = env.readTextFile("""D:\0-data\opendata.sz.gov.cn\SZT2018Record\2018record3.jsons""")
+		val s = env.readTextFile(SVAE_PATH)
 			.filter(_.nonEmpty)
 			.map(x => {
 				JSON.parseObject(x)
