@@ -1,7 +1,5 @@
 package cn.java666.etlflink.app
 
-import java.util.Properties
-
 import cn.java666.etlflink.sink.MyCsvSinkFun
 import cn.java666.etlflink.source.MyRedisSourceFun
 import org.apache.flink.streaming.api.scala._
@@ -17,9 +15,6 @@ object Redis2Csv {
 	def main(args: Array[String]): Unit = {
 		val env = StreamExecutionEnvironment.getExecutionEnvironment
 		env.setParallelism(1)
-		
-		val prop = new Properties
-		prop.load(ClassLoader.getSystemResourceAsStream("kafka.properties"))
 		
 		val s = env.addSource(new MyRedisSourceFun)
 		

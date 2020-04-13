@@ -13,7 +13,7 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.{RedisCommand, 
  * redis 排序去重 ok
  *
  */
-object MyRedisSink {
+object RedisSinkPageJson {
 	val SVAE_PATH = "/tmp/SZTData/2018record.jsons"
 	
 	def main(args: Array[String]): Unit = {
