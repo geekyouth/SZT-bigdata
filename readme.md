@@ -81,9 +81,11 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 `> hget szt:pageJson 1`  
 
 或者 dbeaver 可视化查询：
+
 ![](.file/.pic/redis-szt-pageJson.png)
 
 5- `cn.java666.etlspringboot.EtlSApp.main()` 启动后，也可以用 knife4j 在线调试 REST API：
+
 ![](.file/.pic/api-1.png)   
 
 ![](.file/.pic/api-debug.png)   
@@ -123,7 +125,9 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 7- 根据需求推送满足业务要求的元数据到 kafka：`cn.java666.etlflink.app.Redis2Kafka.main()`；`topic-flink-szt-all`保留了所有元数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的元数据 1266039 条。
 
 8- kafka-eagle 监控查看 topic：
+
 ![](.file/.pic/kafka-eagle02.png)
+
 ![](.file/.pic/kafka-eagle01.png)
 
 ksql 命令：  
@@ -132,6 +136,7 @@ ksql 命令：
 ![](.file/.pic/ksql.png)
 
 9- `cn.java666.etlflink.app.Redis2Csv.main()` 实现了 flink sink csv 格式文件。
+
 ![](.file/.pic/csv.png)
 
 10- ...
