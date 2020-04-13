@@ -22,8 +22,9 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 理论上可以当作实时数据，但是这个接口响应太慢了，于是本项目采用离线思路处理。当然，如果采用 kafka 队列方式，也可以模拟出实时效果。
     
 ## 核心技术栈⚡：
-- flink-1.10
-- redis-3.2
+- Java/Scala
+- Flink-1.10
+- Redis-3.2
 - SpringBoot-2.13
 - knife4j-2.0 （前身为 swagger-bootstrap-ui）
 - 
