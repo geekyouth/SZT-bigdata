@@ -25,14 +25,46 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ---
     
-## 核心技术栈⚡：
-- Java/Scala
-- Flink-1.10
-- Redis-3.2
-- SpringBoot-2.13
-- knife4j-2.0 （前身为 swagger-bootstrap-ui）
-- kafka-0.11 (最佳 CP kafka-eagle)
-- CDH-6.2
+## 核心技术栈(持续更新)⚡：
+- Java/Scala  
+![](.file/.pic/0-scala.png)
+
+- Flink-1.10  
+![](.file/.pic/0-flink.png)
+
+- Redis-3.2  
+![](.file/.pic/0-redis.png)
+
+- SpringBoot-2.13  
+![](.file/.pic/0-springboot.png)
+
+- knife4j-2.0 （前身为 swagger-bootstrap-ui）  
+![](.file/.pic/0-knife4j.png)
+
+- kafka-0.11 (最佳 CP kafka-eagle)  
+![](.file/.pic/0-kafka.png)
+
+- CDH-6.2  
+![](.file/.pic/0-cdh.png)
+
+- Docker  
+![](.file/.pic/0-docker.png)
+
+- Elasticsearch-7  
+![](.file/.pic/0-elastic.png)
+
+- Spark-2.3  
+![](.file/.pic/0-spark.png)
+
+- Hive-2.1  
+![](.file/.pic/0-hive.png)
+
+- Impala  
+![](.file/.pic/0-impala.png)
+
+- HBase  
+![](.file/.pic/0-hbase.png)
+- ...
 
 ---
 
