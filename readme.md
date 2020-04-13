@@ -48,9 +48,9 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 ![](.file/.pic/api-debug.png)   
 
 ## TODO🔔🔔🔔:
-- 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
-- 推送 kafka，使用队列传输数据；
-- 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
+- [ ] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
+- [ ] 推送 kafka，使用队列传输数据；
+- [ ] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
 
 
 ## 更新日志🌥：
