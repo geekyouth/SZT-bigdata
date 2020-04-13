@@ -89,6 +89,7 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ksql 命令：  
 `select * from "topic-flink-szt" where "partition" in (0) limit 1000`
+
 ![](.file/.pic/ksql.png)
 
 9- ...
