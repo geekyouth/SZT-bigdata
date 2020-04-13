@@ -43,12 +43,35 @@
 		</dependency>
 		
 		<!-- 各种连接器 -->
-		<!-- redis 只能写不能读 -->
+		<!-- redis 官方连接器，只能写不能读 -->
 		<dependency>
 			<groupId>org.apache.bahir</groupId>
 			<artifactId>flink-connector-redis_2.11</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<!-- ES7 支持 -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-elasticsearch7_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+		<!-- https://stackoverflow.com/questions/48313461/elasticsearch-6-0-1-nosuchfielderror-lucene-6-0-0/60613430#60613430 -->
+		<!-- 解决 lucene 兼容问题 -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>8.1.0</version>
+		</dependency>
+		
+		<!-- Kafka 最佳 CP -->
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.11 -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka-0.11_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+		
 		
 		<!-- 工具类 -->
 		<dependency>
