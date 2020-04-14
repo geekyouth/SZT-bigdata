@@ -14,6 +14,19 @@ import scala.collection.JavaConversions._
  *
  * redis szt:pageJson 抽取源数据到 elasticsearch-7
  * 
+ * 注意，启动之前先为 szt-data 索引创建时间映射，否则看不到时时更新的kibana 图表
+
+{
+  "properties": {
+    "deal_date": {
+      "format": "yyyy-MM-dd HH:mm:ss",
+      "type": "date"
+    }
+  }
+}
+
+效果：.file/.pic/es-szt-data.png
+ 
  */
 object Redis2ES {
 	def main(args: Array[String]): Unit = {
