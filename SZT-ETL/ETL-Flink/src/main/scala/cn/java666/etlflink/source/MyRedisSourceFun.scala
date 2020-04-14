@@ -39,7 +39,7 @@ case class MyRedisSourceFun() extends RichSourceFunction[String] {
 				val data = JSON.parseObject(xStr)
 				//if (data.size() != 11 && data.size() != 9) { //这里长度不统一，9|11
 				if (data.size() != 11) { //这里长度不统一，9|11
-					System.err.println(" data error ------------------ x=" + x)
+					//System.err.println(" data error ------------------ x=" + x)// TODO 可选是否打印脏数据
 				} else {
 					// 只保留字段长度为 11 的源数据 ===> kafka: topic-flink-szt
 					ctx.collect(xStr)
