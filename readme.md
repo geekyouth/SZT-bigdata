@@ -1,6 +1,12 @@
 # SZT-bigdata 深圳地铁大数据客流分析系统 🚇🚇🚇
 
-![](https://img.shields.io/github/issues/geekyouth/SZT-bigdata) ![](https://img.shields.io/github/forks/geekyouth/SZT-bigdata)  ![](https://img.shields.io/github/stars/geekyouth/SZT-bigdata)  ![](https://img.shields.io/github/license/geekyouth/SZT-bigdata)    
+<p align="center">
+<img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata">
+<img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata">
+<img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata">
+<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata">
+</p>
+
 
 ```
    ___     ____   _____           _         _      __ _      _             _
