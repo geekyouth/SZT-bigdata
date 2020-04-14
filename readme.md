@@ -1,5 +1,7 @@
 # SZT-bigdata 深圳地铁大数据客流分析系统 🚇🚇🚇
 
+![](https://img.shields.io/github/issues/geekyouth/SZT-bigdata) ![](https://img.shields.io/github/forks/geekyouth/SZT-bigdata)  ![](https://img.shields.io/github/stars/geekyouth/SZT-bigdata)  ![](https://img.shields.io/github/license/geekyouth/SZT-bigdata)    
+
 ```
    ___     ____   _____           _         _      __ _      _             _
   / __|   |_  /  |_   _|   ___   | |__     (_)    / _` |  __| |   __ _    | |_    __ _
@@ -152,8 +154,10 @@ ksql 命令：
 
 ## 更新日志🌥：
 - 2020-04-14
-    - 重构
+    - 重构；
     - 完成 csv 格式文件的抽取；
+    - 添加 GPL-3 开源证书，鼓励开源分发；
+    - 添加徽标； 
     
 - 2020-04-13 
     - 项目初始化；
