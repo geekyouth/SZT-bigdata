@@ -41,7 +41,7 @@ case class MyRedisSourceFun() extends RichSourceFunction[String] {
 				if (data.size() != 11) { //这里长度不统一，9|11
 					System.err.println(" data error ------------------ x=" + x)
 				} else {
-					// 只保留字段长度为 11 的元数据 ===> kafka: topic-flink-szt
+					// 只保留字段长度为 11 的源数据 ===> kafka: topic-flink-szt
 					ctx.collect(xStr)
 				}
 			})

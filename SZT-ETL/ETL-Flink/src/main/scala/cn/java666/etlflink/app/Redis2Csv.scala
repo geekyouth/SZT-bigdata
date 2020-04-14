@@ -8,7 +8,7 @@ import org.apache.flink.streaming.api.scala._
  * @author Geek
  * @date 2020-04-14 04:35:36
  *
- * redis szt:pageJson 抽取元数据到 csv 
+ * redis szt:pageJson 抽取源数据到 csv 
  * 
  */
 object Redis2Csv {

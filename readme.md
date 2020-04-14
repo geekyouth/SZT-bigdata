@@ -98,9 +98,9 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ![](.file/.pic/api-debug.png)   
 
-6- `cn.java666.etlflink.source.MyRedisSourceFun.run()` 清洗数据发现 133.7 万数据中，有小部分元数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
+6- `cn.java666.etlflink.source.MyRedisSourceFun.run()` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
 
-合格元数据示例：
+合格源数据示例：
 ```json
 {
     "deal_date": "2018-08-31 21:15:55",
@@ -116,7 +116,7 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
     "equ_no": "263032104"
 }
 ```
-不合格的元数据示例：
+不合格的源数据示例：
 ```json
 {
     "deal_date": "2018-09-01 05:24:22",
@@ -130,7 +130,7 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
     "equ_no": "268005140"
 }
 ```
-7- 根据需求推送满足业务要求的元数据到 kafka：`cn.java666.etlflink.app.Redis2Kafka.main()`；`topic-flink-szt-all`保留了所有元数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的元数据 1266039 条。
+7- 根据需求推送满足业务要求的源数据到 kafka：`cn.java666.etlflink.app.Redis2Kafka.main()`；`topic-flink-szt-all`保留了所有源数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的源数据 1266039 条。
 
 8- kafka-eagle 监控查看 topic：
 
@@ -174,7 +174,7 @@ ksql 命令：
     - 项目初始化；
     - 完成数据源清洗去重，存到 redis；
     - 完成 redis 查询 REST API 的开发；
-    - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗元数据；
-    - 完成 推送元数据到 kafka；
+    - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗源数据；
+    - 完成 推送源数据到 kafka；
 
     

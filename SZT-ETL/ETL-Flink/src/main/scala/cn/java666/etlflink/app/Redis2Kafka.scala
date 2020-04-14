@@ -11,7 +11,7 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer011
  * @author Geek
  * @date 2020-04-14 04:35:36
  *
- * redis szt:pageJson 抽取元数据到 kafka
+ * redis szt:pageJson 抽取源数据到 kafka
  * 
  */
 object Redis2Kafka {
