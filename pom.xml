@@ -30,6 +30,7 @@
 	
 	<modules>
 		<module>SZT-ETL</module>
+		<module>SZT-common</module>
 	</modules>
 	
 </project>
