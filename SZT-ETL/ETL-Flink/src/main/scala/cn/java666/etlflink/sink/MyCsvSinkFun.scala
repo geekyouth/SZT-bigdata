@@ -11,10 +11,12 @@ import org.apache.flink.streaming.api.functions.sink.SinkFunction
  * @date 2020-04-14 04:27:47
  *
  * 自定义 flink sink csv
+ * 
+ * 按天保存文件块
  */
 
-case class MyCsvSinkFun() extends SinkFunction[String] {
-	val SAVE_PATH = "/tmp/SZTData/2018record-etl.csv"
+case class MyCsvSinkFun(day: String) extends SinkFunction[String] {
+	val SAVE_PATH = "/tmp/szt-data/szt-data_" + day + ".csv"
 	
 	override def invoke(value: String, context: SinkFunction.Context[_]): Unit = {
 		// 11 个字段
@@ -48,11 +50,9 @@ case class MyCsvSinkFun() extends SinkFunction[String] {
 			.toString
 		
 		FileUtil.appendUtf8String(csv + "\n", SAVE_PATH)
-	}
-	
-	import org.junit._
-	@Test def check() {
+		
 		val i = FileUtil.readUtf8Lines(SAVE_PATH).size()
-		println(i) //1266039 和 kafka 记录完全一致！！！
+		// 核对 ES 数据库，记录完全一致！！！
+		println(i) // szt-data_2018-09-01.csv 合计 1229180 条
 	}
 }
