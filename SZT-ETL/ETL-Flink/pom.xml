@@ -13,6 +13,11 @@
 	<artifactId>ETL-Flink</artifactId>
 	
 	<dependencies>
+		<dependency>
+			<groupId>cn.java666</groupId>
+			<artifactId>SZT-common</artifactId>
+			<version>0.1</version>
+		</dependency>
 		
 		<!-- flink 核心依赖 -->
 		<dependency>
