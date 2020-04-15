@@ -1,6 +1,7 @@
 package cn.java666.sztcommon.util;
 
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
 import com.sun.istack.internal.NotNull;
 import org.junit.Test;
 
@@ -10,16 +11,15 @@ import java.util.StringJoiner;
 /**
  * @author Geek
  * @date 2020-04-15 12:21:49
- * 
+ *
  * 支持自动识别明文和密文，一键互转
- * 
+ *
  * 日志当中卡号脱敏字段密文反解猜想，
  * 由脱敏的密文卡号反推真实卡号，
  * 因为所有卡号密文当中没有J开头的数据，
  * 但是有A开头的数据，A != 0，
  * 所以卡号映射关系如图！！！ .file/.pic/parse_card_no.png
  * 类似摩斯电码解密。。。
- * 
  */
 public class ParseCardNo {
 	static HashMap<Character, Character> char2NOMap = new HashMap<>();
@@ -50,6 +50,10 @@ public class ParseCardNo {
 	}
 	
 	public static String parse(@NotNull String no) {
+		if (StrUtil.isBlank(no)) {
+			return "滚！！！";
+		}
+		
 		char[] array = no.toCharArray();
 		StringJoiner joiner = new StringJoiner("");
 		for (char c : array) {
@@ -72,5 +76,14 @@ public class ParseCardNo {
 		
 		System.out.println(parse("FFEBEFGAJ"));
 		System.out.println(parse("665256710"));
+		System.out.println(parse("\n"));
 	}
 }
+
+/*
+665261364
+FFEBFACFD
+665256710
+FFEBEFGAJ
+滚！！！
+*/
