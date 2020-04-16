@@ -14,7 +14,7 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.{RedisCommand, 
  *
  */
 object RedisSinkPageJson {
-	val SVAE_PATH = "/tmp/SZTData/2018record.jsons"
+	val SVAE_PATH = "/tmp/szt-data/szt-data-page.jsons"
 	
 	def main(args: Array[String]): Unit = {
 		val env = StreamExecutionEnvironment.getExecutionEnvironment

@@ -32,6 +32,6 @@ object Redis2Kafka {
 			)
 		)
 		
-		env.execute("MyRedisSource")
+		env.execute("Redis2Kafka")
 	}
 }
