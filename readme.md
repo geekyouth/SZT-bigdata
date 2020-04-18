@@ -1,1 +1,447 @@
-# SZT-bigdata 深圳地铁大数据客流分析系统 🚇🚇🚇<p align="center"><img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata"><img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata"><img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata"><img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata"></p>```   ___     ____   _____           _         _      __ _      _             _  / __|   |_  /  |_   _|   ___   | |__     (_)    / _` |  __| |   __ _    | |_    __ _  \__ \    / /     | |    |___|  | '_ \    | |    \__, | / _` |  / _` |   |  _|  / _` |  |___/   /___|   _|_|_   _____  |_.__/   _|_|_   |___/  \__,_|  \__,_|   _\__|  \__,_|_|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'```---## 项目说明🚩：- 🎈 该项目主要分析深圳通刷卡数据，通过大数据技术角度来研究深圳地铁客运能力，探索深圳地铁优化服务的方向；- ✨ 强调学以致用，本项目的原则是尽可能使用较多的常用技术框架，加深对各技术栈的理解和运用，在使用过程中体验各框架的差异和优劣，为以后的项目开发技术选型做基础；- 👑 解决同一个问题，可能有多种技术实现，实际的企业开发应当遵守最佳实践原则；- 🎉 学习过程优先选择较新的软件版本，因为新版踩坑一定比老版更多，坑踩的多了，技能也就提高了，遇到新问题可以见招拆招、对症下药；- 🚀 ...---     ## 核心技术栈 + 版本选择 + 点评 (持续更新)⚡：![](.file/.doc/0-stack.png)  - Java-1.8/Scala-2.11，生态丰富，轮子够多；   - Flink-1.10，流式业务、ETL 首选。发展势头如日中天，阿里巴巴背书，轻快灵活、健步如飞；就问你信不信马云？？？😚😚😚  - Redis-3.2，天然去重，自动排序，除了快还是快。廉价版硬盘实现同类产品 SSDB。Win10|CentOS7|Docker Redis-3.2 三选一，CentOS REPL yum 安装默认使用3.2版本；  - Kafka-2.1，消息队列业务解耦、流量消峰、订阅发布场景首选。最佳 CP：kafka-eagle-1.4.5，集生产、消费、Ksql、大屏、监控、报警于一身，同时监控 zk。其他我用过的 Kafka 监控组件最后都放弃了：      - KafkaOffsetMonitor 问题太多，丑拒；      - Kafka Manager，已更名为 CMAK，老外写的软件用起来就觉得很别扭，而且最高只兼容 Kafka 0.11，但是 Kafka 官方已经升级到 2.4 了啊喂；      - 其他各种开源的 Kafka 监控基本都试过，一个能打的都没有。- Zookeeper-3.4.5，集群基础依赖，选举时 ID 越大越优势，通过会话机制维护各组件在线状态；  - CDH-6.2，解决了程序员最难搞的软件兼容性问题，全家桶服务一键安装；  - Docker-19，最快速度部署一款新软件，无侵入、无污染、快速扩容、服务打包。如果当前没有合适的运行环境，那么 docker 一定是首选；  - SpringBoot-2.13，通用 JAVA 生态，敏捷开发必备；  - knife4j-2.0，前身为 swagger-bootstrap-ui，REST API 项目调试简直不要太方便，秒杀原版丝袜哥十个数量级；  - Elasticsearch-7，全文检索领域唯一靠谱的数据库，搜索引擎核心服务，亿级数据毫秒响应，真实时，坑也多🔊🔊🔊；  - Kibana-7.4，ELK 全家桶成员，前端可视化，小白也不怕；  - ClickHouse，目前资料还不多，正在学习中，就是觉得头皮有点凉😂😂😂；  - MongoDB-4.0，文档数据库，对 Json 数据比较友好，主要用于爬虫数据库；  - Spark-2.3，目前国内大数据框架实时微批处理、离线批处理主流方案。这个组件太吃资源了，曾经在我开发时，把我的笔记本搞到蓝屏，于是我直接远程提交到 spark 集群了。接下来预计 Flink 开始表演了🦘，真的用了更快的框架就爱上了😍😍😍；  - Hive-2.1，Hadoop 生态数仓必备，大数据离线处理 OLAP 结构化数据库，准确来说是个 HQL 解析器，查询语法接近 Mysql，就是窗口函数比较复杂😭😭😭；  - Impala-3.2，像羚羊一样轻快矫健，同样的 hive sql 复杂查询，impala 毫秒级返回，hive 却需要80秒左右甚至更多；  - HBase-2.1 + Phoenix，Hadoop 生态下的非结构化数据库，HBase 的灵魂设计就是 rowkey 和多版本控制，凤凰嫁接 hbase 可以实现更复杂的业务；  - Kylin-2.5，麒麟多维预分析系统，依赖内存快速计算，但是局限性有点多啊，适用于业务特别稳定，纬度固定少变的场景，渣渣机器就别试了，内存太小带不起；  - HUE-4.3，CDH 全家桶赠送的，强调用户体验，操作数仓很方便，权限控制、hive + impala 查询、hdfs 文件管理、oozie 任务调度脚本编写全靠他了；  - 阿里巴巴 DataX，异构数据源同步工具，主持大部分主流数据库，甚至可以自己开发插件，马云家的东西，我选你！！！如果你觉得这还满足不了你的特殊业务需求，那么推荐你用 FlinkX，基于 Flink 的分布式数据同步工具。理论上你也可以自己开发插件；   - Oozie-5.1，本身 UI 奇丑，但是配合 HUE 食用尚可接受，主要用来编写和运行任务调度脚本；  - Sqoop-1.4，主要用来从 Mysql 导出业务数据到 HDFS 数仓，反过来也行；  - Mysql-5.7，程序员都要用的吧，如果说全世界程序员都会用的语言，那一定是 SQL。Mysql 8.0 普及率不够高，MariaDB 暂不推荐，复杂的函数不兼容 Mysql，数据库这么基础的依赖组件出了问题你就哭吧；   - Hadoop3.0（HDFS+Yarn），HDFS 是目前大数据领域最主流的分布式海量数据存储系统，这里的 Yarn 特指 hadoop 生态，主要用来分配集群资源，自带执行引擎 MR；  - 阿里巴巴 DataV 可视化展示；   - ...  > 我发现越来越多的国产开源软件用户体验值得肯定。。。---## 准备工作🍬：以下是我的开发环境，仅作参考：- Win10 IDEA 2019.3 旗舰版，JAVA|Scala 开发必备，集万般功能于一身；- Win10 DBeaver 企业版 6.3，秒杀全宇宙所有数据库客户端，几乎一切常用数据库都可以连，选好驱动是关键；- Win10 Sublime Text3，地表最强轻量级编辑器，光速启动，无限量插件，主要用来编辑零散文件、markdown 实时预览、写前端特别友好（虽然我不擅长🖐🖐🖐），速度快到完全不用担心软件跟不上你的手速；- 其他一些实用工具参考我的博客：<https://java666.cn/#/AboutMe>- CentOS7 CDH-6.2 集群，包含如下组件，对应的主机角色和配置如图，集群至少需要40 GB 总内存，才可以满足基本使用，不差钱的前提下，RAM 当然是合理范围内越大越好啦，鲁迅都说“天下武功唯快不破”；我们的追求是越快越好；  ![](.file/.pic/0-cdh-view.png)   ![](.file/.pic/0-cdh-host.png)   ![](.file/.pic/0-cdh-role.png)   如果你选用原版 Apache 组件搭建大数据集群，那么你会有踩不完的坑。我的头发不够掉了，所以我选 CDH！！！⚙🛠😏😏😏## 物理机配置💎：- 以上软件分开部署在我的三台电脑上，Win10 笔记本 VMware + Win10 台式机 VMware + 古董笔记本 CentOS7。物理机全都配置 SSD + 千兆以太网卡，HDFS 需要最快的网卡。好马配好鞍，当然你得有个千兆交换机配合千兆网线，木桶原理警告！！！🎈🎈🎈- 有个机架当然再好不过了，哈哈哈。。。![](.file/.pic/0-pcs.jpg)   - 如果你想避免网线牵来牵去，可以采用电力猫实现分布式家庭组网方案；---## 数据源🌍：- 深圳市政府数据开放平台，深圳通刷卡数据 133.7 万条【离线数据】，https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601    理论上可以当作实时数据，但是这个接口响应太慢了，如果采用 kafka 队列方式，也可以模拟出实时效果。 本项目采用离线 + 实时思路 多种方案处理。---## 开发进度🥇：> 准备好 java、scala、大数据开发常用的环境，比如 IDEA、VMware 虚拟机、CDH等，然后手机静音盖上，跟我一起左手画个龙，右手划一道彩虹，开始表演吧🤪---1- 获取数据源的 appKey：https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601---2- 调用 `cn.java666.etlspringboot.source.SZTData#saveData` 获取原始数据存盘 `/tmp/szt-data/szt-data-page.jsons`，核对数据量 1337，注意这里每条数据包含1000条子数据；---3- 调用 `cn.java666.etlflink.sink.RedisSinkPageJson#main` 实现 etl 清洗，去除重复数据，redis 天然去重排序，保证数据干净有序，跑完后核对 redis 数据量 1337。---4- redis 查询，redis-cli 登录后执行 ` hget szt:pageJson 1 `   或者 dbeaver 可视化查询：  ![](.file/.pic/redis-szt-pageJson.png)  ---5- `cn.java666.etlspringboot.EtlSApp#main` 启动后，也可以用 knife4j 在线调试 REST API：  ![](.file/.pic/api-1.png)   ![](.file/.pic/api-debug.png)   ---6- `cn.java666.etlflink.source.MyRedisSourceFun#run` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。合格源数据示例：```json{    "deal_date": "2018-08-31 21:15:55",    "close_date": "2018-09-01 00:00:00",    "card_no": "CBHGDEEJB",    "deal_value": "0",    "deal_type": "地铁入站",    "company_name": "地铁五号线",    "car_no": "IGT-104",    "station": "布吉",    "conn_mark": "0",    "deal_money": "0",    "equ_no": "263032104"}```不合格的源数据示例：```json{    "deal_date": "2018-09-01 05:24:22",    "close_date": "2018-09-01 00:00:00",    "card_no": "HHAAABGEH",    "deal_value": "0",    "deal_type": "地铁入站",    "company_name": "地铁一号线",    "conn_mark": "0",    "deal_money": "0",    "equ_no": "268005140"}```---7- `cn.java666.etlflink.app.Redis2Kafka#main` 根据需求推送满足业务要求的源数据到 kafka，`topic-flink-szt-all` 保留了所有源数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的源数据 1266039 条。---8- kafka-eagle 监控查看 topic，基于原版去掉了背景图，漂亮多了：  ![](.file/.pic/kafka-eagle02.png)  ![](.file/.pic/kafka-eagle01.png)  ksql 命令查询： `select * from "topic-flink-szt" where "partition" in (0) limit 1000`  ![](.file/.pic/ksql.png)  ---9- `cn.java666.etlflink.app.Redis2Csv#main` 实现了 flink sink csv 格式文件，并且支持按天分块保存。  ![](.file/.pic/csv.png)---10- `cn.java666.etlflink.app.Redis2ES#main`  实现了 ES 存储源数据。实现实时全文检索，实时跟踪深圳通刷卡数据。  这个模块涉及技术细节比较多，如果没有 ES 使用经验，可以先做下功课，不然的话会很懵。  我之前在处理 ES 各种问题踩了不少坑，熬了不少通宵，掉了很多头发。    **遇到问题心态要稳，因为你今天处理了一个问题，明天接触新的版本新的框架大概率又会出现新的问题**。。🥺🥺🥺   所以最佳实践很重要！！！  > **👇👇👇这部分内容有更新：修正了上一个版本时区问题。**  🎬接下来，让我们时光倒流，回到 2018-09-01这一天，调整 kibana 面板时间范围 `2018-09-01 00:00:00.000~2018-09-01 23:59:59.999`，看看当天深圳通刷卡记录的统计图曲线走向是否科学，间接验证数据源的完整性。 修正时区后统计数量，字段完整的合格源数据 1266039 条，2018-09-01全天 1229180 条。  ![](.file/.pic/2018-09-01.png)  图中可以看出 2018-09-01 这一天刷卡记录集中在上午6点~12点之间，早高峰数据比较吻合，虽然这一天是周六，高峰期不是特别明显。我们继续缩放 kibana 时间轴看看更详细的曲线：![](.file/.pic/2018-09-01-am.png)  回顾一下本项目 ETL 处理流程：> 1337000 条源数据清洗去除字段不全的脏数据，剩余的合格数据条数 1266039 已经进入 ES 索引 `szt-data`  > 在 1266039 条合格数据中，有 1227234 条数据集中在 2018-09-01 这一天的上午时段；  > 我们暂且相信上午时段的数据是真实的，那么是否说明官方提供的数据并不是全部的当天完整刷卡数据？？？ > 如果按照上午的刷卡量来估测全天的刷卡量，考虑到是周六，那么深圳通全天的刷卡记录数据应该在 122万 X 2 左右，当然这么武断的判断方式不是程序员的风格，接下来我们用科学的大数据分析方式来研究这些数据背后的意义。注意，ES 大坑：  - ES 存数据时，带有时间字段的数据如何实时展示到 kibana 的图表面板上？  🤣需要在存入 index 之前设置字段映射。参考格式，不要照抄！！！```json{  "properties": {    "deal_date": {      "format": "yyyy-MM-dd HH:mm:ss",      "type": "date"    }  }}  ```这里并没有指定时区信息，但是 ES 默认使用 0 时区，这个软件很坑，无法设置全局默认时区。但是很多软件产生的数据都是默认机器所在时区，国内就是东八区。因为我们的源始数据本身也没有包含时区信息，这里我不想改源数据，那就假装自己在 ES 的 0 时区。同时需要修改 kibana 默认时区为 UTC，才可以保证 kibana 索引图表时间轴正确对位。不过这并不是一个科学的解决方案。  **如果是企业项目，必须要用数据质量监控软件！！！要不然得有多少背锅侠要杀去祭天😂😂😂，数据可以没有但是千万不能错。**  - ES 存数据时，需要使用 json 格式包装数据，不符合json 语法的纯字符无法保存；  - ES 序列化复杂的 bean 对象时，如果 fastjson 报错，推荐使用 Gson，很强！  ### TIPS😙😙😙：- Gson 相比 fastjson：Gson 序列化能力更强，但是 反序列化时，fastjson 速度更快。---11- 查看 ES 数据库卡号，对比自己的深圳通地铁卡，逐渐发现了一些脱敏规律。  日志当中卡号脱敏字段密文反解猜想：  由脱敏的密文卡号反推真实卡号，因为所有卡号密文当中没有J开头的数据，但是有A开头的数据，A != 0，而且出现了 BCDEFGHIJ 没有 K，所以猜想卡号映射关系如图！！！   ![](.file/.pic/parse_card_no.png)  类似摩斯电码解密。。。我现在还不确定这个解密方式是否正确🙄🙄🙄  ---12- `cn.java666.sztcommon.util.ParseCardNo#parse` 实现了支持自动识别卡号明文和密文、一键互转功能。 `cn.java666.etlspringboot.controller.CardController#get` 实现了卡号明文和密文互转 REST API。    ![](.file/.pic/parse_no.png)  ---13- 搭建数仓：深圳地铁数仓建模  第一步，分析业务    确定业务流程 ---> 声明粒度 ---> 确定维度 ---> 确定事实![](.file/.doc/dim.png)      第二步，规划数仓结构  参考行业通用的数仓分层模式：ODS、DWD、DWS、ADS，虽然原始数据很简单，但是我们依然使用规范的流程设计数据仓库。   - 第一层：ODS 原始数据层  ```ods/ods_szt_data/day=2018-09-01/   # szt_szt_page/day=2018-09-01/  ```- 第二层：DWD 清洗降维层    区分维表 dim_ 和事实表 fact_，为了使粒度更加细化，我们把进站和出站记录分开，巴士数据暂不考虑。 ```dwd_fact_szt_in_detail      进站事实详情表dwd_fact_szt_out_detail     出站事实详情表dwd_fact_szt_in_out_detail  地铁进出站总表```- 第三层：DWS 宽表层    ```dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出行记录】```- 第四层：ADS 业务指标层【待补充】  ```【体现进站压力】 每站进站人次排行榜          ads_in_station_day_top【体现出站压力】 每站出站人次排行榜          ads_out_station_day_top【体现进出站压力】 每站进出站人次排行榜          ads_in_out_station_day_top【体现通勤车费最多】 每卡日消费排行          ads_card_deal_day_top【体现线路运输贡献度】 每线路单日运输乘客总次数排行榜，直达乘客算一次，换乘乘客算一次       ads_line_send_passengers_day_top【体现利用率最高的车站区间】 每日运输乘客最多的车站区间排行榜           ads_stations_send_passengers_day_top【体现线路的平均通勤时间，运输效率】 每条线路单程直达乘客耗时平均值排行榜         ads_line_single_ride_average_time_day_top【体现深圳地铁全市乘客平均通勤时间】 所有乘客从上车到下车间隔时间平均值        ads_all_passengers_single_ride_spend_time_average【体现通勤时间最长的乘客】 单日从上车到下车间隔时间排行榜         ads_passenger_spend_time_day_top【体现车站配置】 每个站点进出站闸机数量排行榜    每个站点入站闸机数量          ads_station_in_equ_num_top    每个站点出站闸机数量            ads_station_out_equ_num_top【体现收入最多的车站】 出站交易收入排行榜       ads_station_deal_day_top【体现收入最多的线路】 出站交易所在线路收入排行榜       ads_line_deal_day_top【体现换乘比例、乘车体验】 每天每线路乘客联程标记的百分比         ads_conn_ratio_day_top【体现每条线的深圳通乘车卡普及程度 9.5 折优惠】 出站交易优惠人数百分比排行榜         ads_line_sale_ratio_top【体现线路拥挤程度】 上车以后还没下车，每分钟、小时每条线在线人数       ads_on_line_min_top```第三步：建库建表  hdfs 关闭权限检查。hive 设置保存目录 /warehouse；  hue 创建 hue 用户，赋予超级组。hue 切换到 hue 用户，执行 hive sql 建库 szt；  库下面建目录 ods dwd dws ads；  上传原始数据到 /warehouse/szt.db/ods/  szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons  查看： `hdfs dfs -ls -h  hdfs://cdh231:8020/user/hive/warehouse/ods/`接下来按照 `.file/.sql/hive.sql` 执行  .....---- 已经完成的指标分析      - 深圳地铁进站人次排行榜  ![](.file/.pic/.ads/ads_in_station_day_top.png)![](.file/.pic/.ads/ads_in_station_day_top2.png)**☝依次为：五和、布吉、丹竹头  以上数据说明当天这几个站点进站人数最多。**      - 深圳地铁出站人次排行榜  ![](.file/.pic/.ads/ads_out_station_day_top.png)![](.file/.pic/.ads/ads_out_station_day_top2.png)**👆 出站乘客主要去向分别为：  深圳北高铁站、罗湖火车站、福田口岸。**    - 深圳地铁进出站总人次排行榜  ![](.file/.pic/.ads/ads_in_out_station_day_top.png)**车站吞吐量排行榜：  五和站？？？、布吉站（深圳东火车站）、罗湖站（深圳火车站）、深圳北（深圳北高铁站）。。。  五和站为什么这么秀？？？  🚀**        - 深圳地铁乘客车费排行榜  ![](.file/.pic/.ads/ads_card_deal_day_top.png)**当天车费最高的乘客花了 48 元人民币  🚄🚄🚄 说明：深圳通地铁卡不记名，未涉及个人隐私！！！**     - ....      ---## TODO🔔🔔🔔:- [x] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； - [x] 推送 kafka，使用队列传输数据；- [x] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； - [x] 数仓建模：ODS、DWD、DWS、ADS- [ ] 开放卡号查数据 REST API，提供卡号查询接口，返回数据库的刷卡记录； - [ ] hive 分析，oozie 调度；    - [ ] flink 流式实时分析早晚高峰站点压力排行；  - [ ] spark 微批处理。。。- [ ] DataV 可视化大屏展示；  ---## 更新日志🌥：- 2020-04-17      - 修正错别字；      - 发布v0.12;      - 2020-04-16    - 重构项目；    - 补充文档    - 发布v0.1 - 2020-04-15      - 增加 common 模块，拆分解耦；    - 支持自动识别卡号明文和密文，一键互转，提供 REST API；      - 修复 ES 时区导致的错误统计数量；    - Redis2Csv 实现了按天转换 csv 存盘；- 2020-04-14    - 重构；    - 完成 csv 格式文件的抽取；    - 添加 GPL-3 开源证书，鼓励开源分发；    - 添加徽标；     - 完成写入 ES 数据库，添加时间映射,kibana 实时查看刷卡数据统计曲线的变化；    - 2020-04-13     - 项目初始化；    - 完成数据源清洗去重，存到 redis；    - 完成 redis 查询 REST API 的开发；    - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗源数据；    - 完成 推送源数据到 kafka；    ## 联系😪：欢迎交流技术，接头暗号`github`        ![](.file/.pic/0-wexin.png)> 百度和谷歌能找到的问题就不要再问了！很累的😕😕😕## 补充💌💌💌：- 不开小密圈；- 不卖课、不卖教程；- 不求赞，不求粉；- 不发广告、不骚扰；- 不割韭菜> 坚持原则和底线。比心🤞🤞🤞  ## 吐个槽🍦🍦🍦：程序员这辈子一定会遇到的三个问题：   - 乱码问题🌚；  - 时区不一致问题🌗；  - 软件版本不兼容问题❄；  ## 教训：- 大数据程序员千万不能生产错误的数据，容忍程序运行失败、甚至没有输出数据，失败了可以跟踪原因，至少不会有脏数据。- 一旦数据错误，会影响后面的所有计算流程，甚至导致错误决策。
+# SZT-bigdata 深圳地铁大数据客流分析系统 🚇🚇🚇
+
+<p align="center">
+<img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata">
+<img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata">
+<img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata">
+<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata">
+</p>
+
+
+```
+   ___     ____   _____           _         _      __ _      _             _
+  / __|   |_  /  |_   _|   ___   | |__     (_)    / _` |  __| |   __ _    | |_    __ _
+  \__ \    / /     | |    |___|  | '_ \    | |    \__, | / _` |  / _` |   |  _|  / _` |
+  |___/   /___|   _|_|_   _____  |_.__/   _|_|_   |___/  \__,_|  \__,_|   _\__|  \__,_|
+_|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
+"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
+```
+---
+
+## 项目说明🚩：
+- 🎈 该项目主要分析深圳通刷卡数据，通过大数据技术角度来研究深圳地铁客运能力，探索深圳地铁优化服务的方向；
+- ✨ 强调学以致用，本项目的原则是尽可能使用较多的常用技术框架，加深对各技术栈的理解和运用，在使用过程中体验各框架的差异和优劣，为以后的项目开发技术选型做基础；
+- 👑 解决同一个问题，可能有多种技术实现，实际的企业开发应当遵守最佳实践原则；
+- 🎉 学习过程优先选择较新的软件版本，因为新版踩坑一定比老版更多，坑踩的多了，技能也就提高了，遇到新问题可以见招拆招、对症下药；
+- 🚀 ...
+
+---     
+
+## 核心技术栈 + 版本选择 + 点评 (持续更新)⚡：
+![](.file/.doc/0-stack.png)  
+
+- Java-1.8/Scala-2.11，生态丰富，轮子够多；   
+- Flink-1.10，流式业务、ETL 首选。发展势头如日中天，阿里巴巴背书，轻快灵活、健步如飞；就问你信不信马云？？？😚😚😚  
+- Redis-3.2，天然去重，自动排序，除了快还是快。廉价版硬盘实现同类产品 SSDB。Win10|CentOS7|Docker Redis-3.2 三选一，CentOS REPL yum 安装默认使用3.2版本；  
+- Kafka-2.1，消息队列业务解耦、流量消峰、订阅发布场景首选。最佳 CP：kafka-eagle-1.4.5，集生产、消费、Ksql、大屏、监控、报警于一身，同时监控 zk。其他我用过的 Kafka 监控组件最后都放弃了：  
+    - KafkaOffsetMonitor 问题太多，丑拒；  
+    - Kafka Manager，已更名为 CMAK，老外写的软件用起来就觉得很别扭，而且最高只兼容 Kafka 0.11，但是 Kafka 官方已经升级到 2.4 了啊喂；  
+    - 其他各种开源的 Kafka 监控基本都试过，一个能打的都没有。
+- Zookeeper-3.4.5，集群基础依赖，选举时 ID 越大越优势，通过会话机制维护各组件在线状态；  
+- CDH-6.2，解决了程序员最难搞的软件兼容性问题，全家桶服务一键安装；  
+- Docker-19，最快速度部署一款新软件，无侵入、无污染、快速扩容、服务打包。如果当前没有合适的运行环境，那么 docker 一定是首选；  
+- SpringBoot-2.13，通用 JAVA 生态，敏捷开发必备；  
+- knife4j-2.0，前身为 swagger-bootstrap-ui，REST API 项目调试简直不要太方便，秒杀原版丝袜哥十个数量级；  
+- Elasticsearch-7，全文检索领域唯一靠谱的数据库，搜索引擎核心服务，亿级数据毫秒响应，真实时，坑也多🔊🔊🔊；  
+- Kibana-7.4，ELK 全家桶成员，前端可视化，小白也不怕；  
+- ClickHouse，目前资料还不多，正在学习中，就是觉得头皮有点凉😂😂😂；  
+- MongoDB-4.0，文档数据库，对 Json 数据比较友好，主要用于爬虫数据库；  
+- Spark-2.3，目前国内大数据框架实时微批处理、离线批处理主流方案。这个组件太吃资源了，曾经在我开发时，把我的笔记本搞到蓝屏，于是我直接远程提交到 spark 集群了。接下来预计 Flink 开始表演了🦘，真的用了更快的框架就爱上了😍😍😍；  
+- Hive-2.1，Hadoop 生态数仓必备，大数据离线处理 OLAP 结构化数据库，准确来说是个 HQL 解析器，查询语法接近 Mysql，就是窗口函数比较复杂😭😭😭；  
+- Impala-3.2，像羚羊一样轻快矫健，同样的 hive sql 复杂查询，impala 毫秒级返回，hive 却需要80秒左右甚至更多；  
+- HBase-2.1 + Phoenix，Hadoop 生态下的非结构化数据库，HBase 的灵魂设计就是 rowkey 和多版本控制，凤凰嫁接 hbase 可以实现更复杂的业务；  
+- Kylin-2.5，麒麟多维预分析系统，依赖内存快速计算，但是局限性有点多啊，适用于业务特别稳定，纬度固定少变的场景，渣渣机器就别试了，内存太小带不起；  
+- HUE-4.3，CDH 全家桶赠送的，强调用户体验，操作数仓很方便，权限控制、hive + impala 查询、hdfs 文件管理、oozie 任务调度脚本编写全靠他了；  
+- 阿里巴巴 DataX，异构数据源同步工具，主持大部分主流数据库，甚至可以自己开发插件，马云家的东西，我选你！！！如果你觉得这还满足不了你的特殊业务需求，那么推荐你用 FlinkX，基于 Flink 的分布式数据同步工具。理论上你也可以自己开发插件；   
+- Oozie-5.1，本身 UI 奇丑，但是配合 HUE 食用尚可接受，主要用来编写和运行任务调度脚本；  
+- Sqoop-1.4，主要用来从 Mysql 导出业务数据到 HDFS 数仓，反过来也行；  
+- Mysql-5.7，程序员都要用的吧，如果说全世界程序员都会用的语言，那一定是 SQL。Mysql 8.0 普及率不够高，MariaDB 暂不推荐，复杂的函数不兼容 Mysql，数据库这么基础的依赖组件出了问题你就哭吧；   
+- Hadoop3.0（HDFS+Yarn），HDFS 是目前大数据领域最主流的分布式海量数据存储系统，这里的 Yarn 特指 hadoop 生态，主要用来分配集群资源，自带执行引擎 MR；  
+- 阿里巴巴 DataV 可视化展示；   
+- ...  
+
+> 我发现越来越多的国产开源软件用户体验值得肯定。。。
+
+---
+
+## 准备工作🍬：
+以下是我的开发环境，仅作参考：
+
+- Win10 IDEA 2019.3 旗舰版，JAVA|Scala 开发必备，集万般功能于一身；
+- Win10 DBeaver 企业版 6.3，秒杀全宇宙所有数据库客户端，几乎一切常用数据库都可以连，选好驱动是关键；
+- Win10 Sublime Text3，地表最强轻量级编辑器，光速启动，无限量插件，主要用来编辑零散文件、markdown 实时预览、写前端特别友好（虽然我不擅长🖐🖐🖐），速度快到完全不用担心软件跟不上你的手速；
+- 其他一些实用工具参考我的博客：<https://java666.cn/#/AboutMe>
+- CentOS7 CDH-6.2 集群，包含如下组件，对应的主机角色和配置如图，集群至少需要40 GB 总内存，才可以满足基本使用，不差钱的前提下，RAM 当然是合理范围内越大越好啦，鲁迅都说“天下武功唯快不破”；我们的追求是越快越好；  
+
+![](.file/.pic/0-cdh-view.png)   
+
+![](.file/.pic/0-cdh-host.png)   
+
+![](.file/.pic/0-cdh-role.png)   
+
+如果你选用原版 Apache 组件搭建大数据集群，那么你会有踩不完的坑。我的头发不够掉了，所以我选 CDH！！！⚙🛠😏😏😏
+
+## 物理机配置💎：
+
+- 以上软件分开部署在我的三台电脑上，Win10 笔记本 VMware + Win10 台式机 VMware + 古董笔记本 CentOS7。物理机全都配置 SSD + 千兆以太网卡，HDFS 需要最快的网卡。好马配好鞍，当然你得有个千兆交换机配合千兆网线，木桶原理警告！！！🎈🎈🎈
+
+- 有个机架当然再好不过了，哈哈哈。。。
+![](.file/.pic/0-pcs.jpg)   
+
+- 如果你想避免网线牵来牵去，可以采用电力猫实现分布式家庭组网方案；
+
+---
+
+## 数据源🌍：
+- 深圳市政府数据开放平台，深圳通刷卡数据 133.7 万条【离线数据】，
+https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
+    
+理论上可以当作实时数据，但是这个接口响应太慢了，如果采用 kafka 队列方式，也可以模拟出实时效果。 
+
+本项目采用离线 + 实时思路 多种方案处理。
+
+---
+
+## 开发进度🥇：
+> 准备好 java、scala、大数据开发常用的环境，比如 IDEA、VMware 虚拟机、CDH等，然后手机静音盖上，跟我一起左手画个龙，右手划一道彩虹，开始表演吧🤪
+
+---
+
+1- 获取数据源的 appKey：https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
+
+---
+
+2- 调用 `cn.java666.etlspringboot.source.SZTData#saveData` 获取原始数据存盘 `/tmp/szt-data/szt-data-page.jsons`，核对数据量 1337，注意这里每条数据包含1000条子数据；
+
+---
+
+3- 调用 `cn.java666.etlflink.sink.RedisSinkPageJson#main` 实现 etl 清洗，去除重复数据，redis 天然去重排序，保证数据干净有序，跑完后核对 redis 数据量 1337。
+
+---
+
+4- redis 查询，redis-cli 登录后执行 ` hget szt:pageJson 1 `   
+或者 dbeaver 可视化查询：  
+![](.file/.pic/redis-szt-pageJson.png)  
+
+---
+
+5- `cn.java666.etlspringboot.EtlSApp#main` 启动后，也可以用 knife4j 在线调试 REST API：  
+![](.file/.pic/api-1.png)   
+
+![](.file/.pic/api-debug.png)   
+
+---
+
+6- `cn.java666.etlflink.source.MyRedisSourceFun#run` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
+
+合格源数据示例：
+```json
+{
+    "deal_date": "2018-08-31 21:15:55",
+    "close_date": "2018-09-01 00:00:00",
+    "card_no": "CBHGDEEJB",
+    "deal_value": "0",
+    "deal_type": "地铁入站",
+    "company_name": "地铁五号线",
+    "car_no": "IGT-104",
+    "station": "布吉",
+    "conn_mark": "0",
+    "deal_money": "0",
+    "equ_no": "263032104"
+}
+```
+不合格的源数据示例：
+```json
+{
+    "deal_date": "2018-09-01 05:24:22",
+    "close_date": "2018-09-01 00:00:00",
+    "card_no": "HHAAABGEH",
+    "deal_value": "0",
+    "deal_type": "地铁入站",
+    "company_name": "地铁一号线",
+    "conn_mark": "0",
+    "deal_money": "0",
+    "equ_no": "268005140"
+}
+```
+
+---
+
+7- `cn.java666.etlflink.app.Redis2Kafka#main` 根据需求推送满足业务要求的源数据到 kafka，`topic-flink-szt-all` 保留了所有源数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的源数据 1266039 条。
+
+---
+
+8- kafka-eagle 监控查看 topic，基于原版去掉了背景图，漂亮多了：  
+![](.file/.pic/kafka-eagle02.png)  
+
+![](.file/.pic/kafka-eagle01.png)  
+
+ksql 命令查询： `select * from "topic-flink-szt" where "partition" in (0) limit 1000`  
+
+![](.file/.pic/ksql.png)  
+
+---
+
+9- `cn.java666.etlflink.app.Redis2Csv#main` 实现了 flink sink csv 格式文件，并且支持按天分块保存。  
+![](.file/.pic/csv.png)
+
+---
+
+10- `cn.java666.etlflink.app.Redis2ES#main`  实现了 ES 存储源数据。实现实时全文检索，实时跟踪深圳通刷卡数据。  
+
+这个模块涉及技术细节比较多，如果没有 ES 使用经验，可以先做下功课，不然的话会很懵。  
+
+我之前在处理 ES 各种问题踩了不少坑，熬了不少通宵，掉了很多头发。    
+
+**遇到问题心态要稳，因为你今天处理了一个问题，明天接触新的版本新的框架大概率又会出现新的问题**。。🥺🥺🥺   
+
+所以最佳实践很重要！！！  
+
+> **👇👇👇这部分内容有更新：修正了上一个版本时区问题。**  
+
+🎬接下来，让我们时光倒流，回到 2018-09-01这一天，调整 kibana 面板时间范围 `2018-09-01 00:00:00.000~2018-09-01 23:59:59.999`，看看当天深圳通刷卡记录的统计图曲线走向是否科学，间接验证数据源的完整性。 
+
+修正时区后统计数量，字段完整的合格源数据 1266039 条，2018-09-01全天 1229180 条。  
+![](.file/.pic/2018-09-01.png)  
+
+图中可以看出 2018-09-01 这一天刷卡记录集中在上午6点~12点之间，早高峰数据比较吻合，虽然这一天是周六，高峰期不是特别明显。我们继续缩放 kibana 时间轴看看更详细的曲线：
+![](.file/.pic/2018-09-01-am.png)  
+
+回顾一下本项目 ETL 处理流程：
+> 1337000 条源数据清洗去除字段不全的脏数据，剩余的合格数据条数 1266039 已经进入 ES 索引 `szt-data`  
+
+> 在 1266039 条合格数据中，有 1227234 条数据集中在 2018-09-01 这一天的上午时段；  
+
+> 我们暂且相信上午时段的数据是真实的，那么是否说明官方提供的数据并不是全部的当天完整刷卡数据？？？ 
+
+> 如果按照上午的刷卡量来估测全天的刷卡量，考虑到是周六，那么深圳通全天的刷卡记录数据应该在 122万 X 2 左右，当然这么武断的判断方式不是程序员的风格，接下来我们用科学的大数据分析方式来研究这些数据背后的意义。
+
+注意，ES 大坑：  
+- ES 存数据时，带有时间字段的数据如何实时展示到 kibana 的图表面板上？  
+🤣需要在存入 index 之前设置字段映射。参考格式，不要照抄！！！
+```json
+{
+  "properties": {
+    "deal_date": {
+      "format": "yyyy-MM-dd HH:mm:ss",
+      "type": "date"
+    }
+  }
+}  
+```
+这里并没有指定时区信息，但是 ES 默认使用 0 时区，这个软件很坑，无法设置全局默认时区。但是很多软件产生的数据都是默认机器所在时区，国内就是东八区。因为我们的源始数据本身也没有包含时区信息，这里我不想改源数据，那就假装自己在 ES 的 0 时区。同时需要修改 kibana 默认时区为 UTC，才可以保证 kibana 索引图表时间轴正确对位。不过这并不是一个科学的解决方案。  
+
+**如果是企业项目，必须要用数据质量监控软件！！！要不然得有多少背锅侠要杀去祭天😂😂😂，数据可以没有但是千万不能错。**  
+
+- ES 存数据时，需要使用 json 格式包装数据，不符合json 语法的纯字符无法保存；  
+- ES 序列化复杂的 bean 对象时，如果 fastjson 报错，推荐使用 Gson，很强！  
+
+### TIPS😙😙😙：
+- Gson 相比 fastjson：Gson 序列化能力更强，但是 反序列化时，fastjson 速度更快。
+
+---
+
+11- 查看 ES 数据库卡号，对比自己的深圳通地铁卡，逐渐发现了一些脱敏规律。  
+日志当中卡号脱敏字段密文反解猜想：  
+由脱敏的密文卡号反推真实卡号，因为所有卡号密文当中没有J开头的数据，
+但是有A开头的数据，A != 0，而且出现了 BCDEFGHIJ 没有 K，所以猜想卡号映射关系如图！！！   
+![](.file/.pic/parse_card_no.png)  
+类似摩斯电码解密。。。我现在还不确定这个解密方式是否正确🙄🙄🙄  
+
+---
+
+12- `cn.java666.sztcommon.util.ParseCardNo#parse` 实现了支持自动识别卡号明文和密文、一键互转功能。 `cn.java666.etlspringboot.controller.CardController#get` 实现了卡号明文和密文互转 REST API。    
+![](.file/.pic/parse_no.png)  
+
+---
+
+13- 搭建数仓：深圳地铁数仓建模  
+
+第一步，分析业务    
+确定业务流程 ---> 声明粒度 ---> 确定维度 ---> 确定事实
+
+![](.file/.doc/dim.png)   
+   
+第二步，规划数仓结构  
+参考行业通用的数仓分层模式：ODS、DWD、DWS、ADS，虽然原始数据很简单，但是我们依然使用规范的流程设计数据仓库。   
+
+- 第一层：ODS 原始数据层  
+```
+ods/ods_szt_data/day=2018-09-01/   
+# szt_szt_page/day=2018-09-01/  
+```
+
+- 第二层：DWD 清洗降维层  
+  区分维表 dim_ 和事实表 fact_，为了使粒度更加细化，我们把进站和出站记录分开，巴士数据暂不考虑。 
+```
+dwd_fact_szt_in_detail      进站事实详情表
+dwd_fact_szt_out_detail     出站事实详情表
+dwd_fact_szt_in_out_detail  地铁进出站总表
+```
+
+- 第三层：DWS 宽表层    
+```
+dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出行记录】
+```
+
+- 第四层：ADS 业务指标层【待补充】  
+```
+【体现进站压力】 每站进站人次排行榜      
+    ads_in_station_day_top
+【体现出站压力】 每站出站人次排行榜      
+    ads_out_station_day_top
+【体现进出站压力】 每站进出站人次排行榜      
+    ads_in_out_station_day_top
+【体现通勤车费最多】 每卡日消费排行      
+    ads_card_deal_day_top
+
+【体现线路运输贡献度】 每线路单日运输乘客总次数排行榜，直达乘客算一次，换乘乘客算一次   
+    ads_line_send_passengers_day_top
+【体现利用率最高的车站区间】 每日运输乘客最多的车站区间排行榜       
+    ads_stations_send_passengers_day_top
+【体现线路的平均通勤时间，运输效率】 每条线路单程直达乘客耗时平均值排行榜     
+    ads_line_single_ride_average_time_day_top
+【体现深圳地铁全市乘客平均通勤时间】 所有乘客从上车到下车间隔时间平均值    
+    ads_all_passengers_single_ride_spend_time_average
+【体现通勤时间最长的乘客】 单日从上车到下车间隔时间排行榜     
+    ads_passenger_spend_time_day_top
+【体现车站配置】 每个站点进出站闸机数量排行榜
+    每个站点入站闸机数量  
+        ads_station_in_equ_num_top
+    每个站点出站闸机数量    
+        ads_station_out_equ_num_top
+【体现收入最多的车站】 出站交易收入排行榜   
+    ads_station_deal_day_top
+【体现收入最多的线路】 出站交易所在线路收入排行榜   
+    ads_line_deal_day_top
+【体现换乘比例、乘车体验】 每天每线路乘客联程标记的百分比     
+    ads_conn_ratio_day_top
+【体现每条线的深圳通乘车卡普及程度 9.5 折优惠】 出站交易优惠人数百分比排行榜     
+    ads_line_sale_ratio_top
+【体现线路拥挤程度】 上车以后还没下车，每分钟、小时每条线在线人数   
+    ads_on_line_min_top
+```
+
+第三步：建库建表  
+hdfs 关闭权限检查。hive 设置保存目录 /warehouse；  
+hue 创建 hue 用户，赋予超级组。hue 切换到 hue 用户，执行 hive sql 建库 szt；  
+库下面建目录 ods dwd dws ads；  
+
+上传原始数据到 /warehouse/szt.db/ods/  
+szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons  
+
+查看： `hdfs dfs -ls -h  hdfs://cdh231:8020/user/hive/warehouse/ods/`
+
+接下来按照 `.file/.sql/hive.sql` 执行  .....
+
+---
+
+- 已经完成的指标分析  
+    - 深圳地铁进站人次排行榜  
+
+![](.file/.pic/.ads/ads_in_station_day_top.png)
+
+![](.file/.pic/.ads/ads_in_station_day_top2.png)
+
+**☝依次为：五和、布吉、丹竹头  
+以上数据说明当天这几个站点进站人数最多。**  
+
+    - 深圳地铁出站人次排行榜  
+
+![](.file/.pic/.ads/ads_out_station_day_top.png)
+
+![](.file/.pic/.ads/ads_out_station_day_top2.png)
+
+**👆 出站乘客主要去向分别为：  
+深圳北高铁站、罗湖火车站、福田口岸。**
+
+    - 深圳地铁进出站总人次排行榜  
+
+![](.file/.pic/.ads/ads_in_out_station_day_top.png)
+
+**车站吞吐量排行榜：  
+五和站？？？、布吉站（深圳东火车站）、罗湖站（深圳火车站）、深圳北（深圳北高铁站）。。。  
+五和站为什么这么秀？？？  🚀**    
+
+    - 深圳地铁乘客车费排行榜  
+
+![](.file/.pic/.ads/ads_card_deal_day_top.png)
+
+**当天车费最高的乘客花了 48 元人民币  
+🚄🚄🚄 说明：深圳通地铁卡不记名，未涉及个人隐私！！！**  
+
+   - ....  
+    
+---
+
+## TODO🔔🔔🔔:
+- [x] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
+- [x] 推送 kafka，使用队列传输数据；
+- [x] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
+- [x] 数仓建模：ODS、DWD、DWS、ADS
+- [ ] 开放卡号查数据 REST API，提供卡号查询接口，返回数据库的刷卡记录； 
+- [ ] hive 分析，oozie 调度；    
+- [ ] flink 流式实时分析早晚高峰站点压力排行；  
+- [ ] spark 微批处理。。。
+- [ ] DataV 可视化大屏展示；  
+
+---
+
+## 更新日志🌥：
+- 2020-04-17  
+    - 修正错别字；  
+    - 发布v0.12;  
+    
+- 2020-04-16
+    - 重构项目；
+    - 补充文档
+    - 发布v0.1 
+
+- 2020-04-15  
+    - 增加 common 模块，拆分解耦；
+    - 支持自动识别卡号明文和密文，一键互转，提供 REST API；  
+    - 修复 ES 时区导致的错误统计数量；
+    - Redis2Csv 实现了按天转换 csv 存盘；
+
+- 2020-04-14
+    - 重构；
+    - 完成 csv 格式文件的抽取；
+    - 添加 GPL-3 开源证书，鼓励开源分发；
+    - 添加徽标； 
+    - 完成写入 ES 数据库，添加时间映射,kibana 实时查看刷卡数据统计曲线的变化；
+    
+- 2020-04-13 
+    - 项目初始化；
+    - 完成数据源清洗去重，存到 redis；
+    - 完成 redis 查询 REST API 的开发；
+    - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗源数据；
+    - 完成 推送源数据到 kafka；
+
+    
+## 联系😪：
+欢迎交流技术，接头暗号`github`        
+![](.file/.pic/0-wexin.png)
+
+> 百度和谷歌能找到的问题就不要再问了！很累的😕😕😕
+
+## 补充💌💌💌：
+- 不开小密圈；
+- 不卖课、不卖教程；
+- 不求赞，不求粉；
+- 不发广告、不骚扰；
+- 不割韭菜
+
+> 坚持原则和底线。
+
+比心🤞🤞🤞  
+
+## 吐个槽🍦🍦🍦：
+程序员这辈子一定会遇到的三个问题：   
+
+- 乱码问题🌚；  
+- 时区不一致问题🌗；  
+- 软件版本不兼容问题❄；  
+
+## 教训：
+- 大数据程序员千万不能生产错误的数据，容忍程序运行失败、甚至没有输出数据，失败了可以跟踪原因，至少不会有脏数据。
+- 一旦数据错误，会影响后面的所有计算流程，甚至导致错误决策。
