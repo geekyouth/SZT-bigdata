@@ -151,20 +151,20 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ---
 
-####2.3- redis 查询，redis-cli 登录后执行 ` hget szt:pageJson 1 `   
+#### 2.3- redis 查询，redis-cli 登录后执行 ` hget szt:pageJson 1 `   
 或者 dbeaver 可视化查询：  
 ![](.file/.pic/redis-szt-pageJson.png)  
 
 ---
 
-####2.4- `cn.java666.etlspringboot.EtlSApp#main` 启动后，也可以用 knife4j 在线调试 REST API：  
+#### 2.4- `cn.java666.etlspringboot.EtlSApp#main` 启动后，也可以用 knife4j 在线调试 REST API：  
 ![](.file/.pic/api-1.png)   
 
 ![](.file/.pic/api-debug.png)   
 
 ---
 
-####2.5- `cn.java666.etlflink.source.MyRedisSourceFun#run` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
+#### 2.5- `cn.java666.etlflink.source.MyRedisSourceFun#run` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
 
 合格源数据示例：
 ```json
