@@ -99,7 +99,7 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 - Win10 IDEA 2019.3 旗舰版，JAVA|Scala 开发必备，集万般功能于一身；
 - Win10 DBeaver 企业版 6.3，秒杀全宇宙所有数据库客户端，几乎一切常用数据库都可以连，选好驱动是关键；
 - Win10 Sublime Text3，地表最强轻量级编辑器，光速启动，无限量插件，主要用来编辑零散文件、markdown 实时预览、写前端特别友好（虽然我不擅长🖐🖐🖐），速度快到完全不用担心软件跟不上你的手速；
-- 其他一些实用工具参考我的博客：<https://java666.cn/#/AboutMe>
+- 其他一些实用工具参考我的博客：<a href="https://java666.cn/#/AboutMe" target="_blank">https://java666.cn/#/AboutMe</a>
 - CentOS7 CDH-6.2 集群，包含如下组件，对应的主机角色和配置如图，集群至少需要40 GB 总内存，才可以满足基本使用，不差钱的前提下，RAM 当然是合理范围内越大越好啦，鲁迅都说“天下武功唯快不破”；我们的追求是越快越好；  
 
 ![](.file/.pic/0-cdh-view.png)   
@@ -136,32 +136,35 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ---
 
-1- 获取数据源的 appKey：https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
+### 1- 获取数据源的 appKey：
+    https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ---
 
-2- 调用 `cn.java666.etlspringboot.source.SZTData#saveData` 获取原始数据存盘 `/tmp/szt-data/szt-data-page.jsons`，核对数据量 1337，注意这里每条数据包含1000条子数据；
+### 2- 代码开发：
+
+#### 2.1- 调用 `cn.java666.etlspringboot.source.SZTData#saveData` 获取原始数据存盘 `/tmp/szt-data/szt-data-page.jsons`，核对数据量 1337，注意这里每条数据包含1000条子数据；
 
 ---
 
-3- 调用 `cn.java666.etlflink.sink.RedisSinkPageJson#main` 实现 etl 清洗，去除重复数据，redis 天然去重排序，保证数据干净有序，跑完后核对 redis 数据量 1337。
+#### 2.2- 调用 `cn.java666.etlflink.sink.RedisSinkPageJson#main` 实现 etl 清洗，去除重复数据，redis 天然去重排序，保证数据干净有序，跑完后核对 redis 数据量 1337。
 
 ---
 
-4- redis 查询，redis-cli 登录后执行 ` hget szt:pageJson 1 `   
+####2.3- redis 查询，redis-cli 登录后执行 ` hget szt:pageJson 1 `   
 或者 dbeaver 可视化查询：  
 ![](.file/.pic/redis-szt-pageJson.png)  
 
 ---
 
-5- `cn.java666.etlspringboot.EtlSApp#main` 启动后，也可以用 knife4j 在线调试 REST API：  
+####2.4- `cn.java666.etlspringboot.EtlSApp#main` 启动后，也可以用 knife4j 在线调试 REST API：  
 ![](.file/.pic/api-1.png)   
 
 ![](.file/.pic/api-debug.png)   
 
 ---
 
-6- `cn.java666.etlflink.source.MyRedisSourceFun#run` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
+####2.5- `cn.java666.etlflink.source.MyRedisSourceFun#run` 清洗数据发现 133.7 万数据中，有小部分源数据字段数为9，缺少两个字段：station、car_no；丢弃脏数据。
 
 合格源数据示例：
 ```json
@@ -196,11 +199,11 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 
 ---
 
-7- `cn.java666.etlflink.app.Redis2Kafka#main` 根据需求推送满足业务要求的源数据到 kafka，`topic-flink-szt-all` 保留了所有源数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的源数据 1266039 条。
+#### 2.6- `cn.java666.etlflink.app.Redis2Kafka#main` 根据需求推送满足业务要求的源数据到 kafka，`topic-flink-szt-all` 保留了所有源数据 1337000 条， `topic-flink-szt` 仅包含清洗合格的源数据 1266039 条。
 
 ---
 
-8- kafka-eagle 监控查看 topic，基于原版去掉了背景图，漂亮多了：  
+#### 2.7- kafka-eagle 监控查看 topic，基于原版去掉了背景图，漂亮多了：  
 ![](.file/.pic/kafka-eagle02.png)  
 
 ![](.file/.pic/kafka-eagle01.png)  
@@ -211,12 +214,12 @@ ksql 命令查询： `select * from "topic-flink-szt" where "partition" in (0) l
 
 ---
 
-9- `cn.java666.etlflink.app.Redis2Csv#main` 实现了 flink sink csv 格式文件，并且支持按天分块保存。  
+#### 2.8- `cn.java666.etlflink.app.Redis2Csv#main` 实现了 flink sink csv 格式文件，并且支持按天分块保存。  
 ![](.file/.pic/csv.png)
 
 ---
 
-10- `cn.java666.etlflink.app.Redis2ES#main`  实现了 ES 存储源数据。实现实时全文检索，实时跟踪深圳通刷卡数据。  
+#### 2.9- `cn.java666.etlflink.app.Redis2ES#main`  实现了 ES 存储源数据。实现实时全文检索，实时跟踪深圳通刷卡数据。  
 
 这个模块涉及技术细节比较多，如果没有 ES 使用经验，可以先做下功课，不然的话会很懵。  
 
@@ -270,7 +273,7 @@ ksql 命令查询： `select * from "topic-flink-szt" where "partition" in (0) l
 
 ---
 
-11- 查看 ES 数据库卡号，对比自己的深圳通地铁卡，逐渐发现了一些脱敏规律。  
+#### 2.10- 查看 ES 数据库卡号，对比自己的深圳通地铁卡，逐渐发现了一些脱敏规律。  
 日志当中卡号脱敏字段密文反解猜想：  
 由脱敏的密文卡号反推真实卡号，因为所有卡号密文当中没有J开头的数据，
 但是有A开头的数据，A != 0，而且出现了 BCDEFGHIJ 没有 K，所以猜想卡号映射关系如图！！！   
@@ -279,19 +282,19 @@ ksql 命令查询： `select * from "topic-flink-szt" where "partition" in (0) l
 
 ---
 
-12- `cn.java666.sztcommon.util.ParseCardNo#parse` 实现了支持自动识别卡号明文和密文、一键互转功能。 `cn.java666.etlspringboot.controller.CardController#get` 实现了卡号明文和密文互转 REST API。    
+#### 2.11- `cn.java666.sztcommon.util.ParseCardNo#parse` 实现了支持自动识别卡号明文和密文、一键互转功能。 `cn.java666.etlspringboot.controller.CardController#get` 实现了卡号明文和密文互转 REST API。    
 ![](.file/.pic/parse_no.png)  
 
 ---
 
-13- 搭建数仓：深圳地铁数仓建模  
+### 3- 搭建数仓：深圳地铁数仓建模  
 
-第一步，分析业务    
+#### 3.1- 第一步，分析业务    
 确定业务流程 ---> 声明粒度 ---> 确定维度 ---> 确定事实
 
 ![](.file/.doc/dim.png)   
    
-第二步，规划数仓结构  
+#### 3.2- 第二步，规划数仓结构  
 参考行业通用的数仓分层模式：ODS、DWD、DWS、ADS，虽然原始数据很简单，但是我们依然使用规范的流程设计数据仓库。   
 
 - 第一层：ODS 原始数据层  
@@ -322,10 +325,10 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 【体现进出站压力】 每站进出站人次排行榜      
 	ads_in_out_station_day_top
 【体现通勤车费最多】 每卡日消费排行      
-	ads_card_deal_day_top
+	ads_card_deal_day_top  
+【体现线路运输贡献度】 每线路单日运输乘客总次数排行榜，进站算一次，出站并且联程算一次     
+	ads_line_send_passengers_day_top  
 
-【体现线路运输贡献度】 每线路单日运输乘客总次数排行榜，直达乘客算一次，换乘乘客算一次   
-	ads_line_send_passengers_day_top
 【体现利用率最高的车站区间】 每日运输乘客最多的车站区间排行榜       
 	ads_stations_send_passengers_day_top
 【体现线路的平均通勤时间，运输效率】 每条线路单程直达乘客耗时平均值排行榜     
@@ -351,7 +354,7 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 	ads_on_line_min_top
 ```
 
-第三步：建库建表  
+#### 3.3- 第三步：建库建表计算指标  
 hdfs 关闭权限检查。hive 设置保存目录 /warehouse；  
 hue 创建 hue 用户，赋予超级组。hue 切换到 hue 用户，执行 hive sql 建库 szt；  
 库下面建目录 ods dwd dws ads；  
@@ -359,14 +362,15 @@ hue 创建 hue 用户，赋予超级组。hue 切换到 hue 用户，执行 hive
 上传原始数据到 /warehouse/szt.db/ods/  
 szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons  
 
-查看： `hdfs dfs -ls -h  hdfs://cdh231:8020/user/hive/warehouse/ods/`
+查看： `hdfs dfs -ls -h  hdfs://cdh231:8020/warehouse/szt.db/ods/`
 
 接下来按照 `.file/.sql/hive.sql` 执行  .....
 
 ---
 
-- 已经完成的指标分析  
-	- 深圳地铁进站人次排行榜  
+已经完成的指标分析：  
+
+##### 3.3.1 - 深圳地铁进站人次排行榜：  
 
 ![](.file/.pic/.ads/ads_in_station_day_top.png)
 
@@ -375,7 +379,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 **☝依次为：五和、布吉、丹竹头  
 以上数据说明当天这几个站点进站人数最多。**  
 
-	- 深圳地铁出站人次排行榜  
+##### 3.3.2 - 深圳地铁出站人次排行榜：  
 
 ![](.file/.pic/.ads/ads_out_station_day_top.png)
 
@@ -384,7 +388,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 **👆 出站乘客主要去向分别为：  
 深圳北高铁站、罗湖火车站、福田口岸。**
 
-	- 深圳地铁进出站总人次排行榜  
+##### 3.3.3- 深圳地铁进出站总人次排行榜：  
 
 ![](.file/.pic/.ads/ads_in_out_station_day_top.png)
 
@@ -392,15 +396,19 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 五和站？？？、布吉站（深圳东火车站）、罗湖站（深圳火车站）、深圳北（深圳北高铁站）。。。  
 五和站为什么这么秀？？？  🚀**    
 
-	- 深圳地铁乘客车费排行榜  
+##### 3.3.4- 深圳地铁乘客车费排行榜：  
 
 ![](.file/.pic/.ads/ads_card_deal_day_top.png)
 
 **当天车费最高的乘客花了 48 元人民币  
 🚄🚄🚄 说明：深圳通地铁卡不记名，未涉及个人隐私！！！**  
 
-   - ....  
-	
+##### 3.3.5- 深圳地铁各线路单日发送旅客排行榜：  
+
+![](.file/.pic/.ads/ads_line_send_passengers_day_top.png)
+
+**五号线客运量遥遥领先，龙岗线碾压一号线，心疼龙岗人民！😳**
+
 ---
 
 ## TODO🔔🔔🔔:
@@ -408,15 +416,28 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 - [x] 推送 kafka，使用队列传输数据；
 - [x] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
 - [x] 数仓建模：ODS、DWD、DWS、ADS
-- [ ] 开放卡号查数据 REST API，提供卡号查询接口，返回数据库的刷卡记录； 
-- [ ] hive 分析，oozie 调度；    
+- [x] hive on spark 数仓建模、分析计算；    
+- [ ] oozie 调度;  
 - [ ] flink 流式实时分析早晚高峰站点压力排行；  
 - [ ] spark 微批处理。。。
 - [ ] DataV 可视化大屏展示；  
+- [ ] 开放卡号查数据 REST API，提供卡号查询接口，返回数据库的刷卡记录； 
 
 ---
 
 ## 更新日志🌥：
+- 2020-04-20：
+	- 更新项目文档；  
+	- 自制项目 logo；  
+	- 继续写 SQL 计算新指标，本打算切到 hive 3.1 使用 TEZ 引擎，但是 hive on spark 速度已经很给力了，至少是 MR 引擎的 10 倍速度，先用着；  
+
+- 2020-04-19：
+	- vmware 虚拟机扩容时误删系统文件`rm -rf /usr/` 🥵，好在 HDFS、Kafka、ES 自带副本机制，而且大部分业务数据都是挂载到外部磁盘，所以重要数据和组件日志基本没丢。cdh 集群添加了新的节点；  
+	- 恢复工作环境，从 hive on MR 切换到 hive on spark；  
+
+- 2020-04-18：
+	- 规划数仓，搭建数仓环境；  
+
 - 2020-04-17  
 	- 修正错别字；  
 	- 发布v0.12;  

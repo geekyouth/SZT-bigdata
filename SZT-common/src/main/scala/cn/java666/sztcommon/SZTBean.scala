@@ -15,7 +15,7 @@ case class SZTBean(
 	company_name: String, 		//公司名称，线名						巴士集团|地铁七号线		
 	car_no: String, 			//车号								01563D|宽AGM26-27
 	station: String, 			//站名								74路|华强北
-	conn_mark: String, 			//联程标记							0|1
+	conn_mark: String, 			//联程标记							0 直达 |1 联程
 	deal_money: String, 		//实收金额，整数分值，优惠后			190
 	equ_no: String 				//闸机号								265030122
 )
