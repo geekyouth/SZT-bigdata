@@ -290,7 +290,7 @@ PARTITIONED BY(DAY string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATIO
 
 ---
 insert overwrite table ads_card_deal_day_top partition (day='2018-09-01')
-SELECT
+SELECT 
     t1.card_no,
     t1.deal_date_arr,
     t2.deal_sum,
@@ -299,16 +299,16 @@ SELECT
     t1.conn_mark_arr,
     t3.deal_m_sum,
     t1.equ_no_arr,
-    t1.`count`
-from
-    dws_card_record_day_wide as t1,
-    (SELECT card_no, sum(deal_v) OVER(PARTITION BY card_no) AS deal_sum FROM dws_card_record_day_wide LATERAL VIEW explode(deal_value_arr) tmp as deal_v )t2,
+    t1.`count` 
+from 
+    dws_card_record_day_wide as t1, 
+    (SELECT card_no, sum(deal_v) OVER(PARTITION BY card_no) AS deal_sum FROM dws_card_record_day_wide LATERAL VIEW explode(deal_value_arr) tmp as deal_v )t2, 
     (SELECT card_no, sum(deal_m) OVER(PARTITION BY card_no) AS deal_m_sum FROM dws_card_record_day_wide LATERAL VIEW explode(deal_money_arr) tmp as deal_m )t3
-
-WHERE t1.day='2018-09-01'  AND
+    
+    WHERE t1.day='2018-09-01'  AND
     t1.card_no = t2.card_no AND
     t2.card_no = t3.card_no
-ORDER BY t2.deal_sum DESC--ok
+    ORDER BY t2.deal_sum DESC--ok
 ;--ok
 
 SELECT * from ads_card_deal_day_top LIMIT 100;
@@ -316,17 +316,81 @@ SELECT * from ads_card_deal_day_top LIMIT 100;
 SELECT card_no, sum(deal_v) OVER(PARTITION BY card_no) AS deal_sum
 FROM dws_card_record_day_wide LATERAL VIEW explode(deal_value_arr) tmp as deal_v ORDER BY deal_sum DESC;--ok
 
-SELECT sum(c1) FROM
-    dws_card_record_day_wide LATERAL VIEW explode(deal_value_arr) tmp as c1
+SELECT sum(c1) FROM 
+dws_card_record_day_wide LATERAL VIEW explode(deal_value_arr) tmp as c1
 WHERE card_no='HHAAJICJB';--ok
 
 -- 分组
-SELECT
-    card_no,
-    sum(deal_value) OVER(PARTITION BY card_no) as deal_sum
-FROM
-    dwd_fact_szt_out_detail
+SELECT 
+card_no,
+sum(deal_value) OVER(PARTITION BY card_no) as deal_sum
+FROM 
+dwd_fact_szt_out_detail 
 ORDER BY deal_sum desc
 ;--ok
 -----------------------------
 
+SELECT collect_set(company_name) FROM dwd_fact_szt_out_detail; 
+--["地铁一号线","地铁四号线","地铁九号线","地铁五号线","地铁十一号线","地铁二号线","地铁三号线","地铁七号线"]
+
+-- ads_line_send_passengers_day_top
+DROP TABLE IF EXISTS ads_line_send_passengers_day_top;
+CREATE EXTERNAL TABLE ads_line_send_passengers_day_top(
+company_name String,
+`count` int
+)
+PARTITIONED BY(DAY STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/warehouse/szt.db/ads/ads_line_send_passengers_day_top';
+
+-- 查询 dwd_fact_szt_in_out_detail 进出站详情表 ，
+---------------------------------------------------------------------------
+-- 进站，线路 +1
+-- 出站直达，线路不加，-- 什么也不做
+-- 出站联程，线路 +1.
+--t1
+SELECT company_name,
+    deal_type,
+    conn_mark,
+    count(*) c
+FROM dwd_fact_szt_in_out_detail
+WHERE DAY = '2018-09-01' and deal_type='地铁入站'
+GROUP BY company_name,deal_type,conn_mark
+ORDER BY c DESC ;
+--LIMIT 10;
+
+--t2
+SELECT company_name,
+    deal_type,
+    conn_mark,
+    count(*) c
+FROM dwd_fact_szt_in_out_detail
+WHERE DAY = '2018-09-01' and deal_type='地铁出站' and conn_mark='1'
+GROUP BY company_name,deal_type,conn_mark
+ORDER BY c DESC ;
+
+--t3
+INSERT OVERWRITE TABLE ads_line_send_passengers_day_top PARTITION(DAY = '2018-09-01')
+SELECT t1.company_name,
+    t1.c+t2.c AS c
+FROM 
+    (SELECT company_name,
+        deal_type,
+        conn_mark,
+        count(*) c
+    FROM dwd_fact_szt_in_out_detail
+    WHERE DAY = '2018-09-01' and deal_type='地铁入站'
+    GROUP BY company_name,deal_type,conn_mark) 
+    t1,
+    
+    (SELECT company_name,
+        deal_type,
+        conn_mark,
+        count(*) c
+    FROM dwd_fact_szt_in_out_detail
+    WHERE DAY = '2018-09-01' and deal_type='地铁出站' and conn_mark='1'
+    GROUP BY company_name,deal_type,conn_mark) 
+    t2
+    
+WHERE t1.company_name=t2.company_name 
+ORDER BY c DESC ;
+
+select * from ads_line_send_passengers_day_top;
