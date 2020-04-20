@@ -27,7 +27,6 @@
 	<a href="https://github.com/geekyouth/SZT-bigdata/blob/master/LICENSE" >
 		<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-
 	<br/>
 	<a href="https://java666.cn" target="_blank">
 		<img src="https://img.shields.io/badge/博客：-https://java666.cn-red?style=for-the-badge">
