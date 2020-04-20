@@ -1,11 +1,41 @@
 # SZT-bigdata 深圳地铁大数据客流分析系统 🚇🚇🚇
 
-<p align="center">
-<img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata">
-<img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata">
-<img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata">
-<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata">
-</p>
+<div align="center">
+	<a href="https://github.com/geekyouth/SZT-bigdata" target="_blank">
+		<img src=".file/.doc/full-logo.png" alt="logo">
+	</a>
+</div>
+
+---
+
+<div align="center">
+	<a href="https://github.com/geekyouth/SZT-bigdata/stargazers" >   
+		<img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata?style=for-the-badge">
+	</a>	
+	<a href="https://github.com/geekyouth/SZT-bigdata/network/members" > 
+		<img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata?style=for-the-badge">
+	</a>	
+	<a href="https://github.com/geekyouth/SZT-bigdata/watchers" >
+		<img src="https://img.shields.io/github/watchers/geekyouth/SZT-bigdata?style=for-the-badge">
+	</a>	
+	<a href="https://github.com/geekyouth/SZT-bigdata/releases" >
+		<img src="https://img.shields.io/github/v/release/geekyouth/SZT-bigdata?style=for-the-badge">
+	</a>	
+	<a href="https://github.com/geekyouth/SZT-bigdata/issues" >  
+		<img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata?style=for-the-badge">
+	</a>	
+	<a href="https://github.com/geekyouth/SZT-bigdata/blob/master/LICENSE" >
+		<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata?style=for-the-badge">
+	</a>	
+
+	<br/>
+	<a href="https://java666.cn" target="_blank">
+		<img src="https://img.shields.io/badge/博客：-https://java666.cn-red?style=for-the-badge">
+	</a>
+</div>
+
+---
+
 
 
 ```
@@ -28,15 +58,15 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 ---     
 
 ## 核心技术栈 + 版本选择 + 点评 (持续更新)⚡：
-![](.file/.doc/0-stack.png)  
+![](.file/.doc/stack2.jpg)  
 
 - Java-1.8/Scala-2.11，生态丰富，轮子够多；   
 - Flink-1.10，流式业务、ETL 首选。发展势头如日中天，阿里巴巴背书，轻快灵活、健步如飞；就问你信不信马云？？？😚😚😚  
 - Redis-3.2，天然去重，自动排序，除了快还是快。廉价版硬盘实现同类产品 SSDB。Win10|CentOS7|Docker Redis-3.2 三选一，CentOS REPL yum 安装默认使用3.2版本；  
 - Kafka-2.1，消息队列业务解耦、流量消峰、订阅发布场景首选。最佳 CP：kafka-eagle-1.4.5，集生产、消费、Ksql、大屏、监控、报警于一身，同时监控 zk。其他我用过的 Kafka 监控组件最后都放弃了：  
-    - KafkaOffsetMonitor 问题太多，丑拒；  
-    - Kafka Manager，已更名为 CMAK，老外写的软件用起来就觉得很别扭，而且最高只兼容 Kafka 0.11，但是 Kafka 官方已经升级到 2.4 了啊喂；  
-    - 其他各种开源的 Kafka 监控基本都试过，一个能打的都没有。
+	- KafkaOffsetMonitor 问题太多，丑拒；  
+	- Kafka Manager，已更名为 CMAK，老外写的软件用起来就觉得很别扭，而且最高只兼容 Kafka 0.11，但是 Kafka 官方已经升级到 2.4 了啊喂；  
+	- 其他各种开源的 Kafka 监控基本都试过，一个能打的都没有。
 - Zookeeper-3.4.5，集群基础依赖，选举时 ID 越大越优势，通过会话机制维护各组件在线状态；  
 - CDH-6.2，解决了程序员最难搞的软件兼容性问题，全家桶服务一键安装；  
 - Docker-19，最快速度部署一款新软件，无侵入、无污染、快速扩容、服务打包。如果当前没有合适的运行环境，那么 docker 一定是首选；  
@@ -95,7 +125,7 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 ## 数据源🌍：
 - 深圳市政府数据开放平台，深圳通刷卡数据 133.7 万条【离线数据】，
 https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
-    
+	
 理论上可以当作实时数据，但是这个接口响应太慢了，如果采用 kafka 队列方式，也可以模拟出实时效果。 
 
 本项目采用离线 + 实时思路 多种方案处理。
@@ -137,31 +167,31 @@ https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
 合格源数据示例：
 ```json
 {
-    "deal_date": "2018-08-31 21:15:55",
-    "close_date": "2018-09-01 00:00:00",
-    "card_no": "CBHGDEEJB",
-    "deal_value": "0",
-    "deal_type": "地铁入站",
-    "company_name": "地铁五号线",
-    "car_no": "IGT-104",
-    "station": "布吉",
-    "conn_mark": "0",
-    "deal_money": "0",
-    "equ_no": "263032104"
+	"deal_date": "2018-08-31 21:15:55",
+	"close_date": "2018-09-01 00:00:00",
+	"card_no": "CBHGDEEJB",
+	"deal_value": "0",
+	"deal_type": "地铁入站",
+	"company_name": "地铁五号线",
+	"car_no": "IGT-104",
+	"station": "布吉",
+	"conn_mark": "0",
+	"deal_money": "0",
+	"equ_no": "263032104"
 }
 ```
 不合格的源数据示例：
 ```json
 {
-    "deal_date": "2018-09-01 05:24:22",
-    "close_date": "2018-09-01 00:00:00",
-    "card_no": "HHAAABGEH",
-    "deal_value": "0",
-    "deal_type": "地铁入站",
-    "company_name": "地铁一号线",
-    "conn_mark": "0",
-    "deal_money": "0",
-    "equ_no": "268005140"
+	"deal_date": "2018-09-01 05:24:22",
+	"close_date": "2018-09-01 00:00:00",
+	"card_no": "HHAAABGEH",
+	"deal_value": "0",
+	"deal_type": "地铁入站",
+	"company_name": "地铁一号线",
+	"conn_mark": "0",
+	"deal_money": "0",
+	"equ_no": "268005140"
 }
 ```
 
@@ -222,10 +252,10 @@ ksql 命令查询： `select * from "topic-flink-szt" where "partition" in (0) l
 ```json
 {
   "properties": {
-    "deal_date": {
-      "format": "yyyy-MM-dd HH:mm:ss",
-      "type": "date"
-    }
+	"deal_date": {
+	  "format": "yyyy-MM-dd HH:mm:ss",
+	  "type": "date"
+	}
   }
 }  
 ```
@@ -287,39 +317,39 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 - 第四层：ADS 业务指标层【待补充】  
 ```
 【体现进站压力】 每站进站人次排行榜      
-    ads_in_station_day_top
+	ads_in_station_day_top
 【体现出站压力】 每站出站人次排行榜      
-    ads_out_station_day_top
+	ads_out_station_day_top
 【体现进出站压力】 每站进出站人次排行榜      
-    ads_in_out_station_day_top
+	ads_in_out_station_day_top
 【体现通勤车费最多】 每卡日消费排行      
-    ads_card_deal_day_top
+	ads_card_deal_day_top
 
 【体现线路运输贡献度】 每线路单日运输乘客总次数排行榜，直达乘客算一次，换乘乘客算一次   
-    ads_line_send_passengers_day_top
+	ads_line_send_passengers_day_top
 【体现利用率最高的车站区间】 每日运输乘客最多的车站区间排行榜       
-    ads_stations_send_passengers_day_top
+	ads_stations_send_passengers_day_top
 【体现线路的平均通勤时间，运输效率】 每条线路单程直达乘客耗时平均值排行榜     
-    ads_line_single_ride_average_time_day_top
+	ads_line_single_ride_average_time_day_top
 【体现深圳地铁全市乘客平均通勤时间】 所有乘客从上车到下车间隔时间平均值    
-    ads_all_passengers_single_ride_spend_time_average
+	ads_all_passengers_single_ride_spend_time_average
 【体现通勤时间最长的乘客】 单日从上车到下车间隔时间排行榜     
-    ads_passenger_spend_time_day_top
+	ads_passenger_spend_time_day_top
 【体现车站配置】 每个站点进出站闸机数量排行榜
-    每个站点入站闸机数量  
-        ads_station_in_equ_num_top
-    每个站点出站闸机数量    
-        ads_station_out_equ_num_top
+	每个站点入站闸机数量  
+		ads_station_in_equ_num_top
+	每个站点出站闸机数量    
+		ads_station_out_equ_num_top
 【体现收入最多的车站】 出站交易收入排行榜   
-    ads_station_deal_day_top
+	ads_station_deal_day_top
 【体现收入最多的线路】 出站交易所在线路收入排行榜   
-    ads_line_deal_day_top
+	ads_line_deal_day_top
 【体现换乘比例、乘车体验】 每天每线路乘客联程标记的百分比     
-    ads_conn_ratio_day_top
+	ads_conn_ratio_day_top
 【体现每条线的深圳通乘车卡普及程度 9.5 折优惠】 出站交易优惠人数百分比排行榜     
-    ads_line_sale_ratio_top
+	ads_line_sale_ratio_top
 【体现线路拥挤程度】 上车以后还没下车，每分钟、小时每条线在线人数   
-    ads_on_line_min_top
+	ads_on_line_min_top
 ```
 
 第三步：建库建表  
@@ -337,7 +367,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 ---
 
 - 已经完成的指标分析  
-    - 深圳地铁进站人次排行榜  
+	- 深圳地铁进站人次排行榜  
 
 ![](.file/.pic/.ads/ads_in_station_day_top.png)
 
@@ -346,7 +376,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 **☝依次为：五和、布吉、丹竹头  
 以上数据说明当天这几个站点进站人数最多。**  
 
-    - 深圳地铁出站人次排行榜  
+	- 深圳地铁出站人次排行榜  
 
 ![](.file/.pic/.ads/ads_out_station_day_top.png)
 
@@ -355,7 +385,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 **👆 出站乘客主要去向分别为：  
 深圳北高铁站、罗湖火车站、福田口岸。**
 
-    - 深圳地铁进出站总人次排行榜  
+	- 深圳地铁进出站总人次排行榜  
 
 ![](.file/.pic/.ads/ads_in_out_station_day_top.png)
 
@@ -363,7 +393,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 五和站？？？、布吉站（深圳东火车站）、罗湖站（深圳火车站）、深圳北（深圳北高铁站）。。。  
 五和站为什么这么秀？？？  🚀**    
 
-    - 深圳地铁乘客车费排行榜  
+	- 深圳地铁乘客车费排行榜  
 
 ![](.file/.pic/.ads/ads_card_deal_day_top.png)
 
@@ -371,7 +401,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 🚄🚄🚄 说明：深圳通地铁卡不记名，未涉及个人隐私！！！**  
 
    - ....  
-    
+	
 ---
 
 ## TODO🔔🔔🔔:
@@ -389,35 +419,35 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ## 更新日志🌥：
 - 2020-04-17  
-    - 修正错别字；  
-    - 发布v0.12;  
-    
+	- 修正错别字；  
+	- 发布v0.12;  
+	
 - 2020-04-16
-    - 重构项目；
-    - 补充文档
-    - 发布v0.1 
+	- 重构项目；
+	- 补充文档
+	- 发布v0.1 
 
 - 2020-04-15  
-    - 增加 common 模块，拆分解耦；
-    - 支持自动识别卡号明文和密文，一键互转，提供 REST API；  
-    - 修复 ES 时区导致的错误统计数量；
-    - Redis2Csv 实现了按天转换 csv 存盘；
+	- 增加 common 模块，拆分解耦；
+	- 支持自动识别卡号明文和密文，一键互转，提供 REST API；  
+	- 修复 ES 时区导致的错误统计数量；
+	- Redis2Csv 实现了按天转换 csv 存盘；
 
 - 2020-04-14
-    - 重构；
-    - 完成 csv 格式文件的抽取；
-    - 添加 GPL-3 开源证书，鼓励开源分发；
-    - 添加徽标； 
-    - 完成写入 ES 数据库，添加时间映射,kibana 实时查看刷卡数据统计曲线的变化；
-    
+	- 重构；
+	- 完成 csv 格式文件的抽取；
+	- 添加 GPL-3 开源证书，鼓励开源分发；
+	- 添加徽标； 
+	- 完成写入 ES 数据库，添加时间映射,kibana 实时查看刷卡数据统计曲线的变化；
+	
 - 2020-04-13 
-    - 项目初始化；
-    - 完成数据源清洗去重，存到 redis；
-    - 完成 redis 查询 REST API 的开发；
-    - 完成 flink 自定义 source redis 的开发，并且更细粒度清洗源数据；
-    - 完成 推送源数据到 kafka；
+	- 项目初始化；
+	- 完成数据源清洗去重，存到 redis；
+	- 完成 redis 查询 REST API 的开发；
+	- 完成 flink 自定义 source redis 的开发，并且更细粒度清洗源数据；
+	- 完成 推送源数据到 kafka；
 
-    
+	
 ## 联系😪：
 欢迎交流技术，接头暗号`github`        
 ![](.file/.pic/0-wexin.png)
