@@ -21,9 +21,12 @@
 		<scala.binary.version>2.11</scala.binary.version>
 		<!--<flink.version>1.7.2</flink.version>-->
 		<flink.version>1.10.0</flink.version>
+		<spark.version>2.4.0</spark.version>
+		<!--<cdh.spark.version>2.4.0-cdh6.2.1</cdh.spark.version>-->
 		
 		<log4j.version>1.2.17</log4j.version>
 		<slf4j.version>1.7.15</slf4j.version>
+		<junit.version>4.12</junit.version>
 		
 		<spring-boot.version>2.1.13.RELEASE</spring-boot.version>
 	</properties>
@@ -31,6 +34,7 @@
 	<modules>
 		<module>SZT-ETL</module>
 		<module>SZT-common</module>
+		<module>SZT-spark-hive</module>
 	</modules>
 	
 </project>
