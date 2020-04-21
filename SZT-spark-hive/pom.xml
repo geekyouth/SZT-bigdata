@@ -16,8 +16,6 @@
 		Building Spark Applications | 6.2.x | Cloudera Documentation
 		https://docs.cloudera.com/documentation/enterprise/6/6.2/topics/spark_building.html
 		
-		java.lang.IllegalArgumentException: Compression codec com.hadoop.compression.lzo.LzoCodec not found. - 小象问答-hadoop,spark,storm,R,hive,hbase,redis,大数据问答社区
-		https://wenda.chinahadoop.cn/question/2983
 	</description>
 	
 	<dependencies>
