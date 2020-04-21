@@ -416,16 +416,24 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 - [x] 推送 kafka，使用队列传输数据；
 - [x] 存入 elasticsearch，使用全文检索实现实时搜索，kibana 可视化展示； 
 - [x] 数仓建模：ODS、DWD、DWS、ADS
-- [x] hive on spark 数仓建模、分析计算；    
-- [ ] oozie 调度;  
-- [ ] flink 流式实时分析早晚高峰站点压力排行；  
-- [ ] spark 微批处理。。。
+- [x] hive on spark 数仓建模、分析计算；  
+- [x] spark on hive，本地开发 spark 程序，操作远程 hive 数据库；  
+- [ ] oozie 调度，数据太少啊 嘤嘤嘤😮😮😮;  
+- [ ] 实时思路分析数据：flink 流式实时分析早晚高峰站点压力排行；  
+- [ ] 离线思路分析数据：spark 微批处理；
 - [ ] DataV 可视化大屏展示；  
 - [ ] 开放卡号查数据 REST API，提供卡号查询接口，返回数据库的刷卡记录； 
 
 ---
 
 ## 更新日志🌥：
+- 2020-04-22：
+	- 更新文档；  
+	
+- 2020-04-21:
+	- 新增模块：SZT-spark-hive，本地开发 spark 程序，操作远程 Hive 数据库；  
+	- Debug：spark on hive 本地开发，远程提交 yarn 踩坑，主要是为了缓解开发主机的压力；  
+
 - 2020-04-20：
 	- 更新项目文档；  
 	- 自制项目 logo；  
