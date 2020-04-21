@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "description": "Redact passwords from json files",
+      "trigger": "password",
+      "search": "\"password\"[ ]*:[ ]*\"[^\"]+\"",
+      "caseSensitive": false,
+      "replace": "\"password\": \"LOG-REDACTED\""
+    },
+    {
+      "description": "Redact password= and password:",
+      "trigger": "password",
+      "search": "password[:=][^ \"\\\\]+",
+      "caseSensitive": false,
+      "replace": "password=LOG-REDACTED"
+    },
+    {
+      "description": "Redact passwd= and passwd:",
+      "trigger": "passwd",
+      "search": "passwd[:=][^ \"\\\\]+",
+      "caseSensitive": false,
+      "replace": "passwd=LOG-REDACTED"
+    },
+    {
+      "description": "Redact pass= and pass:",
+      "trigger": "pass",
+      "search": "pass[:=][^ \"\\\\]+",
+      "caseSensitive": false,
+      "replace": "pass=LOG-REDACTED"
+    },
+    {
+      "description": "Redact PASSWORD,",
+      "trigger": "PASSWORD,",
+      "search": "PASSWORD,[^\"\\\\]+",
+      "caseSensitive": false,
+      "replace": "PASSWORD, LOG-REDACTED"
+    },
+    {
+      "description": "Redact secret= and secret:",
+      "trigger": "secret",
+      "search": "secret[:=][^ \"\\\\]+",
+      "caseSensitive": false,
+      "replace": "secret=LOG-REDACTED"
+    },
+    {
+      "description": "Credit Card numbers (with separator)",
+      "search": "\\d{4}[^\\w:]\\d{4}[^\\w:]\\d{4}[^\\w:]\\d{4}",
+      "caseSensitive": true,
+      "replace": "XXXX-XXXX-XXXX-XXXX"
+    },
+    {
+      "description": "Social Security numbers (with separator)",
+      "search": "\\d{3}[^\\w:]\\d{2}[^\\w:]\\d{4}",
+      "caseSensitive": true,
+      "replace": "XXX-XX-XXXX"
+    }
+  ]
+}
