@@ -409,6 +409,12 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 **五号线客运量遥遥领先，龙岗线碾压一号线，心疼龙岗人民！😳**
 
+##### 3.3.6- 深圳地铁每日运输乘客最多的区间排行榜：  
+
+![](.file/.pic/.ads/ads_stations_send.png)
+
+**👆前三名分别是：赤尾>华强北，福民>福田口岸，五和>深圳北**
+
 ---
 
 ## TODO🔔🔔🔔:
@@ -429,6 +435,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 ## 更新日志🌥：
 - 2020-04-22：
 	- 更新文档；  
+	- 完成新的指标计算任务：每日运输乘客最多的区间排行榜；  
 	
 - 2020-04-21:
 	- 新增模块：SZT-spark-hive，本地开发 spark 程序，操作远程 Hive 数据库；  
