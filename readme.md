@@ -364,7 +364,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 查看： `hdfs dfs -ls -h  hdfs://cdh231:8020/warehouse/szt.db/ods/`
 
-接下来按照 `.file/.sql/hive.sql` 执行  .....
+接下来使用 HUE 按照 `sql/hive.sql` 依次执行 HQL 语句.....  
 
 ---
 
