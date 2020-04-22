@@ -394,3 +394,121 @@ WHERE t1.company_name=t2.company_name
 ORDER BY c DESC ;
 
 select * from ads_line_send_passengers_day_top;
+
+
+-- 每日运输乘客最多的区间排行榜
+----------------------------------------------------------------------------------
+drop table if exists dws_in_out_sorted_card_date;
+create external table dws_in_out_sorted_card_date (
+card_no string,
+deal_date string,
+deal_type string,
+station string
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/dws/dws_in_out_sorted_card_date';
+
+insert overwrite table dws_in_out_sorted_card_date partition (day="2018-09-01")
+select 
+card_no,
+deal_date,
+deal_type,
+station
+from dwd_fact_szt_in_out_detail
+where day="2018-09-01"
+order by card_no, deal_date;
+
+----------------------------------------------------------------------------------
+drop table if exists temp02;
+create table temp02 as
+select
+card_no,
+deal_date,
+deal_type,
+station,
+concat_ws('@', deal_type, station) deal_type_station
+from dws_in_out_sorted_card_date;
+
+drop table if exists temp03;
+create table temp03 as
+select
+card_no,
+deal_date,
+deal_type_station,
+LEAD(deal_type_station,1) over(partition by card_no order by deal_date) as next_station
+from temp02;
+
+drop table if exists temp04;
+create table temp04 as
+select
+card_no,
+deal_type_station,
+next_station,
+concat_ws('>', deal_type_station, next_station) as station2station
+from
+temp03 where 
+substr(deal_type_station,0,4)='地铁入站'
+and 
+substr(next_station,0,4)='地铁出站'
+;
+
+drop table if exists temp05;
+create table temp05 as
+select 
+regexp_replace(station2station,'地铁入站@|地铁出站@','') short_stations
+from temp04;
+
+drop table if exists temp06;
+create table temp06 as
+select 
+short_stations,
+count(*) as `count`
+from temp05
+group by short_stations
+order by `count` desc;
+----------------------------------------------------------------------------------
+
+-- 合并
+drop table if exists ads_stations_send_passengers_day_top;
+create external table ads_stations_send_passengers_day_top(
+short_stations string,
+`count` int
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_stations_send_passengers_day_top';
+
+insert overwrite table ads_stations_send_passengers_day_top partition (day="2018-09-01")
+select 
+short_stations,
+count(*) as `count`
+from (
+    select 
+    regexp_replace(station2station,'地铁入站@|地铁出站@','') short_stations
+    from (
+        select
+        card_no,
+        deal_type_station,
+        next_station,
+        concat_ws('>', deal_type_station, next_station) as station2station
+        from (
+            select
+            card_no,
+            deal_date,
+            deal_type_station,
+            LEAD(deal_type_station,1) over(partition by card_no order by deal_date) as next_station
+            from (
+                select
+                card_no,
+                deal_date,
+                deal_type,
+                station,
+                concat_ws('@', deal_type, station) deal_type_station
+                from dws_in_out_sorted_card_date
+            ) temp02
+        ) temp03 where 
+        substr(deal_type_station,0,4)='地铁入站'
+        and 
+        substr(next_station,0,4)='地铁出站'
+    ) temp04
+) temp05
+group by short_stations
+order by `count` desc;
+----------------------------------------------------------------------------------
