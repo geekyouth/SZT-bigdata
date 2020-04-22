@@ -328,11 +328,11 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 	ads_card_deal_day_top  
 【体现线路运输贡献度】 每线路单日运输乘客总次数排行榜，进站算一次，出站并且联程算一次     
 	ads_line_send_passengers_day_top  
-
 【体现利用率最高的车站区间】 每日运输乘客最多的车站区间排行榜       
 	ads_stations_send_passengers_day_top
 【体现线路的平均通勤时间，运输效率】 每条线路单程直达乘客耗时平均值排行榜     
 	ads_line_single_ride_average_time_day_top
+
 【体现深圳地铁全市乘客平均通勤时间】 所有乘客从上车到下车间隔时间平均值    
 	ads_all_passengers_single_ride_spend_time_average
 【体现通勤时间最长的乘客】 单日从上车到下车间隔时间排行榜     
@@ -421,6 +421,13 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ---
 
+##### 3.3.7- 深圳地铁每条线路单程直达乘客耗时平均值排行榜：
+**2018-09-01，当天五号线单程直达乘客平均耗时1500s，约合25分钟，平均值最长的是 11号线，平均耗时 40 分钟**
+
+![](.file/.pic/.ads/ads_line_single_ride_average_time_day_top.png)
+
+---
+
 ## TODO🔔🔔🔔:
 - [x] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
 - [x] 推送 kafka，使用队列传输数据；
@@ -437,6 +444,9 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 ---
 
 ## 更新日志🌥：
+- 2020-04-23：
+	- 完成新的指标计算任务：深圳地铁每条线路单程直达乘客耗时平均值排行榜
+
 - 2020-04-22：
 	- 更新文档；  
 	- 完成新的指标计算任务：每日运输乘客最多的区间排行榜；  
