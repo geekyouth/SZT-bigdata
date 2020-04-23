@@ -1081,3 +1081,172 @@ where t1.company_name=t2.company_name
 order by ratio desc
 ;
 SELECT * from ads_line_sale_ratio_top;
+
+------------------------------------------------------------------------------------
+
+-------------------------------------------------------------
+-- 换乘时间最久的乘客排行榜
+
+-- 拼接单程，起始时间
+drop table if exists temp022;
+create table temp022 COMMENT '临时中间表，拼接单程:前缀：联程标记+# 起始时间戳+行程'
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp022'
+as select
+card_no,
+ts,
+deal_type,
+company_name,
+station,
+conn_mark,
+concat_ws('@',conn_mark, ts, deal_type, station) conn_ts_deal_type_station
+from dws_in_out_sorted_card_date_wide where day='2018-09-01'
+;
+
+-- 寻找下一程
+drop table if exists temp033;
+create table temp033 COMMENT '临时中间表，开窗寻找下一程'
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp033'
+as select
+card_no,
+ts,
+company_name,
+conn_mark,
+conn_ts_deal_type_station,
+LEAD(conn_ts_deal_type_station,1) over(partition by card_no order by ts) as conn_ts_next_station
+from temp022;
+
+select substr('0@1535760350@地铁入站@益田',3,10);
+
+-- 过滤合法行程，允许多程，添加联程字段
+drop table if exists temp044;
+create table temp044 COMMENT '临时中间表，过滤合法记录'
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp044'
+as select
+card_no,
+company_name,
+conn_mark,
+conn_ts_deal_type_station,
+conn_ts_next_station,
+substr(conn_ts_next_station,3,10)-substr(conn_ts_deal_type_station,3,10) as time_s
+from
+temp033 where 
+substr(conn_ts_deal_type_station ,14,4)='地铁入站'
+and 
+substr(conn_ts_next_station ,14,4)='地铁出站'
+;
+
+-- 创建行程表
+create external table dws_travel_info(
+card_no string,
+company_name string,
+conn_mark string,
+conn_ts_deal_type_station string,
+conn_ts_next_station string,
+time_s double
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/dws/dws_travel_info';
+
+insert overwrite table dws_travel_info partition (day="2018-09-01")
+select
+card_no,
+company_name,
+conn_mark,
+conn_ts_deal_type_station,
+conn_ts_next_station,
+substr(conn_ts_next_station,3,10)-substr(conn_ts_deal_type_station,3,10) as time_s
+from
+(
+    select
+    card_no,
+    ts,
+    company_name,
+    conn_mark,
+    conn_ts_deal_type_station,
+    LEAD(conn_ts_deal_type_station,1) over(partition by card_no order by ts) as conn_ts_next_station
+    from 
+    (
+        select
+        card_no,
+        ts,
+        deal_type,
+        company_name,
+        station,
+        conn_mark,
+        concat_ws('@',conn_mark, ts, deal_type, station) conn_ts_deal_type_station
+        from dws_in_out_sorted_card_date_wide where day='2018-09-01'
+    )
+    temp022
+)
+temp033 where 
+substr(conn_ts_deal_type_station ,14,4)='地铁入站'
+and 
+substr(conn_ts_next_station ,14,4)='地铁出站'
+;
+
+drop table if exists temp055;
+create table temp055
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp055'
+as select 
+card_no,
+company_name,
+substr(conn_ts_deal_type_station,19) pre_station,
+substr(conn_ts_next_station,19) last_station,
+time_s
+from temp044
+where 
+substr(conn_ts_next_station,1,1)='1' 
+order by time_s desc
+;
+
+
+select 
+card_no,
+company_name,
+pre_station,
+last_station,
+time_s
+from temp055
+where pre_station != last_station
+order by time_s desc
+;
+
+
+------------------------合并
+drop table if exists ads_conn_spend_time_top;
+CREATE EXTERNAL TABLE ads_conn_spend_time_top(
+card_no string,
+company_name STRING,
+pre_station string,
+last_station string,
+time_s double
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_conn_spend_time_top';
+
+insert overwrite table ads_conn_spend_time_top partition (day="2018-09-01")
+select 
+card_no,
+company_name,
+pre_station,
+last_station,
+time_s
+from 
+(
+    select 
+    card_no,
+    company_name,
+    substr(conn_ts_deal_type_station,19) pre_station,
+    substr(conn_ts_next_station,19) last_station,
+    time_s
+    from 
+    dws_travel_info where day='2018-09-01'
+    where 
+    substr(conn_ts_next_station,1,1)='1' 
+    order by time_s desc
+)
+temp055
+where pre_station != last_station
+order by time_s desc
+;
+
+select * from ads_conn_spend_time_top;
+------------------------------------------------------------------------------------
