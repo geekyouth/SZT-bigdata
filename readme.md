@@ -334,14 +334,15 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 	ads_line_single_ride_average_time_day_top
 【体现深圳地铁全市乘客平均通勤时间】 所有乘客从上车到下车间隔时间平均值    
 	ads_all_passengers_single_ride_spend_time_average
-
 【体现通勤时间最长的乘客】 单日从上车到下车间隔时间排行榜     
 	ads_passenger_spend_time_day_top
 【体现车站配置】 每个站点进出站闸机数量排行榜
-	每个站点入站闸机数量  
-		ads_station_in_equ_num_top
-	每个站点出站闸机数量    
-		ads_station_out_equ_num_top
+	每个站点入站闸机数量  		ads_station_in_equ_num_top
+	每个站点出站闸机数量    		ads_station_out_equ_num_top
+【体现各线路综合服务水平】 各线路进出站闸机数排行榜
+	各线路进站闸机数排行榜 		ads_line_in_equ_num_top.png
+	各线路出站闸机数排行榜 		ads_line_out_equ_num_top
+
 【体现收入最多的车站】 出站交易收入排行榜   
 	ads_station_deal_day_top
 【体现收入最多的线路】 出站交易所在线路收入排行榜   
@@ -447,6 +448,22 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 ![](.file/.pic/baiduMap1.png)
 
 ![](.file/.pic/.ads/ads_passenger_spend_time_day_top.png)
+
+---
+
+##### 3.3.10- 深圳地铁每个站点进出站闸机数量排行榜：
+**福田站双项第一**
+
+![](.file/.pic/.ads/ads_station_in_equ_num_top.png)
+![](.file/.pic/.ads/ads_station_out_equ_num_top.png)
+
+---
+
+##### 3.3.11- 深圳地铁每条线路进出站闸机数量排行榜：
+**深圳地铁一号线长脸了@_@，两个指标都是第一，港铁四号线全部垫底，后妈养的？？？**
+
+![](.file/.pic/.ads/ads_line_in_equ_num_top.png)
+![](.file/.pic/.ads/ads_line_out_equ_num_top.png)
 
 ---
 
