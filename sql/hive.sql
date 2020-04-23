@@ -857,3 +857,65 @@ order by time_s desc
 select * from ads_passenger_spend_time_day_top;
 -----------------------------------------------------------------
 
+-----------------------------------------------------------------
+
+--内部表 每个站点入站闸机数量  ads_station_in_equ_num_top
+--内部表 每个站点出站闸机数量  ads_station_out_equ_num_top
+
+drop table if exists ads_station_in_equ_num_top;
+create table ads_station_in_equ_num_top 
+row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_station_in_equ_num_top'
+as
+select company_name,station,
+count(distinct equ_no) c
+from dwd_fact_szt_in_detail
+group by company_name,station
+order by c desc
+;
+
+select * from ads_station_in_equ_num_top;
+
+
+drop table if exists ads_station_out_equ_num_top;
+create table ads_station_out_equ_num_top 
+row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_station_out_equ_num_top'
+as
+select company_name,station,
+count(distinct equ_no) c
+from dwd_fact_szt_out_detail
+group by company_name,station
+order by c desc
+;
+select * from ads_station_out_equ_num_top;
+
+-- 各线路进站闸机数统计排行榜
+drop table if exists ads_line_in_equ_num_top;
+create table ads_line_in_equ_num_top 
+row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_line_in_equ_num_top'
+as
+select 
+company_name,
+count(distinct equ_no) c
+from 
+dwd_fact_szt_in_detail 
+group by company_name
+order by c desc
+;
+
+select * from ads_line_in_equ_num_top;
+
+-- 各线路出站闸机数统计排行榜
+drop table if exists ads_line_out_equ_num_top;
+create table ads_line_out_equ_num_top 
+row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_line_out_equ_num_top'
+as
+select 
+company_name,
+count(distinct equ_no) c
+from 
+dwd_fact_szt_out_detail 
+group by company_name
+order by c desc
+;
+
+SELECT * from ads_line_out_equ_num_top;
