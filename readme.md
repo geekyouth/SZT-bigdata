@@ -350,7 +350,8 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 	ads_conn_ratio_day_top
 【体现每条线的深圳通乘车卡普及程度 9.5 折优惠】 出站交易优惠人数百分比排行榜     
 	ads_line_sale_ratio_top
-	
+【体现换乘的心酸】 换乘耗时最久的乘客排行榜	
+	ads_conn_spend_time_top
 【体现线路拥挤程度】 上车以后还没下车，每分钟、小时每条线在线人数   
 	ads_on_line_min_top
 ```
@@ -488,6 +489,14 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 ##### 3.3.14- 深圳地铁各线路直达乘客优惠人次百分比排行榜：  
 **目前可以确定的是，持有深圳通地铁卡可以享受9.5折优惠乘坐地铁，从统计结果看，2018-09-01当天，七号线使用地铁卡优惠的乘客人次占比最高，达到 90.36%，排名最低的是五号线，占比 84.3%**
 ![](.file/.pic/.ads/ads_line_sale_ratio_top.png)
+
+---
+
+##### 3.3.15- 深圳地铁换乘时间最久的乘客排行榜：  
+**统计过程发现难以理解的现象，有几个乘客进站以后，没有刷卡出站就换乘了公交车，于是出现了同一个地铁站进出站，但是标记为联程的记录**
+
+![](.file/.pic/WTF.png)
+![](.file/.pic/.ads/ads_conn_spend_time_top.png)
 
 ---
 
