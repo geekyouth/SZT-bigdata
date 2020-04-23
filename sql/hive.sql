@@ -919,3 +919,51 @@ order by c desc
 ;
 
 SELECT * from ads_line_out_equ_num_top;
+
+------------------------------------------------------------------------------------
+-- 车站收入排行榜 ads_station_deal_top
+
+drop table if exists ads_station_deal_top;
+create external table ads_station_deal_top(
+company_name string,
+station string,
+deal_money_sum double,
+deal_value_sum double
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_station_deal_top';
+
+insert overwrite table ads_station_deal_top partition (day="2018-09-01")
+select 
+company_name,
+station,
+sum(deal_money)/100 deal_money_sum,
+sum(deal_value)/100 deal_value_sum
+from dwd_fact_szt_out_detail
+where day='2018-09-01'
+group by company_name, station
+order by deal_money_sum desc
+;
+select * from ads_station_deal_top;
+
+-- 线路收入排行榜 ads_line_deal_top
+
+drop table if exists ads_line_deal_top;
+create external table ads_line_deal_top(
+company_name string,
+deal_money_sum double,
+deal_value_sum double
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_line_deal_top';
+
+insert overwrite table ads_line_deal_top partition (day="2018-09-01") 
+select 
+company_name,
+sum(deal_money)/100 deal_money_sum,
+sum(deal_value)/100 deal_value_sum
+from dwd_fact_szt_out_detail
+where day='2018-09-01'
+group by company_name
+order by deal_money_sum desc
+;
+select * from ads_line_deal_top;
+------------------------------------------------------------------------------------
