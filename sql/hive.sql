@@ -502,6 +502,7 @@ from (
                 station,
                 concat_ws('@', deal_type, station) deal_type_station
                 from dws_in_out_sorted_card_date
+                where day='2018-09-01'
             ) temp02
         ) temp03 where 
         substr(deal_type_station,0,4)='地铁入站'
@@ -562,6 +563,7 @@ station,
 conn_mark,
 concat_ws('@',ts, deal_type, station) ts_deal_type_station
 from dws_in_out_sorted_card_date_wide
+where day='2018-09-01'
 ;
 
 -- 寻找下一程
@@ -636,38 +638,39 @@ select
 company_name,
 avg(time_s) avg_time_s
 from (
-	select
-	card_no,
-	company_name,
-	ts_deal_type_station,
-	ts_next_station,
-	-- 求时差
-	substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
-	from (
-		select
-		card_no,
-		ts,
-		company_name,
-		conn_mark,
-		ts_deal_type_station,
-		LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
-		from (
-			select
-			card_no,
-			ts,
-			deal_type,
-			company_name,
-			station,
-			conn_mark,
-			concat_ws('@',ts, deal_type, station) ts_deal_type_station
-			from dws_in_out_sorted_card_date_wide
-			) temp02
-		) temp03 where 
-	substr(ts_deal_type_station ,12,4)='地铁入站'
-	and 
-	substr(ts_next_station ,12,4)='地铁出站'
-	and 
-	conn_mark ='0'
+  select
+  card_no,
+  company_name,
+  ts_deal_type_station,
+  ts_next_station,
+  -- 求时差
+  substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
+  from (
+    select
+    card_no,
+    ts,
+    company_name,
+    conn_mark,
+    ts_deal_type_station,
+    LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
+    from (
+      select
+      card_no,
+      ts,
+      deal_type,
+      company_name,
+      station,
+      conn_mark,
+      concat_ws('@',ts, deal_type, station) ts_deal_type_station
+      from dws_in_out_sorted_card_date_wide
+      where day='2018-09-01'
+      ) temp02
+    ) temp03 where 
+  substr(ts_deal_type_station ,12,4)='地铁入站'
+  and 
+  substr(ts_next_station ,12,4)='地铁出站'
+  and 
+  conn_mark ='0'
 ) temp04
 group by company_name
 order by avg_time_s 
@@ -677,39 +680,6 @@ order by avg_time_s
 -----------------------------------------------------------------------------------
 --所有乘客通勤时间平均值
 --ads_all_passengers_single_ride_spend_time_average
-
---建宽表
-drop table if exists dws_in_out_sorted_card_date_wide;
-create external table dws_in_out_sorted_card_date_wide (
-card_no string,
-deal_date string,
-ts string,
-deal_value string,
-deal_type string,
-company_name string,
-station string,
-conn_mark string,
-deal_money string,
-equ_no string
-)
-partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/dws/dws_in_out_sorted_card_date_wide';
-
-insert overwrite table dws_in_out_sorted_card_date_wide partition (day="2018-09-01")
-select 
-card_no,
-deal_date,
-unix_timestamp(deal_date) ts,
-deal_value,
-deal_type,
-company_name,
-station,
-conn_mark,
-deal_money,
-equ_no
-from dwd_fact_szt_in_out_detail
-where day="2018-09-01"
-order by card_no, deal_date;
-
 
 -- 拼接单程，起始时间
 drop table if exists temp02;
@@ -793,39 +763,97 @@ insert overwrite table ads_all_passengers_single_ride_spend_time_average partiti
 select 
 avg(time_s) all_avg_time_s
 from (
-	select
-	card_no,
-	company_name,
-	conn_mark,
-	ts_deal_type_station,
-	ts_next_station,
-	-- 求时差
-	substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
-	from (
-		select
-		card_no,
-		ts,
-		company_name,
-		conn_mark,
-		ts_deal_type_station,
-		LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
-		from (
-			select
-			card_no,
-			ts,
-			deal_type,
-			company_name,
-			station,
-			conn_mark,
-			concat_ws('@',ts, deal_type, station) ts_deal_type_station
-			from dws_in_out_sorted_card_date_wide where day='2018-09-01'
-			) temp02
-		) temp03 where 
-	substr(ts_deal_type_station ,12,4)='地铁入站'
-	and 
-	substr(ts_next_station ,12,4)='地铁出站'
+  select
+  card_no,
+  company_name,
+  conn_mark,
+  ts_deal_type_station,
+  ts_next_station,
+  -- 求时差
+  substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
+  from (
+    select
+    card_no,
+    ts,
+    company_name,
+    conn_mark,
+    ts_deal_type_station,
+    LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
+    from (
+      select
+      card_no,
+      ts,
+      deal_type,
+      company_name,
+      station,
+      conn_mark,
+      concat_ws('@',ts, deal_type, station) ts_deal_type_station
+      from dws_in_out_sorted_card_date_wide 
+      where day='2018-09-01'
+      ) temp02
+    ) temp03 where 
+  substr(ts_deal_type_station ,12,4)='地铁入站'
+  and 
+  substr(ts_next_station ,12,4)='地铁出站'
 ) temp04
 ;
 
 select * from ads_all_passengers_single_ride_spend_time_average;
 -----------------------------------------------------------------------------------
+
+
+--深圳地铁乘客单程通勤时间排行榜 ads_passenger_spend_time_day_top
+
+--合并 过滤合法行程+ ads 建表
+drop table if exists ads_passenger_spend_time_day_top;
+create external table ads_passenger_spend_time_day_top
+(
+  card_no string,
+  company_name string,
+  ts_deal_type_station string,
+  ts_next_station string,
+  time_s double
+)
+COMMENT '通勤时间排行榜倒序'
+partitioned by (day string) row format delimited fields terminated by ',' 
+location '/warehouse/szt.db/ads/ads_passenger_spend_time_day_top';
+
+insert overwrite table ads_passenger_spend_time_day_top partition (day='2018-09-01')
+select
+card_no,
+company_name,
+ts_deal_type_station,
+ts_next_station,
+substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
+from (
+  select
+  card_no,
+  ts,
+  company_name,
+  conn_mark,
+  ts_deal_type_station,
+  LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
+  from 
+  (
+    select
+    card_no,
+    ts,
+    deal_type,
+    company_name,
+    station,
+    conn_mark,
+    concat_ws('@',ts, deal_type, station) ts_deal_type_station
+    from dws_in_out_sorted_card_date_wide 
+    where day='2018-09-01'
+  ) temp02
+)
+temp03 where 
+substr(ts_deal_type_station ,12,4)='地铁入站'
+and 
+substr(ts_next_station ,12,4)='地铁出站'
+order by time_s desc
+;
+
+select * from ads_passenger_spend_time_day_top;
+-----------------------------------------------------------------
+
