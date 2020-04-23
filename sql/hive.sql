@@ -967,3 +967,117 @@ order by deal_money_sum desc
 ;
 select * from ads_line_deal_top;
 ------------------------------------------------------------------------------------
+-- 各线路换乘出站乘客百分比排行榜
+
+-- 各线路出站乘客统计
+SELECT 
+company_name,
+count(*) c1
+from dwd_fact_szt_out_detail
+where day='2018-09-01'
+GROUP BY company_name
+;--t1
+
+-- 各线路出站直达乘客统计
+SELECT 
+company_name,
+count(*) c2
+from dwd_fact_szt_out_detail
+where day='2018-09-01' and conn_mark='1'
+GROUP BY company_name
+;--t2
+
+
+-- 求比例，排序
+drop table if exists ads_conn_ratio_day_top;
+CREATE EXTERNAL TABLE ads_conn_ratio_day_top(
+company_name STRING,
+ratio DOUBLE
+)
+COMMENT '联程百分比'
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_conn_ratio_day_top';
+
+insert overwrite table ads_conn_ratio_day_top partition (day="2018-09-01")
+SELECT
+t1.company_name,
+t2.c2/t1.c1*100 rate
+from 
+(
+    SELECT 
+    company_name,
+    count(*) c1
+    from dwd_fact_szt_out_detail
+    where day='2018-09-01'
+    GROUP BY company_name
+) 
+t1 FULL join 
+(
+    SELECT 
+    company_name,
+    count(*) c2
+    from dwd_fact_szt_out_detail
+    where day='2018-09-01' and conn_mark='1'
+    GROUP BY company_name
+)
+t2 
+on t1.company_name=t2.company_name
+ORDER BY rate desc
+;
+
+SELECT * from ads_conn_ratio_day_top;
+------------------------------------------------------------------------------------
+
+---各线路车费优惠人次百分比
+
+-- 各线路出站乘客统计
+SELECT 
+company_name,
+count(*) c1
+from dwd_fact_szt_out_detail
+where day='2018-09-01'
+GROUP BY company_name
+;--t1
+
+-- 各线路直达出站并且享受优惠的人数
+SELECT 
+company_name,
+count( if(deal_value - deal_money=0,null,1) ) sale_count
+from dwd_fact_szt_out_detail
+where day='2018-09-01' and conn_mark='0'
+GROUP BY company_name
+;--t2
+
+-------------------------
+drop table if exists ads_line_sale_ratio_top;
+CREATE EXTERNAL TABLE ads_line_sale_ratio_top(
+company_name STRING,
+ratio DOUBLE
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_line_sale_ratio_top';
+
+insert overwrite table ads_line_sale_ratio_top partition (day="2018-09-01")
+SELECT t1.company_name,
+t2.sale_count/t1.c1*100 ratio
+from 
+(
+    SELECT 
+    company_name,
+    count(*) c1
+    from dwd_fact_szt_out_detail
+    where day='2018-09-01'
+    GROUP BY company_name
+)
+t1,
+(
+    SELECT 
+    company_name,
+    count( if(deal_value - deal_money=0,null,1) ) sale_count
+    from dwd_fact_szt_out_detail
+    where day='2018-09-01' and conn_mark='0'
+    GROUP BY company_name
+)
+t2
+where t1.company_name=t2.company_name
+order by ratio desc
+;
+SELECT * from ads_line_sale_ratio_top;
