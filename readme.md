@@ -332,9 +332,9 @@ dws_card_record_day_wide  每卡每日行程记录宽表【单卡单日所有出
 	ads_stations_send_passengers_day_top
 【体现线路的平均通勤时间，运输效率】 每条线路单程直达乘客耗时平均值排行榜     
 	ads_line_single_ride_average_time_day_top
-
 【体现深圳地铁全市乘客平均通勤时间】 所有乘客从上车到下车间隔时间平均值    
 	ads_all_passengers_single_ride_spend_time_average
+
 【体现通勤时间最长的乘客】 单日从上车到下车间隔时间排行榜     
 	ads_passenger_spend_time_day_top
 【体现车站配置】 每个站点进出站闸机数量排行榜
@@ -428,6 +428,13 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ---
 
+##### 3.3.8- 深圳地铁所有乘客通勤时间平均值：
+**2018-09-01，当天所有乘客通勤时间平均值 1791 s，约合 30 分钟**
+
+![](.file/.pic/.ads/ads_all_passengers_single_ride_spend_time_average.png)
+
+---
+
 ## TODO🔔🔔🔔:
 - [x] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
 - [x] 推送 kafka，使用队列传输数据；
@@ -445,7 +452,8 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ## 更新日志🌥：
 - 2020-04-23：
-	- 完成新的指标计算任务：深圳地铁每条线路单程直达乘客耗时平均值排行榜
+	- 完成新的指标计算任务：深圳地铁每条线路单程直达乘客耗时平均值排行榜；  
+	- 完成新的指标计算任务：深圳地铁所有乘客通勤时间平均值；   
 
 - 2020-04-22：
 	- 更新文档；  
