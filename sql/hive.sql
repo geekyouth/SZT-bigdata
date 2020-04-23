@@ -678,7 +678,38 @@ order by avg_time_s
 --所有乘客通勤时间平均值
 --ads_all_passengers_single_ride_spend_time_average
 
-----------------------------------------------------------------------------------
+--建宽表
+drop table if exists dws_in_out_sorted_card_date_wide;
+create external table dws_in_out_sorted_card_date_wide (
+card_no string,
+deal_date string,
+ts string,
+deal_value string,
+deal_type string,
+company_name string,
+station string,
+conn_mark string,
+deal_money string,
+equ_no string
+)
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/dws/dws_in_out_sorted_card_date_wide';
+
+insert overwrite table dws_in_out_sorted_card_date_wide partition (day="2018-09-01")
+select 
+card_no,
+deal_date,
+unix_timestamp(deal_date) ts,
+deal_value,
+deal_type,
+company_name,
+station,
+conn_mark,
+deal_money,
+equ_no
+from dwd_fact_szt_in_out_detail
+where day="2018-09-01"
+order by card_no, deal_date;
+
 
 -- 拼接单程，起始时间
 drop table if exists temp02;

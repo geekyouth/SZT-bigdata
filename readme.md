@@ -366,6 +366,12 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 接下来使用 HUE 按照 `sql/hive.sql` 依次执行 HQL 语句.....  
 
+> 也可以使用 IDEA Database 工具栏操作，附送idea cdh hive 完美驱动 <https://github.com/timveil/hive-jdbc-uber-jar/releases>：  
+![](.file/.pic/idea-dev+hive.png)
+
+> 也可以使用 DBeaver （我只想说， 上古产品 Sqlyog、navicat、heidisql、workbench 全都是战五渣），因为有时候复杂的查询可以一边执行一边在另一个客户端工具查看结果，这对于复杂的嵌套查询 debug 非常有助于分析和跟踪问题。DBeaver 客户端自带图表，不过没有 HUE 好看：   
+![](.file/.pic/dbeaver-dev+hive.png)
+
 ---
 
 已经完成的指标分析：  
