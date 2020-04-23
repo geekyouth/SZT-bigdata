@@ -672,3 +672,129 @@ from (
 group by company_name
 order by avg_time_s 
 ;
+
+
+-----------------------------------------------------------------------------------
+--所有乘客通勤时间平均值
+--ads_all_passengers_single_ride_spend_time_average
+
+----------------------------------------------------------------------------------
+
+-- 拼接单程，起始时间
+drop table if exists temp02;
+create table temp02 COMMENT '临时中间表，拼接单程+起始时间戳'
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp02'
+as select
+card_no,
+ts,
+deal_type,
+company_name,
+station,
+conn_mark,
+concat_ws('@',ts, deal_type, station) ts_deal_type_station
+from dws_in_out_sorted_card_date_wide where day='2018-09-01'
+;
+
+-- 寻找下一程
+drop table if exists temp03;
+create table temp03 COMMENT '临时中间表，开窗寻找下一程'
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp03'
+as select
+card_no,
+ts,
+company_name,
+conn_mark,
+ts_deal_type_station,
+LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
+from temp02;
+
+
+select substr('1535767701@地铁出站@少年宫',0,10);
+select substr('1535767701@地铁出站@少年宫',11,1);
+select substr('1535765725@地铁入站@向西村',12,4);
+select substr('1535767701@地铁出站@少年宫',0,10)-substr('1535765725@地铁入站@向西村',0,10) as time_s;
+-- 过滤合法行程，允许多程，添加联程字段
+drop table if exists temp04;
+create table temp04 COMMENT '临时中间表，过滤合法记录'
+row format delimited fields terminated by ',' location '/warehouse/szt.db/temp/temp04'
+as select
+card_no,
+company_name,
+conn_mark,
+ts_deal_type_station,
+ts_next_station,
+-- 求时差
+substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
+from
+temp03 where 
+substr(ts_deal_type_station ,12,4)='地铁入站'
+and 
+substr(ts_next_station ,12,4)='地铁出站'
+;
+
+
+-- 全表求平均
+drop table if exists ads_all_passengers_single_ride_spend_time_average;
+create external table ads_all_passengers_single_ride_spend_time_average (
+all_avg_time_s double
+)COMMENT '所有乘客通勤时间平均值'
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_all_passengers_single_ride_spend_time_average';
+
+insert overwrite table ads_all_passengers_single_ride_spend_time_average partition (day="2018-09-01")
+select 
+avg(time_s) all_avg_time_s
+from temp04
+;
+
+select * from ads_all_passengers_single_ride_spend_time_average;
+----------------------------------------------------------------------------------
+-- 合并，注意这里有一些可以复用的临时表
+
+drop table if exists ads_all_passengers_single_ride_spend_time_average;
+create external table ads_all_passengers_single_ride_spend_time_average (
+all_avg_time_s double
+)COMMENT '所有乘客通勤时间平均值'
+partitioned by(day string) row format delimited fields terminated by ',' location '/warehouse/szt.db/ads/ads_all_passengers_single_ride_spend_time_average';
+
+SET hive.load.dynamic.partitions.thread=15;
+
+insert overwrite table ads_all_passengers_single_ride_spend_time_average partition (day="2018-09-01")
+select 
+avg(time_s) all_avg_time_s
+from (
+	select
+	card_no,
+	company_name,
+	conn_mark,
+	ts_deal_type_station,
+	ts_next_station,
+	-- 求时差
+	substr(ts_next_station,0,10)-substr(ts_deal_type_station,0,10) as time_s
+	from (
+		select
+		card_no,
+		ts,
+		company_name,
+		conn_mark,
+		ts_deal_type_station,
+		LEAD(ts_deal_type_station,1) over(partition by card_no order by ts) as ts_next_station
+		from (
+			select
+			card_no,
+			ts,
+			deal_type,
+			company_name,
+			station,
+			conn_mark,
+			concat_ws('@',ts, deal_type, station) ts_deal_type_station
+			from dws_in_out_sorted_card_date_wide where day='2018-09-01'
+			) temp02
+		) temp03 where 
+	substr(ts_deal_type_station ,12,4)='地铁入站'
+	and 
+	substr(ts_next_station ,12,4)='地铁出站'
+) temp04
+;
+
+select * from ads_all_passengers_single_ride_spend_time_average;
+-----------------------------------------------------------------------------------
