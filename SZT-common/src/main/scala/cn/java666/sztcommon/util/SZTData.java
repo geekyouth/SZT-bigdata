@@ -1,4 +1,4 @@
-package cn.java666.etlspringboot.source;
+package cn.java666.sztcommon.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
