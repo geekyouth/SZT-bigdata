@@ -1,0 +1,5 @@
+深圳通地铁线路+车站数据：szmc.net-metro.json
+https://www.szmc.net/styles/index/sz-subway/mcdata/shenzhen.json
+
+深圳通地铁线路查询+换乘方案：.file/.api/szmc/search.http
+https://www.szmc.net/algorithm/Ticketing/MinTimeJson.do
