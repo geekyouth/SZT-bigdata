@@ -1,0 +1,89 @@
+{
+	"adultSZT": 4.75,
+	"buslist": [
+		{
+			"segmentlist": [
+				{
+					"busid": "440300024064",
+					"endname": "会展中心",
+					"passdepotname": "老街 大剧院 科学馆 华强路 岗厦",
+					"startname": "国贸"
+				},
+				{
+					"busid": "440300024075",
+					"endname": "白石龙",
+					"passdepotname": "会展中心 市民中心 少年宫 莲花北 上梅林 民乐 白石龙",
+					"startname": "会展中心"
+				}
+			]
+		}
+	],
+	"childSZT": 2.5,
+	"count": "1",
+	"lineList": [
+		{
+			"arriveStation": "会展中心站",
+			"code": "0108",
+			"departureStation": "国贸站",
+			"endTime": "23:52",
+			"firstTime": "06:28",
+			"highNterval": "2分45秒",
+			"line": "01",
+			"lineName": "罗宝线",
+			"nextStation": "老街站",
+			"passdepotname": "国贸|老街|大剧院|科学馆|华强路|岗厦|会展中心",
+			"shortNterval": "5分30秒",
+			"stationNO": 6,
+			"terminus": "机场东站",
+			"transferDistance": "100",
+			"transferTime": "30",
+			"travelTime": 580,
+			"zhandianwanzhi": "guomao.html"
+		},
+		{
+			"arriveStation": "白石龙站",
+			"code": "0409",
+			"departureStation": "会展中心站",
+			"endTime": "23:12",
+			"firstTime": "06:42",
+			"highNterval": "6分钟",
+			"line": "04",
+			"lineName": "龙华线",
+			"nextStation": "市民中心站",
+			"passdepotname": "会展中心|市民中心|少年宫|莲花北|上梅林|民乐|白石龙",
+			"shortNterval": "6分钟",
+			"stationNO": 6,
+			"terminus": "清湖站",
+			"transferDistance": "1",
+			"transferTime": "1",
+			"travelTime": 910,
+			"zhandianwanzhi": "4hxhuizhanzhongxin.html"
+		},
+		{
+			"arriveStation": "",
+			"code": "",
+			"departureStation": "",
+			"endTime": "",
+			"firstTime": "",
+			"highNterval": "",
+			"line": "xx",
+			"lineName": "",
+			"nextStation": "",
+			"passdepotname": "",
+			"shortNterval": "",
+			"stationNO": 0,
+			"terminus": "",
+			"transferDistance": "",
+			"transferTime": "",
+			"travelTime": 0,
+			"zhandianwanzhi": "baishilong.html"
+		}
+	],
+	"qidiancode": "0102",
+	"starStation": "国贸站",
+	"terminus": "白石龙站",
+	"ticketPrice": 5,
+	"times": 1,
+	"useTime": 1616,
+	"zhondiancode": "0409"
+}

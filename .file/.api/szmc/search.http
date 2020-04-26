@@ -1,0 +1,16 @@
+### 深圳地铁官网线路规划查询接口
+
+### 最小化查询
+POST https://www.szmc.net/algorithm/Ticketing/MinTimeJson.do
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+departureStation=0102&arriveStation=0409&ridingType=0
+
+
+### 错误示例
+POST https://www.szmc.net/algorithm/Ticketing/MinTimeJson.do
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+departureStation=0103&arriveStation=0310&ridingType=0
+
+###
