@@ -1250,3 +1250,67 @@ order by time_s desc
 
 select * from ads_conn_spend_time_top;
 ------------------------------------------------------------------------------------
+
+--------------------------------------- 孖岭
+drop table if exists ods_line_station;
+create table ods_line_station
+(
+    line_no         string comment '线路编号',
+    line_name       string comment '线路名称',
+    station_no      string comment '车站编号',
+    station_name    string comment '车站名称',
+    line_station_id string comment '线站唯一名称'
+) comment '线站详情表|孖岭|szmc.net-metro.csv' row format delimited fields terminated by ',' location '/warehouse/szt.db/ods/ods_line_station';
+load data inpath '/warehouse/szt.db/ods/szmc.net-metro.csv' overwrite into table ods_line_station;
+
+select * from ods_line_station;
+
+----------------------------------------------------------------------------
+-- 线路规划表，指定必要字段
+drop table if exists ods_travel_plan;
+create table ods_travel_plan
+(
+    start_station_id string comment '始发站 id|qidiancode',
+    end_station_id   string comment '终到站 id|zhondiancode',
+    switch_counts    string comment '换乘次数|times',
+    tralev_all       string comment '所有行程'
+) comment '线路规划、换乘方案，来自深圳地铁官网，45932 条|MiniTime.jsons -->45932 csv' 
+    row format delimited fields terminated by '\t' location '/warehouse/szt.db/ods/ods_travel_plan';
+
+load data inpath '/warehouse/szt.db/ods/travel_plan.csv' overwrite into table ods_travel_plan;
+select * from ods_travel_plan;
+
+select get_json_object(tralev_all, "$.[0,1,2].next_sid") 
+from ods_travel_plan limit 1000,1050;
+
+select start_station_id, 
+       end_station_id, 
+       switch_counts,
+       get_json_object( tralev_all, "$.[0,1,2,3,4,5].travel_time") travel_time,
+       get_json_object( tralev_all, "$.[0,1,2,3,4,5].switch_time") switch_time,
+       get_json_object( tralev_all, "$.[0:5:1].next_sid")          next_sid,
+       get_json_object( tralev_all, "$.[0].next_sid")              next_sid1,
+       get_json_object( tralev_all, "$.[0::1].next_sid")           next_sid2
+from ods_travel_plan limit 1000,1100;
+
+------------------------------------------------------------------------------------------------------
+-- 合并 ods_line_station + ods_travel_plan ---> dwd_travel_plan_detail
+drop table if exists dwd_travel_plan_detail;
+
+drop table if exists dwd_travel_plan_detail;
+create table dwd_travel_plan_detail row format delimited fields terminated by '\t' location '/warehouse/szt.db/dwd/dwd_travel_plan_detail' as
+select start_station_id,
+       line1.station_name as start_station_name,
+       end_station_id,
+       line2.station_name as end_station_name,
+       switch_counts,
+       tralev_all
+from ods_line_station as line1,
+     ods_travel_plan as plan,
+     ods_line_station as line2
+where line1.line_station_id =
+      plan.start_station_id
+  and plan.end_station_id =
+      line2.line_station_id;
+-- 所有换乘方案
+select * from dwd_travel_plan_detail;
