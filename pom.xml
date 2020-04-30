@@ -36,7 +36,7 @@
 		<module>SZT-ETL</module>
 		<module>SZT-common</module>
 		<module>SZT-spark-hive</module>
-		<module>SZT-hbase</module>
+		<module>SZT-kafka-hbase</module>
 	</modules>
 	
 </project>
