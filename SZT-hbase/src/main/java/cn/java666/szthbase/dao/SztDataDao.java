@@ -1,5 +1,6 @@
 package cn.java666.szthbase.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
@@ -31,6 +32,7 @@ import static cn.java666.szthbase.constants.SztEnum.SZT_TABLE_NAME;
 
 // 赋值给静态成员变量
 // @Component
+@Slf4j
 @Repository
 public class SztDataDao {
 	
@@ -83,7 +85,7 @@ public class SztDataDao {
 	public void createTable(String tableName, Integer versions, String... families) throws IOException {
 		Admin admin = connection.getAdmin();
 		if (admin.tableExists(TableName.valueOf(tableName))) {
-			System.err.println("table [" + tableName + "] 已存在");
+			log.warn("table [{}] 已存在", tableName);
 			admin.close();
 			return;
 		}
