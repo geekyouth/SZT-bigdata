@@ -9,14 +9,14 @@
 		<version>0.1</version>
 	</parent>
 	
-	<artifactId>SZT-hbase</artifactId>
+	<artifactId>SZT-kafka-hbase</artifactId>
 	
 	<description>
-		SZT-hbase project for Spring Boot2
+		SZT-kafka-hbase project for Spring Boot2
 		看过开源的 spring-boot-starter-hbase、spring-data-hadoop-hbase，
 		基础依赖过于老旧，长期不更新；引入过程繁琐，而且 API 粒度受限；数据库连接没有复用，导致数据库服务读写成本太高。
 		
-		于是自己实现了 hbase-2.1 + springboot-2.1.13 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
+		于是自己实现了 hbase-2.1 + springboot-2.1.13 + kafka-2.0 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
 	</description>
 	
 	<properties>
@@ -83,6 +83,12 @@
 					<groupId>org.slf4j</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<!-- kafka -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
 		</dependency>
 		
 	</dependencies>
