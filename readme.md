@@ -507,15 +507,50 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 - [x] 数仓建模：ODS、DWD、DWS、ADS
 - [x] hive on spark 数仓建模、分析计算；  
 - [x] spark on hive，本地开发 spark 程序，操作远程 hive 数据库；  
-- [ ] oozie 调度，数据太少啊 嘤嘤嘤😮😮😮;  
+- [-] ~~oozie 调度，数据太少啊 嘤嘤嘤~~😮😮😮;  
 - [ ] 实时思路分析数据：flink 流式实时分析早晚高峰站点压力排行；  
 - [ ] 离线思路分析数据：spark 微批处理；
 - [ ] DataV 可视化大屏展示；  
-- [ ] 开放卡号查数据 REST API，提供卡号查询接口，返回数据库的刷卡记录； 
 
 ---
 
 ## 更新日志🌥：
+- 2020-04-27：  
+	- 彻底的解决了静态资源无法热部署的问题；  
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-devtools</artifactId>
+	<scope>runtime</scope>
+	<optional>true</optional>
+</dependency>
+
+######################### 实时热部署 ###################################
+#"关闭缓存, 即时刷新"
+spring.freemarker.cache=false
+spring.thymeleaf.cache=false
+
+#热部署生效
+spring.devtools.restart.enabled=true
+#是否支持livereload
+spring.devtools.livereload.enabled=true
+#设置重启的目录,添加那个目录的文件需要restart
+spring.devtools.restart.additional-paths=src/main/*
+#设置不需要重启的目录
+#spring.devtools.restart.exclude=static/**,public/**
+```
+
+- 202-04-27:  
+	- 完成所有线路规划+换乘方案的抓取入库，合计 45932 条；  
+	- 解决了 hive 注释乱码问题；  
+```
+alter table COLUMNS_V2 modify column COMMENT varchar(256) character set utf8;
+alter table TABLE_PARAMS modify column PARAM_VALUE varchar(4000) character set utf8;
+alter table PARTITION_PARAMS  modify column PARAM_VALUE varchar(4000) character set utf8;
+alter table PARTITION_KEYS  modify column PKEY_COMMENT varchar(4000) character set utf8;
+alter table  INDEX_PARAMS  modify column PARAM_VALUE  varchar(4000) character set utf8;
+```
+
 - 2020-04-24：
 	- 完成新的指标计算任务：深圳地铁各线路换乘出站乘客百分比排行榜；  
 	- 完成新的指标计算任务：深圳地铁各线路直达乘客优惠人次百分比排行榜；  
