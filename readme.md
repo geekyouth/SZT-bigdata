@@ -500,6 +500,49 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ---
 
+### 4- 新增模块：SZT-hbase
+SZT-hbase project for Spring Boot2  
+
+看过开源的 spring-boot-starter-hbase、spring-data-hadoop-hbase，基础依赖过于老旧，长期不更新；引入过程繁琐，而且 API 粒度受限；数据库连接没有复用，导致数据库服务读写成本太高。
+
+于是自己实现了 hbase-2.1 + springboot-2.1.13 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
+
+![](SZT-hbase/.pic/hbase666.png)
+
+主要特色：  
+
+- knife4j 在线调试，点击鼠标即可完成 hbase 写入和查询，再也不用记住繁琐的命令😏😏😏。
+
+- hbase 列族版本历史设置为 10，支持配置文件级别的修改。可以查询某卡号最近 10 次交易记录。
+
+- hbase rowkey 设计为卡号反转，使得字典排序过程消耗的服务器算力在分布式环境更加均衡。
+
+- 全自动的建库建表【本项目的 hbase 命名空间为 szt】，实现幂等操作，无需担心 hbase 数据库的污染。
+
+效果展示：  
+
+- 准备部署完成的 hbase，适当修改本项目配置文件，运行 SZT-hbase 项目，效果如下：  
+
+启动：  
+![](SZT-hbase/.pic/hbase-run.png)
+
+api-debug，随便写点东西进去，狂点发送。能写多快就考验你的手速了😏😏😏：  
+![](SZT-hbase/.pic/hbase-api-debug.png)
+
+hue-hbase 查表：  
+![](SZT-hbase/.pic/hue-hbase-szt.png)
+
+hue-hbase 查看历史版本：  
+![](SZT-hbase/.pic/hue-hbase-szt-versions-10.png)
+
+hbase-shell 命令：  
+全表扫描，返回十个版本格式化为字符串显示，压榨服务器性能的时候到啦！！！😝😝😝   
+`scan 'szt:data', {FORMATTER => 'toString',VERSIONS=>10}`
+
+![](SZT-hbase/.pic/hbase-shell-toString.png)
+
+---
+
 ## TODO🔔🔔🔔:
 - [x] 解析 redis pageJson，转换数据格式为最小数据单元存到 csv，减少原始数据的冗余字符，方便存取和传输。丰富数据源的格式，兼容更多的实现方案； 
 - [x] 推送 kafka，使用队列传输数据；
@@ -507,6 +550,7 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 - [x] 数仓建模：ODS、DWD、DWS、ADS
 - [x] hive on spark 数仓建模、分析计算；  
 - [x] spark on hive，本地开发 spark 程序，操作远程 hive 数据库；  
+- [ ] 刷卡记录实时写入 hbase，支持最近交易记录的查询；   
 - [-] ~~oozie 调度，数据太少啊 嘤嘤嘤~~😮😮😮;  
 - [ ] 实时思路分析数据：flink 流式实时分析早晚高峰站点压力排行；  
 - [ ] 离线思路分析数据：spark 微批处理；
@@ -514,7 +558,12 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ---
 
+
 ## 更新日志🌥：
+- 2020-04-30：  
+	- 实现了 hbase-2.1 + springboot-2.1.13 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
+	
+
 - 2020-04-27：  
 	- 彻底的解决了静态资源无法热部署的问题；  
 ```
