@@ -2,6 +2,7 @@ package cn.java666.szthbase.service;
 
 import cn.java666.szt.pojo.SztDataBean;
 import cn.java666.szthbase.dao.SztDataDao;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ import static cn.java666.szthbase.constants.SztEnum.SZT_TABLE_NAME;
  * @date 2020-04-29 22:19:33
  * 业务逻辑层
  */
-
+@Slf4j
 @Service
 public class SztDataService {
 	private String tb = SZT_TABLE_NAME.value();
@@ -51,6 +52,7 @@ public class SztDataService {
 			dao.putCell(tb, card_no_re, cf, SZT_CL_CONN_MARK.value(), data.getConn_mark());
 			dao.putCell(tb, card_no_re, cf, SZT_CL_DEAL_MONEY.value(), data.getDeal_money());
 			dao.putCell(tb, card_no_re, cf, SZT_CL_EQU_NO.value(), data.getEqu_no());
+			log.warn("写入 hbase 成功 [{}]", data);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
