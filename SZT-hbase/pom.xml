@@ -13,6 +13,10 @@
 	
 	<description>
 		SZT-hbase project for Spring Boot2
+		看过开源的 spring-boot-starter-hbase、spring-data-hadoop-hbase，
+		基础依赖过于老旧，长期不更新；引入过程繁琐，而且 API 粒度受限；数据库连接没有复用，导致数据库服务读写成本太高。
+		
+		于是自己实现了 hbase-2.1 + springboot-2.1.13 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
 	</description>
 	
 	<properties>
@@ -53,7 +57,6 @@
 			<artifactId>knife4j-spring-boot-starter</artifactId>
 			<version>2.0.2</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -70,6 +73,14 @@
 				<exclusion>
 					<artifactId>guava</artifactId>
 					<groupId>com.google.guava</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
