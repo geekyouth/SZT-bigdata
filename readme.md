@@ -500,14 +500,13 @@ szt-etl-data.csv szt-etl-data_2018-09-01.csv szt-page.jsons
 
 ---
 
-### 4- 新增模块：SZT-hbase
-SZT-hbase project for Spring Boot2  
-
+### 4- 新增模块：SZT-kafka-hbase  
+SZT-kafka-hbase project for Spring Boot2  
 看过开源的 spring-boot-starter-hbase、spring-data-hadoop-hbase，基础依赖过于老旧，长期不更新；引入过程繁琐，而且 API 粒度受限；数据库连接没有复用，导致数据库服务读写成本太高。
 
-于是自己实现了 hbase-2.1 + springboot-2.1.13 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
+于是自己实现了 hbase-2.1 + springboot-2.1.13 + kafka-2.0 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
 
-![](SZT-hbase/.pic/hbase666.png)
+![](SZT-kafka-hbase/.pic/hbase666.png)
 
 主要特色：  
 
@@ -521,25 +520,38 @@ SZT-hbase project for Spring Boot2
 
 效果展示：  
 
-- 准备部署完成的 hbase，适当修改本项目配置文件，运行 SZT-hbase 项目，效果如下：  
+- 准备部署完成的 hbase，适当修改本项目配置文件，运行 SZT-kafka-hbase 项目，效果如下：  
 
 启动：  
-![](SZT-hbase/.pic/hbase-run.png)
+![](SZT-kafka-hbase/.pic/hbase-run.png)
 
 api-debug，随便写点东西进去，狂点发送。能写多快就考验你的手速了😏😏😏：  
-![](SZT-hbase/.pic/hbase-api-debug.png)
+![](SZT-kafka-hbase/.pic/hbase-api-debug.png)
 
 hue-hbase 查表：  
-![](SZT-hbase/.pic/hue-hbase-szt.png)
+![](SZT-kafka-hbase/.pic/hue-hbase-szt.png)
 
 hue-hbase 查看历史版本：  
-![](SZT-hbase/.pic/hue-hbase-szt-versions-10.png)
+![](SZT-kafka-hbase/.pic/hue-hbase-szt-versions-10.png)
 
 hbase-shell 命令：  
 全表扫描，返回十个版本格式化为字符串显示，压榨服务器性能的时候到啦！！！😝😝😝   
 `scan 'szt:data', {FORMATTER => 'toString',VERSIONS=>10}`
 
-![](SZT-hbase/.pic/hbase-shell-toString.png)
+![](SZT-kafka-hbase/.pic/hbase-shell-toString.png)
+
+---
+
+- 接下来接入 kafka 🎯🎯🎯  
+启动 `cn.java666.etlflink.app.Redis2Kafka`，生产消息，适当调慢生产速度，以免机器崩溃。  
+不出意外的话，你会看到 SZT-kafka-hbase 项目的控制台打印了日志：  
+
+![](.file/.pic/kafka2hbase.png)
+
+如果 hbase 崩溃了，看看内存够不够，我就直接怼上 2GB X 3 个节点🌟🌟🌟：  
+
+![](SZT-kafka-hbase/.pic/hbase-2GB.png)
+
 
 ---
 
@@ -560,6 +572,10 @@ hbase-shell 命令：
 
 
 ## 更新日志🌥：
+- 2020-05-01：  
+	- 实现了 hbase-2.1 + springboot-2.1.13 + kafka-2.0 的集成；  
+	- 实时消费 kafka 消息存到 hbase 数据库，支持实时查询某卡号最近 n 次交易记录；  
+
 - 2020-04-30：  
 	- 实现了 hbase-2.1 + springboot-2.1.13 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
 	
