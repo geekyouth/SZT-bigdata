@@ -1,6 +1,6 @@
 package cn.java666.szthbase.service;
 
-import cn.java666.szt.pojo.SztDataBean;
+import cn.java666.sztcommon.pojo.SztDataBean;
 import cn.java666.szthbase.dao.SztDataDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -9,19 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.IOException;
 
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_CARD_NO;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_CAR_NO;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_CLOSE_DATE;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_CONN_MARK;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_DEAL_DATE;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_DEAL_MONEY;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_DEAL_TYPE;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_DEAL_VALUE;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_EQU_NO;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_LINE;
-import static cn.java666.szthbase.constants.SztEnum.SZT_CL_STATION;
-import static cn.java666.szthbase.constants.SztEnum.SZT_TABLE_CF;
-import static cn.java666.szthbase.constants.SztEnum.SZT_TABLE_NAME;
+import static cn.java666.sztcommon.enums.SztEnum.*;
 
 /**
  * @author Geek

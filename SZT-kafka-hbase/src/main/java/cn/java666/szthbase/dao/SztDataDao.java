@@ -19,9 +19,9 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
-import static cn.java666.szthbase.constants.SztEnum.SZT_NAME_SPACE;
-import static cn.java666.szthbase.constants.SztEnum.SZT_TABLE_CF;
-import static cn.java666.szthbase.constants.SztEnum.SZT_TABLE_NAME;
+import static cn.java666.sztcommon.enums.SztEnum.SZT_NAME_SPACE;
+import static cn.java666.sztcommon.enums.SztEnum.SZT_TABLE_CF;
+import static cn.java666.sztcommon.enums.SztEnum.SZT_TABLE_NAME;
 
 /**
  * @author Geek

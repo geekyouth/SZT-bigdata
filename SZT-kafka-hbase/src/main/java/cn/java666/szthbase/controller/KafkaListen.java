@@ -1,6 +1,6 @@
 package cn.java666.szthbase.controller;
 
-import cn.java666.szt.pojo.SztDataBean;
+import cn.java666.sztcommon.pojo.SztDataBean;
 import cn.java666.szthbase.service.SztDataService;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
