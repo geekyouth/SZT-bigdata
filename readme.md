@@ -552,6 +552,27 @@ hbase-shell 命令：
 
 ![](SZT-kafka-hbase/.pic/hbase-2GB.png)
 
+### 5- `SZT-flink` 模块新增 `cn.java666.etlflink.app.Json2HBase`  
+实现了从 redis 或者其他数据源取出 json 串，保存到 hbase 表。本项目中从 redis 获取 json（当然更推荐 kafka），通过 flink 清洗存到 hbase flink:flink2hbase 表中。用于实时保存深圳通刷卡记录，通过卡号查询可以获取卡号最近10次（如果有10次）交易记录。  
+
+![](.file/.pic/flink2hbase.png)
+
+> 简化了上一版 hbase 写入 bean 的方式，JSON 再一次赢得掌声😏😏😏。
+
+```scala
+val keys = jsonObj.keySet().toList
+val size = keys.size()
+
+for (i <- 0 until size) {
+	val key = keys.get(i)
+	val value = jsonObj.getStr(key)
+	putCell(card_no_re, cf, key, value)
+}
+```
+
+--- 
+
+...继续开发中🛠🛠🛠...
 
 ---
 
@@ -573,6 +594,7 @@ hbase-shell 命令：
 
 ## 更新日志🌥：
 - 2020-05-01：  
+	- 实现了从 redis 或者其他数据源取出 json 串，保存到 hbase 表；  
 	- 实现了 hbase-2.1 + springboot-2.1.13 + kafka-2.0 的集成；  
 	- 实时消费 kafka 消息存到 hbase 数据库，支持实时查询某卡号最近 n 次交易记录；  
 
