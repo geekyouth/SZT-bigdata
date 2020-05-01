@@ -1,4 +1,4 @@
-package cn.java666.szt.enums;
+package cn.java666.sztcommon.enums;
 
 import java.util.StringJoiner;
 

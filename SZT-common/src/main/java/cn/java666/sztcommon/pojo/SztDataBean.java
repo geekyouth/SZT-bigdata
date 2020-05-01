@@ -1,4 +1,4 @@
-package cn.java666.szt.pojo;
+package cn.java666.sztcommon.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
