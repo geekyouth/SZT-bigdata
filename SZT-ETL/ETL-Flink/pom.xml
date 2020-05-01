@@ -12,6 +12,17 @@
 	
 	<artifactId>ETL-Flink</artifactId>
 	
+	<description>
+		该模块涉及技术栈：
+		flink-1.10
+		kafka-2.1
+		elasticsearch-7.0
+		hbase-1.4 (兼容 cdh-6.2 hbase-2.1)
+		redis-2.8 (兼容 redis-3.5)
+		
+		主要实现 flink 各种连接器的读写和 ETL
+	</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>cn.java666</groupId>
@@ -77,6 +88,12 @@
 			<version>${flink.version}</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-hbase -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-hbase_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
 		
 		<!-- 工具类 -->
 		<dependency>
