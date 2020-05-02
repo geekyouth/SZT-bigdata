@@ -44,10 +44,10 @@ public class APIConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.apiInfo(apiInfo())
 			//分组名称
-			.groupName("默认组")
+			.groupName("ETL-SpringBoot")
 			.select()
 			//这里指定Controller扫描包路径
-			.apis(RequestHandlerSelectors.basePackage("cn.java666.etlspringboot"))
+			.apis(RequestHandlerSelectors.basePackage("cn.java666.etlspringboot.controller"))
 			.paths(PathSelectors.any())
 			.build();
 	}
