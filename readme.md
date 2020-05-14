@@ -593,6 +593,9 @@ for (i <- 0 until size) {
 
 
 ## 更新日志🌥：
+- 2020-05-14：
+	- `RedisSinkPageJson` 从 `package cn.java666.etlflink.sink` 移到 `package cn.java666.etlflink.app` 更名为 `Jsons2Redis`，方便归类，该模块用于解析原始数据多行json到redis；
+
 - 2020-05-01：  
 	- 实现了从 redis 或者其他数据源取出 json 串，保存到 hbase 表；  
 	- 实现了 hbase-2.1 + springboot-2.1.13 + kafka-2.0 的集成；  
