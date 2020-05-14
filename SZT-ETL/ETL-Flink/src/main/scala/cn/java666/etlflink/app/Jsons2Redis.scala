@@ -1,4 +1,4 @@
-package cn.java666.etlflink.sink
+package cn.java666.etlflink.app
 
 import com.alibaba.fastjson.{JSON, JSONObject}
 import org.apache.flink.streaming.api.scala._
@@ -10,10 +10,11 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.{RedisCommand, 
  * @author Geek
  * @date 2020-04-13 18:16:27
  *
+ * 读取 jsons，存入 redis
  * redis 排序去重 ok
  *
  */
-object RedisSinkPageJson {
+object Jsons2Redis {
 	val SVAE_PATH = "/tmp/szt-data/szt-data-page.jsons"
 	
 	def main(args: Array[String]): Unit = {
@@ -32,7 +33,7 @@ object RedisSinkPageJson {
 		//存到 redis sink
 		s.addSink(new RedisSink(jedis, new MyRedisSinkFun))
 		
-		env.execute("MyRedisSink")
+		env.execute("Jsons2Redis")
 	}
 }
 
