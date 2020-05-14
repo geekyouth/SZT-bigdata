@@ -13,7 +13,7 @@ import scala.util.Random
  * 从 redis 或者其他数据源取出 json 串，保存到 hbase 表。
  * 
  */
-object Json2HBase {
+object Redis2HBase {
 	def main(args: Array[String]): Unit = {
 		
 		val env = StreamExecutionEnvironment.getExecutionEnvironment
