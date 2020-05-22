@@ -55,6 +55,30 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 - 🚀 ...
 
 ---     
+## 第一期架构图
+原图 [.file/.doc/SZT-bigdata-1.png](.file/.doc/SZT-bigdata-1.png)  
+
+![](.file/.doc/SZT-bigdata-1+.png)
+
+```
+数字标记不分先后顺序，对应代码：
+1-cn.java666.sztcommon.util.SZTData
+2-cn.java666.etlflink.app.Jsons2Redis
+3-cn.java666.etlspringboot.controller.RedisController#get
+4-cn.java666.etlflink.app.Redis2ES
+5-cn.java666.etlflink.app.Redis2Csv
+6-CDH+HUE+HDFS 上传
+7、8-sql/hive.sql
+9-cn.java666.etlflink.app.Redis2HBase
+10、14-cn.java666.szthbase.controller.KafkaListen#sink2Hbase
+11-cn.java666.etlflink.app.Redis2HBase
+12-CDH+HUE+Hbase
+13-cn.java666.etlflink.app.Redis2Kafka
+15-待开发
+
+```
+
+---
 
 ## 核心技术栈 + 版本选择 + 点评 (持续更新)⚡：
 ![](.file/.doc/stack2.jpg)  
@@ -593,6 +617,9 @@ for (i <- 0 until size) {
 
 
 ## 更新日志🌥：
+- 2020-05-22:
+	- 补充第一期开发计划的架构图，帮助理解整个业务流程；
+
 - 2020-05-14：
 	- `RedisSinkPageJson` 从 `package cn.java666.etlflink.sink` 移到 `package cn.java666.etlflink.app` 更名为 `Jsons2Redis`，方便归类，该模块用于解析原始数据多行json到redis；
 
