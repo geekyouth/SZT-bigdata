@@ -26,8 +26,8 @@ object Redis2Kafka {
 		
 		val s = env.addSource[String](new MyRedisSourceFun)
 			.map(x => {
-				// TODO 假装休息一会，如果客户觉得速度太慢，可以加钱优化！！！但是这里我们真的需要休息，因为速度太快机器会卡住🙄🙄🙄甚至崩溃
-				//Thread.sleep(Random.nextInt(10)) 
+				// TODO 假装休息一会，如果客户觉得速度太慢，可以加钱优化！！！但是这里我们真的需要休息，模拟流式数据连续的注入
+				//Thread.sleep(Random.nextInt(1000))
 				x
 			})
 		
