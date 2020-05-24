@@ -37,6 +37,7 @@
 		<module>SZT-common</module>
 		<module>SZT-spark-hive</module>
 		<module>SZT-kafka-hbase</module>
+		<module>SZT-flink</module>
 	</modules>
 	
 </project>
