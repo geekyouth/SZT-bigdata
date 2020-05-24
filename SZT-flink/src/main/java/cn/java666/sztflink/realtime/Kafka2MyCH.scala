@@ -6,7 +6,6 @@ import cn.java666.sztflink.realtime.sink.MyClickhouseSinkFun
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
-import org.junit.Test
 
 /**
  * @author Geek
@@ -16,8 +15,7 @@ import org.junit.Test
  */
 case class Kafka2MyCH() {
 	
-	@Test
-	def test1() {
+	def main(args: Array[String]): Unit = {
 		val env = StreamExecutionEnvironment.getExecutionEnvironment
 		env.setParallelism(1)
 		
