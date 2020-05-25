@@ -31,3 +31,11 @@ case class MyClickhouseSinkFun(host: String = "localhost", port: Int = 8123, use
 		conn.close()
 	}
 }
+/*
+
+CREATE DATABASE IF NOT EXISTS szt;
+CREATE TABLE szt.szt_data (string_value String) ENGINE = Log();
+
+SELECT * FROM szt.szt_data;
+
+*/

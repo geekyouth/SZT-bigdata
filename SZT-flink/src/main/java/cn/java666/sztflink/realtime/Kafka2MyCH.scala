@@ -6,6 +6,7 @@ import cn.java666.sztflink.realtime.sink.MyClickhouseSinkFun
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
+import org.junit._
 
 /**
  * @author Geek
@@ -15,7 +16,9 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
  */
 case class Kafka2MyCH() {
 	
-	def main(args: Array[String]): Unit = {
+	@Test
+	def test1() {
+		
 		val env = StreamExecutionEnvironment.getExecutionEnvironment
 		env.setParallelism(1)
 		
@@ -23,7 +26,10 @@ case class Kafka2MyCH() {
 		kafka_prop.setProperty("bootstrap.servers", "cdh231:9092")
 		kafka_prop.setProperty("group.id", "consumer-group-flink")
 		
-		env.addSource[String](new FlinkKafkaConsumer011("topic-flink-szt", new SimpleStringSchema, kafka_prop))
+		env.addSource[String](
+			new FlinkKafkaConsumer011("topic-flink-szt", new SimpleStringSchema, kafka_prop)
+			//.setStartFromEarliest()
+		)
 			.name("kafka-source")
 			.map(x => {
 				//Thread.sleep(1000)
@@ -35,3 +41,19 @@ case class Kafka2MyCH() {
 		env.execute("Kafka2CH")
 	}
 }
+
+/*
+<!-- https://mvnrepository.com/artifact/com.github.housepower/clickhouse-native-jdbc 9000 不成功 -->
+<dependency>
+    <groupId>com.github.housepower</groupId>
+    <artifactId>clickhouse-native-jdbc</artifactId>
+    <version>2.1-stable</version>
+</dependency>
+
+<!-- 8123 正常 -->
+<dependency>
+    <groupId>ru.yandex.clickhouse</groupId>
+    <artifactId>clickhouse-jdbc</artifactId>
+    <version>0.2.4</version>
+</dependency>
+ */
