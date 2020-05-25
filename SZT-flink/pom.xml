@@ -28,31 +28,11 @@
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-scala_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>scala-library</artifactId>
-					<groupId>org.scala-lang</groupId>
-				</exclusion>
-				<!--<exclusion>
-					<artifactId>scala-parser-combinators_2.11</artifactId>
-					<groupId>org.scala-lang.modules</groupId>
-				</exclusion>-->
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-				<!--<exclusion>
-					<artifactId>snappy-java</artifactId>
-					<groupId>org.xerial.snappy</groupId>
-				</exclusion>-->
-			</exclusions>
 		</dependency>
 		
 		<!-- Kafka 最佳 CP -->
@@ -61,46 +41,27 @@
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-connector-kafka-0.11_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-		
 		
 		<dependency>
 			<groupId>ru.yandex.clickhouse</groupId>
 			<artifactId>clickhouse-jdbc</artifactId>
 			<version>0.2.4</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>guava</artifactId>
-					<groupId>com.google.guava</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
+		
+		<!-- 暂不可用 -->
+		<!-- https://mvnrepository.com/artifact/com.github.housepower/clickhouse-native-jdbc -->
+		<!--<dependency>
+			<groupId>com.github.housepower</groupId>
+			<artifactId>clickhouse-native-jdbc</artifactId>
+			<version>2.1-stable</version>
+		</dependency>-->
 		
 		<!-- 暂不可用 -->
 		<!--<dependency>
 			<groupId>ru.ivi.opensource</groupId>
 			<artifactId>flink-clickhouse-sink</artifactId>
 			<version>1.1.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>flink-streaming-java_2.11</artifactId>
-					<groupId>org.apache.flink</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>-->
 		
 		<!-- 工具类 -->
@@ -108,9 +69,9 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-			<!--<scope>compile</scope>-->
+			<!--<scope>test</scope>-->
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
@@ -119,7 +80,7 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
-		</dependency>-->
+		</dependency>
 	</dependencies>
 	
 	<build>
