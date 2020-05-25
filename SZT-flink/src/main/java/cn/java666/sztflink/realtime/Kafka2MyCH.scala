@@ -28,7 +28,7 @@ case class Kafka2MyCH() {
 		
 		env.addSource[String](
 			new FlinkKafkaConsumer011("topic-flink-szt", new SimpleStringSchema, kafka_prop)
-			//.setStartFromEarliest()
+			.setStartFromEarliest()
 		)
 			.name("kafka-source")
 			.map(x => {
