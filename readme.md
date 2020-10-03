@@ -774,3 +774,13 @@ alter table  INDEX_PARAMS  modify column PARAM_VALUE  varchar(4000) character se
 ## 教训：
 - 大数据程序员千万不能生产错误的数据，容忍程序运行失败、甚至没有输出数据，失败了可以跟踪原因，至少不会有脏数据。
 - 一旦数据错误，会影响后面的所有计算流程，甚至导致错误决策。
+
+
+## 仓库统计：
+[![关注量](https://starchart.cc/geekyouth/SZT-bigdata.svg)](https://starchart.cc/geekyouth/SZT-bigdata)
+
+[![极客青年的 github stats，含主题](https://github-readme-stats.vercel.app/api?username=geekyouth&show_icons=true&theme=monokai)](https://github.com/anuraghazra/github-readme-stats)
+
+[![极客青年的 github stats，指定仓库](https://github-readme-stats.vercel.app/api/pin?username=geekyouth&repo=SZT-bigdata&show_icons=true&theme=monokai&show_owner=true)](https://github.com/anuraghazra/github-readme-stats)
+
+[![JB logo](https://www.jetbrains.com/company/brand/img/logo1.svg)](https://www.jetbrains.com/?from=https://github.com/geekyouth/SZT-bigdata)
