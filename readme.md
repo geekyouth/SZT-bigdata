@@ -9,22 +9,22 @@
 ---
 
 <div align="center">
-	<a href="https://github.com/geekyouth/SZT-bigdata/stargazers" >   
+	<a href="https://github.com/geekyouth/SZT-bigdata/stargazers" target="_blank">   
 		<img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/network/members" > 
+	<a href="https://github.com/geekyouth/SZT-bigdata/network/members" target="_blank"> 
 		<img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/watchers" >
+	<a href="https://github.com/geekyouth/SZT-bigdata/watchers" target="_blank">
 		<img src="https://img.shields.io/github/watchers/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/releases" >
+	<a href="https://github.com/geekyouth/SZT-bigdata/releases" target="_blank">
 		<img src="https://img.shields.io/github/v/release/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/issues" >  
+	<a href="https://github.com/geekyouth/SZT-bigdata/issues" target="_blank">  
 		<img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/blob/master/LICENSE" >
+	<a href="https://github.com/geekyouth/SZT-bigdata/blob/master/LICENSE" target="_blank">
 		<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
 	<br/>
@@ -777,10 +777,22 @@ alter table  INDEX_PARAMS  modify column PARAM_VALUE  varchar(4000) character se
 
 
 ## 仓库统计：
-[![关注量](https://starchart.cc/geekyouth/SZT-bigdata.svg)](https://starchart.cc/geekyouth/SZT-bigdata)
+## 统计信息：
+---
 
-[![极客青年的 github stats，含主题](https://github-readme-stats.vercel.app/api?username=geekyouth&show_icons=true&theme=monokai)](https://github.com/anuraghazra/github-readme-stats)
+<div align="left">
+    <a href="" target="_blank">
+            <img src="https://starchart.cc/geekyouth/SZT-bigdata.svg" alt="关注曲线">
+    </a>
+    <a href="https://github.com/geekyouth" target="_blank">   
+            <img src="https://github-readme-stats.vercel.app/api?username=geekyouth&show_icons=true&theme=monokai" alt="个人概况">
+    </a>
 
-[![极客青年的 github stats，指定仓库](https://github-readme-stats.vercel.app/api/pin?username=geekyouth&repo=SZT-bigdata&show_icons=true&theme=monokai&show_owner=true)](https://github.com/anuraghazra/github-readme-stats)
+    <a href="" target="_blank">   
+            <img src="https://github-readme-stats.vercel.app/api/pin?username=geekyouth&repo=SZT-bigdata&show_icons=true&theme=monokai&show_owner=true" alt="仓库概况">
+    </a>
+    <a href="https://www.jetbrains.com/?from=https://github.com/geekyouth/SZT-bigdata" target="_blank">   
+            <img src="https://www.jetbrains.com/company/brand/img/logo1.svg" alt="赞助伙伴">
+    </a>
 
-[![JB logo](https://www.jetbrains.com/company/brand/img/logo1.svg)](https://www.jetbrains.com/?from=https://github.com/geekyouth/SZT-bigdata)
+</div>
