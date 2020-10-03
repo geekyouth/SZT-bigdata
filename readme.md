@@ -776,17 +776,17 @@ alter table  INDEX_PARAMS  modify column PARAM_VALUE  varchar(4000) character se
 - 一旦数据错误，会影响后面的所有计算流程，甚至导致错误决策。
 
 
-## 统计信息：
 ---
+## 统计信息：
 
-<div>
-    <a href="" target="_blank">
+<div align="right">
+    <a href="https://github.com/geekyouth/SZT-bigdata" target="_blank">
             <img src="https://starchart.cc/geekyouth/SZT-bigdata.svg" alt="关注曲线">
     </a>
     <a href="https://github.com/geekyouth" target="_blank">   
             <img src="https://github-readme-stats.vercel.app/api?username=geekyouth&show_icons=true&theme=monokai" alt="个人概况">
     </a>
-    <a href="" target="_blank">   
+    <a href="https://github.com/geekyouth/SZT-bigdata" target="_blank">   
             <img src="https://github-readme-stats.vercel.app/api/pin?username=geekyouth&repo=SZT-bigdata&show_icons=true&theme=monokai&show_owner=true" alt="仓库概况">
     </a>
     <a href="https://www.jetbrains.com/?from=https://github.com/geekyouth/SZT-bigdata" target="_blank">   
