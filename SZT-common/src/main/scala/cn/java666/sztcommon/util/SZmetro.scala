@@ -8,6 +8,7 @@ import cn.hutool.http.HttpUtil
 import cn.hutool.json.{JSONObject, JSONUtil}
 import org.junit.Test
 
+import scala.io.Source
 import scala.util.control.Breaks
 
 /**
@@ -25,6 +26,7 @@ case class SZmetro() {
 	 */
 	@Test
 	def json2CSV() {
+		// TODO val s = Source.fromFile("szmc.net-metro.json") //scala 原生 API 读取文件，支持相对路径
 		val s = FileUtil.readUtf8String(ClassLoader.getSystemResource("szmc.net-metro.json").getPath)
 		val obj = JSONUtil.parseObj(s)
 		val lineArray = obj.getJSONArray("l")
