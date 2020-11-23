@@ -9,22 +9,22 @@
 ---
 
 <div align="center">
-	<a href="https://github.com/geekyouth/SZT-bigdata/stargazers" >   
+	<a href="https://github.com/geekyouth/SZT-bigdata/stargazers" target="_blank">   
 		<img src="https://img.shields.io/github/stars/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/network/members" > 
+	<a href="https://github.com/geekyouth/SZT-bigdata/network/members" target="_blank"> 
 		<img src="https://img.shields.io/github/forks/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/watchers" >
+	<a href="https://github.com/geekyouth/SZT-bigdata/watchers" target="_blank">
 		<img src="https://img.shields.io/github/watchers/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/releases" >
+	<a href="https://github.com/geekyouth/SZT-bigdata/releases" target="_blank">
 		<img src="https://img.shields.io/github/v/release/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/issues" >  
+	<a href="https://github.com/geekyouth/SZT-bigdata/issues" target="_blank">  
 		<img src="https://img.shields.io/github/issues/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
-	<a href="https://github.com/geekyouth/SZT-bigdata/blob/master/LICENSE" >
+	<a href="https://github.com/geekyouth/SZT-bigdata/blob/master/LICENSE" target="_blank">
 		<img src="https://img.shields.io/github/license/geekyouth/SZT-bigdata?style=for-the-badge">
 	</a>	
 	<br/>
@@ -152,6 +152,7 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 ## 数据源🌍：
 - 深圳市政府数据开放平台，深圳通刷卡数据 133.7 万条【离线数据】，
 https://opendata.sz.gov.cn/data/api/toApiDetails/29200_00403601
+- 备用数据源：https://github.com/geekyouth/SZT-bigdata/issues/22#issuecomment-718866130  
 	
 理论上可以当作实时数据，但是这个接口响应太慢了，如果采用 kafka 队列方式，也可以模拟出实时效果。 
 
@@ -774,3 +775,22 @@ alter table  INDEX_PARAMS  modify column PARAM_VALUE  varchar(4000) character se
 ## 教训：
 - 大数据程序员千万不能生产错误的数据，容忍程序运行失败、甚至没有输出数据，失败了可以跟踪原因，至少不会有脏数据。
 - 一旦数据错误，会影响后面的所有计算流程，甚至导致错误决策。
+
+
+---
+## 统计信息：
+
+<div align="right">
+    <a href="https://github.com/geekyouth/SZT-bigdata" target="_blank">
+            <img src="https://starchart.cc/geekyouth/SZT-bigdata.svg" alt="关注曲线">
+    </a>
+    <a href="https://github.com/geekyouth" target="_blank">   
+            <img src="https://github-readme-stats.vercel.app/api?username=geekyouth&show_icons=true&theme=monokai" alt="个人概况">
+    </a>
+    <a href="https://github.com/geekyouth/SZT-bigdata" target="_blank">   
+            <img src="https://github-readme-stats.vercel.app/api/pin?username=geekyouth&repo=SZT-bigdata&show_icons=true&theme=monokai&show_owner=true" alt="仓库概况">
+    </a>
+    <a href="https://www.jetbrains.com/?from=https://github.com/geekyouth/SZT-bigdata" target="_blank">   
+            <img src="https://www.jetbrains.com/company/brand/img/logo1.svg" alt="赞助伙伴">
+    </a>
+</div>
