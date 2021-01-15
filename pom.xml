@@ -8,7 +8,7 @@
 	<groupId>cn.java666</groupId>
 	<artifactId>SZT-bigdata</artifactId>
 	<version>0.1</version>
-
+	
 	<properties>
 		<!--基础部分 通用配置-->
 		<java.version>1.8</java.version>
@@ -39,5 +39,5 @@
 		<module>SZT-kafka-hbase</module>
 		<module>SZT-flink</module>
 	</modules>
-	
+
 </project>
