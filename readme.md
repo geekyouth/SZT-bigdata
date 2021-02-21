@@ -748,12 +748,6 @@ alter table  INDEX_PARAMS  modify column PARAM_VALUE  varchar(4000) character se
 	- 完成 flink 自定义 source redis 的开发，并且更细粒度清洗源数据；
 	- 完成 推送源数据到 kafka；
 
-	
-## 联系😪：
-欢迎交流技术，接头暗号`github`        
-![](.file/.pic/0-wexin.png)
-
-> 百度和谷歌能找到的问题就不要再问了！很累的😕😕😕
 
 ## 补充💌💌💌：
 - 不开小密圈；
