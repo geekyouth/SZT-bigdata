@@ -7,5 +7,8 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 indent_style = space
-indent_size = 2
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.md] # markdown 尾随空格不允许删除
 trim_trailing_whitespace = false
