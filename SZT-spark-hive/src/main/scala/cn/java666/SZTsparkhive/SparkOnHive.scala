@@ -6,111 +6,110 @@ import org.junit.Test
  * @author Geek
  * @date 2020-04-21 02:22:40
  *
- * spark on hive 
+ * spark on hive
  * spark 操作 远程 hive 数据库
  *
  */
 case class SparkOnHive() {
-	val spark = SparkSession.builder()
-		.master("local[*]")
-		.appName("SparkOnHive")
-		.enableHiveSupport()
-		.config("spark.driver.host", "lx")
-		.getOrCreate()
-	
-	import spark.implicits._
-	import spark.sql
-	
-	@Test
-	def testSqls() {
-		val sqls =
-			"""
-				|show databases;
-				|show tables in szt;
-				|use szt;
-				|select * from ads_card_deal_day_top;
-				|select * from ads_in_out_station_day_top;
-				|select * from ads_in_station_day_top;
-				|select * from ads_line_send_passengers_day_top;
-				|select * from ads_out_station_day_top;
-				|
-				|""".stripMargin
-		val sql_arr = sqls.split(";")
-		
-		sql_arr.foreach(x => {
-			if (x.trim.nonEmpty) {
-				sql(x).show(10, 50) // sql 太大，一屏放不下🙄🙄🙄
-			}
-		})
-		
-		spark.stop
-	}
-	
-	
-	@Test //不推荐此方式提交 
-	def testYarn() {
-		val spark = SparkSession.builder()
-			
-			//Detected yarn cluster mode, but isn't running on a cluster. Deployment to YARN is not supported directly by SparkContext. Please use spark-submit.
-			//.master("yarn-cluster")
-			
-			//Detected yarn cluster mode, but isn't running on a cluster. Deployment to YARN is not supported directly by SparkContext. Please use spark-submit.
-			//https://github.com/apache/spark/blob/master/docs/configuration.md
-			//.config("spark.submit.deployMode", "cluster")
-			
-			//spark.sql.catalyst.expressions.AttributeReference; local class incompatible: stream classdesc serialVersionUID ???
-			
-			.master("yarn")
-			.appName("App1")
-			//.config("spark.jars", "target/SZT-spark-hive-0.1-jar-with-dependencies.jar")
-			.config("spark.jars", "target/SZT-spark-hive-0.1.jar")
-			.config("spark.driver.host", "lx") // 多网卡机器，会识别到错误的主机名，要写绝对地址，不要 localhost
-			.enableHiveSupport()
-			.getOrCreate()
-		
-		spark.sparkContext.setLogLevel("warn")
-		import spark.sql
-		
-		sql("show databases")
-			.show(100, false)
-		//|select * from test_score
-		//show databases
-		
-		// 因为 HDFS 采用 LZO 压缩，spark 读取 HDFS 需要配置相应的 LZO 依赖，客户端也需要 LZO 环境，均要保证版本号兼容，lzo 项目年久失修，找不到匹配的版本了，所以 yarn 远程提交无法解码压缩文件 HDFS，建议取消压缩
-		
-		spark.stop
-	}
-	
-	/*
-	+------------+
-	|databaseName|
-	+------------+
-	|default     |
-	|szt         |
-	+------------+
-	*/
-	
-	@Test //ok 
-	def testLocal() {
-		val spark = SparkSession.builder()
-			.master("local[*]")
-			.appName("AppLocal2")
-			.config("spark.driver.host", "lx") // 多网卡机器，会识别到错误的主机名，要写绝对地址，不要 localhost
-			.enableHiveSupport()
-			.getOrCreate()
-		
-		//spark.sparkContext.setLogLevel("warn")
-		import spark.sql
-		
-		//hdfs 启用 LZO 压缩以后，需要在客户端添加 LZO 依赖库的环境变量和 maven 坐标，windows本地配置lzo读取所需相关组件_运维_coolerzZ的博客-CSDN博客 https://blog.csdn.net/coolerzz/article/details/103952188
-		sql(
-			"""
-				|select * from szt.ods_szt_data limit 100
-				|""".stripMargin)
-			.show(200, false)
-		
-		spark.stop()
-	}
+    val spark = SparkSession.builder()
+        .master("local[*]")
+        .appName("SparkOnHive")
+        .enableHiveSupport()
+        .config("spark.driver.host", "lx")
+        .getOrCreate()
+
+    import spark.sql
+    import spark.implicits._
+
+    @Test
+    def testSqls() {
+        val sqls =
+            """
+                |show databases;
+                |show tables in szt;
+                |use szt;
+                |select * from ads_card_deal_day_top;
+                |select * from ads_in_out_station_day_top;
+                |select * from ads_in_station_day_top;
+                |select * from ads_line_send_passengers_day_top;
+                |select * from ads_out_station_day_top;
+                |
+                |""".stripMargin
+        val sql_arr = sqls.split(";")
+
+        sql_arr.foreach(x => {
+            if (x.trim.nonEmpty) {
+                sql(x).show(10, 50) // sql 太大，一屏放不下🙄🙄🙄
+            }
+        })
+
+        spark.stop
+    }
+
+    @Test //不推荐此方式提交
+    def testYarn() {
+        val spark = SparkSession.builder()
+
+            //Detected yarn cluster mode, but isn't running on a cluster. Deployment to YARN is not supported directly by SparkContext. Please use spark-submit.
+            //.master("yarn-cluster")
+
+            //Detected yarn cluster mode, but isn't running on a cluster. Deployment to YARN is not supported directly by SparkContext. Please use spark-submit.
+            //https://github.com/apache/spark/blob/master/docs/configuration.md
+            //.config("spark.submit.deployMode", "cluster")
+
+            //spark.sql.catalyst.expressions.AttributeReference; local class incompatible: stream classdesc serialVersionUID ???
+
+            .master("yarn")
+            .appName("App1")
+            //.config("spark.jars", "target/SZT-spark-hive-0.1-jar-with-dependencies.jar")
+            .config("spark.jars", "target/SZT-spark-hive-0.1.jar")
+            .config("spark.driver.host", "lx") // 多网卡机器，会识别到错误的主机名，要写绝对地址，不要 localhost
+            .enableHiveSupport()
+            .getOrCreate()
+
+        spark.sparkContext.setLogLevel("warn")
+        import spark.sql
+
+        sql("show databases")
+            .show(100, false)
+        //|select * from test_score
+        //show databases
+
+        // 因为 HDFS 采用 LZO 压缩，spark 读取 HDFS 需要配置相应的 LZO 依赖，客户端也需要 LZO 环境，均要保证版本号兼容，lzo 项目年久失修，找不到匹配的版本了，所以 yarn 远程提交无法解码压缩文件 HDFS，建议取消压缩
+
+        spark.stop
+    }
+
+    /*
+    +------------+
+    |databaseName|
+    +------------+
+    |default     |
+    |szt         |
+    +------------+
+    */
+
+    @Test //ok
+    def testLocal() {
+        val spark = SparkSession.builder()
+            .master("local[*]")
+            .appName("AppLocal2")
+            .config("spark.driver.host", "lx") // 多网卡机器，会识别到错误的主机名，要写绝对地址，不要 localhost
+            .enableHiveSupport()
+            .getOrCreate()
+
+        //spark.sparkContext.setLogLevel("warn")
+        import spark.sql
+
+        //hdfs 启用 LZO 压缩以后，需要在客户端添加 LZO 依赖库的环境变量和 maven 坐标，windows本地配置lzo读取所需相关组件_运维_coolerzZ的博客-CSDN博客 https://blog.csdn.net/coolerzz/article/details/103952188
+        sql(
+            """
+                |select * from szt.ods_szt_data limit 100
+                |""".stripMargin)
+            .show(200, false)
+
+        spark.stop()
+    }
 }
 
 /*
