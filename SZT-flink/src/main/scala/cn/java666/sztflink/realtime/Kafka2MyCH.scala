@@ -15,31 +15,31 @@ import org.junit._
  * flink 读取 kafka 存到 ch【自定义】
  */
 case class Kafka2MyCH() {
-	
-	@Test
-	def test1() {
-		
-		val env = StreamExecutionEnvironment.getExecutionEnvironment
-		env.setParallelism(1)
-		
-		val kafka_prop = new Properties
-		kafka_prop.setProperty("bootstrap.servers", "cdh231:9092")
-		kafka_prop.setProperty("group.id", "consumer-group-flink")
-		
-		env.addSource[String](
-			new FlinkKafkaConsumer011("topic-flink-szt", new SimpleStringSchema, kafka_prop)
-			.setStartFromEarliest()
-		)
-			.name("kafka-source")
-			.map(x => {
-				//Thread.sleep(1000)
-				x
-			})
-			.addSink(new MyClickhouseSinkFun("cdh231"))
-			.name("ch-sink")
-		
-		env.execute("Kafka2CH")
-	}
+
+    @Test
+    def test1(): Unit = {
+
+        val env = StreamExecutionEnvironment.getExecutionEnvironment
+        env.setParallelism(1)
+
+        val kafka_prop = new Properties
+        kafka_prop.setProperty("bootstrap.servers", "cdh231:9092")
+        kafka_prop.setProperty("group.id", "consumer-group-flink")
+
+        env.addSource[String](
+            new FlinkKafkaConsumer011("topic-flink-szt", new SimpleStringSchema, kafka_prop)
+                .setStartFromEarliest()
+        )
+            .name("kafka-source")
+            .map(x => {
+                //Thread.sleep(1000)
+                x
+            })
+            .addSink(new MyClickhouseSinkFun("cdh231"))
+            .name("ch-sink")
+
+        env.execute("Kafka2CH")
+    }
 }
 
 /*
