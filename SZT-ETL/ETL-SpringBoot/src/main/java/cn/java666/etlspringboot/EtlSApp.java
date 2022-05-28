@@ -5,12 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class EtlSApp {
-	static {
-		// es bug
-		// System.setProperty("es.set.netty.runtime.available.processors", "false");
-	}
-	
-	public static void main(String[] args) {
-		SpringApplication.run(EtlSApp.class, args);
-	}
+    static {
+        // es bug
+        // System.setProperty("es.set.netty.runtime.available.processors", "false");
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(EtlSApp.class, args);
+    }
 }
