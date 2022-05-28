@@ -1,9 +1,9 @@
 package cn.java666.etlspringboot.service;
 
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author Geek
@@ -14,16 +14,16 @@ import javax.annotation.Resource;
 
 @Service
 public class RedisService {
-	
-	@Resource
-	private StringRedisTemplate redis; // 使用默认的 redis 序列化
-	
-	public String get(String key) {
-		return redis.opsForHash().get("szt:pageJson", key).toString();
-	}
-	
-	// 暂时用不上
-	private void set(String key, String value) {
-		redis.opsForHash().put("test:xxx", key, value);
-	}
+
+    @Resource
+    private StringRedisTemplate redis; // 使用默认的 redis 序列化
+
+    public String get(String key) {
+        return redis.opsForHash().get("szt:pageJson", key).toString();
+    }
+
+    // 暂时用不上
+    private void set(String key, String value) {
+        redis.opsForHash().put("test:xxx", key, value);
+    }
 }

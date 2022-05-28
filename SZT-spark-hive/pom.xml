@@ -1,112 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
-	<parent>
-		<groupId>cn.java666</groupId>
-		<artifactId>SZT-bigdata</artifactId>
-		<version>0.1</version>
-	</parent>
-	
-	<artifactId>SZT-spark-hive</artifactId>
-	
-	<description>
-		Building Spark Applications | 6.2.x | Cloudera Documentation
-		https://docs.cloudera.com/documentation/enterprise/6/6.2/topics/spark_building.html
-		
-	</description>
-	
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-hive -->
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-hive_2.11</artifactId>
-			<version>${spark.version}</version>
-			<!--<scope>provided</scope>-->
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-sql_2.11</artifactId>
-			<version>${spark.version}</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-yarn -->
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-yarn_2.11</artifactId>
-			<version>${spark.version}</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-catalyst -->
-		<!--<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-catalyst_2.11</artifactId>
-			<version>${spark.version}</version>
-		</dependency>-->
-		
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.16</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.hadoop.gplcompression/hadoop-lzo -->
-		<!--<dependency>
-			<groupId>com.hadoop.gplcompression</groupId>
-			<artifactId>hadoop-lzo</artifactId>
-			&lt;!&ndash; cdh6.2.1 对应 0.4.15 版本，yarn 模式需要。但是无法保证 local 模式兼容，建议取消压缩  &ndash;&gt;
-			<version>0.4.20</version>
-		</dependency>-->
-		
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<!--<scope>test</scope>-->
-		</dependency>
-	
-	</dependencies>
-	
-	<build>
-		<plugins>
-			<!-- 打包插件, 否则 scala 类不会编译并打包进去 -->
-			<plugin>
-				<groupId>net.alchim31.maven</groupId>
-				<artifactId>scala-maven-plugin</artifactId>
-				<version>3.4.6</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<!--<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>-->
-		
-		</plugins>
-	</build>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cn.java666</groupId>
+        <artifactId>SZT-bigdata</artifactId>
+        <version>0.1</version>
+    </parent>
+
+    <artifactId>SZT-spark-hive</artifactId>
+
+    <description>
+        Building Spark Applications | 6.2.x | Cloudera Documentation
+        https://docs.cloudera.com/documentation/enterprise/6/6.2/topics/spark_building.html
+
+    </description>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-hive -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_2.11</artifactId>
+            <version>${spark.version}</version>
+            <!--<scope>provided</scope>-->
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-yarn -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-yarn_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-catalyst -->
+        <!--<dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-catalyst_2.11</artifactId>
+            <version>${spark.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.hadoop.gplcompression/hadoop-lzo -->
+        <!--<dependency>
+            <groupId>com.hadoop.gplcompression</groupId>
+            <artifactId>hadoop-lzo</artifactId>
+            &lt;!&ndash; cdh6.2.1 对应 0.4.15 版本，yarn 模式需要。但是无法保证 local 模式兼容，建议取消压缩  &ndash;&gt;
+            <version>0.4.20</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 打包插件, 否则 scala 类不会编译并打包进去 -->
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.4.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--<plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+
+        </plugins>
+    </build>
 
 </project>

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/card")
 public class CardController {
-	
-	@GetMapping("/{no}")
-	public String get(@PathVariable String no) {
-		return ParseCardNo.parse(no);
-	}
+
+    @GetMapping("/{no}")
+    public String get(@PathVariable String no) {
+        return ParseCardNo.parse(no);
+    }
 }
