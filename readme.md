@@ -145,6 +145,17 @@ _|"""""|_|"""""|_|"""""|_|     |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 - 有个机架当然再好不过了，哈哈哈。。。
 ![](.file/.pic/0-pcs.jpg)   
 
+- 如果你有一台超过 16G RAM 的闲置 Linux 主机，可以尝试使用更快的方式初始化本项目的 hadoop 集群环境，使用 vagrant 批量部署集群，快速体验：
+```shell
+# 在 linux 机器（RAM > 16G）执行以下命令，目前只兼容 centos7
+# 强烈要求使用科学上网环境！！！
+# 强烈要求使用科学上网环境！！！
+# 强烈要求使用科学上网环境！！！
+# 科学上网环境部署：https://github.com/juewuy/ShellClash
+
+curl -sSL https://raw.githubusercontent.com/geekyouth/vagrant/main/start.sh | sh -x
+```
+
 - 如果你想避免网线牵来牵去，可以采用电力猫实现分布式家庭组网方案；
 
 ---
