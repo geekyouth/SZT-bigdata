@@ -1,0 +1,26 @@
+services:
+
+  logstash:
+    image: logstash:7.8.0
+    container_name: log
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - ./logstash/pipeline/logstash-nginx.config:/usr/share/logstash/pipeline/logstash-nginx.config
+      - ./logstash/nginx.log:/home/nginx.log
+    ports:
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "5044:5044"
+      - "9600:9600"
+    networks:
+      - szt-network
+    command: logstash -f /usr/share/logstash/pipeline/logstash-nginx.config
+
+networks:
+  szt-network:
+    driver: bridge
+    name: szt-network
+
+# docker compose -f log.yaml up -d
