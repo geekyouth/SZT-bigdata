@@ -1,0 +1,18 @@
+services:
+
+  kibana:
+    image: kibana:7.8.0
+    container_name: kib
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://es:9200"]'
+    networks:
+      - szt-network
+
+networks:
+  szt-network:
+    driver: bridge
+    name: szt-network
+
+# docker compose -f kibana.yaml up -d

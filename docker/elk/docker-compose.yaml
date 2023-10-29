@@ -1,0 +1,56 @@
+services:
+
+  elasticsearch:
+    image: elasticsearch:7.8.0
+    container_name: es
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - "29200:9200"
+      - "9300:9300"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    networks:
+      - elastic
+
+  logstash:
+    image: logstash:7.8.0
+    container_name: log
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - ./logstash/pipeline/logstash-nginx.config:/usr/share/logstash/pipeline/logstash-nginx.config
+      - ./logstash/nginx.log:/home/nginx.log
+    ports:
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "5044:5044"
+      - "9600:9600"
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+    command: logstash -f /usr/share/logstash/pipeline/logstash-nginx.config
+
+  kibana:
+    image: kibana:7.8.0
+    container_name: kib
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://es:9200"]'
+    networks:
+      - elastic
+
+#networks:
+#  elastic:
+#    driver: bridge
+#    attachable: true # driver 为 overlay 时使用, 如果设置为 true 则除了服务之外，独立容器也可以附加到该网络
+#    external: true # 一些场景下，我们并不需要创建新的网络，而只需加入已存在的网络，此时可使用external选项
