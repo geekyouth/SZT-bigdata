@@ -1,8 +1,24 @@
--- 全表扫描，并且格式化字符串
-scan 'szt:data', {FORMATTER => 'toString'}
+# HBase Shell Commands for SZT-bigdata v2.0
+# Compatible with HBase 2.6+
 
--- 查看历史版本
-scan 'szt:data', {FORMATTER => 'toString',VERSIONS=>10}
+# Create namespace
+create_namespace 'szt'
 
--- 查看指定的 rowkey 
-get 'szt:data','10drac',{COLUMN=>'card:station',VERSIONS=>10, FORMATTER => 'toString'}
+# Create table with column family and versions
+create 'szt:data', {NAME => 'card', VERSIONS => 10}
+
+# Scan table
+scan 'szt:data', {FORMATTER => 'toString', VERSIONS => 10}
+
+# Get by row key
+get 'szt:data', 'JHAGBEIFF', {FORMATTER => 'toString', VERSIONS => 10}
+
+# Describe table
+describe 'szt:data'
+
+# Count rows
+count 'szt:data'
+
+# Disable and drop table
+# disable 'szt:data'
+# drop 'szt:data'

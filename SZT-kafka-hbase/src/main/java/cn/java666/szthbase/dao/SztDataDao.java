@@ -1,29 +1,18 @@
 package cn.java666.szthbase.dao;
 
-import java.io.IOException;
-
-import javax.annotation.PostConstruct;
-
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import static cn.java666.sztcommon.enums.SztEnum.SZT_NAME_SPACE;
-import static cn.java666.sztcommon.enums.SztEnum.SZT_TABLE_CF;
-import static cn.java666.sztcommon.enums.SztEnum.SZT_TABLE_NAME;
+import java.io.IOException;
 
-/**
- * @author Geek
- * @date 2020-04-29 21:36:08
- *
- * 持久层，操作 hbase 数据库，连接复用，降低资源开销
- */
+import static cn.java666.sztcommon.enums.SztEnum.*;
 
-// 赋值给静态成员变量
-// @Component
 @Slf4j
 @Repository
 public class SztDataDao {
@@ -36,7 +25,6 @@ public class SztDataDao {
 
     private Connection connection;
 
-    /** 初始化数据库 */
     @PostConstruct
     public void init() {
         try {
@@ -59,42 +47,40 @@ public class SztDataDao {
     }
 
     public void createNameSpace(String nameSpace) throws IOException {
-        Admin admin = connection.getAdmin();
-        try {
-            admin.getNamespaceDescriptor(nameSpace);
-        } catch (NamespaceNotFoundException e) {
-            admin.createNamespace(NamespaceDescriptor.create(nameSpace).build());
-        } finally {
-            admin.close();
+        try (Admin admin = connection.getAdmin()) {
+            try {
+                admin.getNamespaceDescriptor(nameSpace);
+            } catch (NamespaceNotFoundException e) {
+                admin.createNamespace(NamespaceDescriptor.create(nameSpace).build());
+            }
         }
     }
 
-    /** 指定列版本数量 */
     public void createTable(String tableName, String... families) throws IOException {
         createTable(tableName, version, families);
     }
 
     public void createTable(String tableName, Integer versions, String... families) throws IOException {
-        Admin admin = connection.getAdmin();
-        if (admin.tableExists(TableName.valueOf(tableName))) {
-            log.warn("table [{}] 已存在", tableName);
-            admin.close();
-            return;
+        try (Admin admin = connection.getAdmin()) {
+            if (admin.tableExists(TableName.valueOf(tableName))) {
+                log.warn("table [{}] 已存在", tableName);
+                return;
+            }
+            var tableDesc = TableDescriptorBuilder.newBuilder(TableName.valueOf(tableName));
+            for (String family : families) {
+                var columnDesc = new ColumnFamilyDescriptorBuilder.ModifiableColumnFamilyDescriptor(Bytes.toBytes(family));
+                columnDesc.setMaxVersions(versions);
+                tableDesc.setColumnFamily(columnDesc);
+            }
+            admin.createTable(tableDesc.build());
         }
-        HTableDescriptor tableDesc = new HTableDescriptor(TableName.valueOf(tableName));
-        for (String family : families) {
-            HColumnDescriptor columnDesc = new HColumnDescriptor(family);
-            columnDesc.setMaxVersions(versions);
-            tableDesc.addFamily(columnDesc);
-        }
-        admin.createTable(tableDesc);
-        admin.close();
     }
 
     public void putCell(String tableName, String rowKey, String family, String column, String value) throws IOException {
-        Table table = connection.getTable(TableName.valueOf(tableName));
-        Put put = new Put(rowKey.getBytes());
-        put.addColumn(family.getBytes(), column.getBytes(), value.getBytes());
-        table.put(put);
+        try (Table table = connection.getTable(TableName.valueOf(tableName))) {
+            Put put = new Put(rowKey.getBytes());
+            put.addColumn(family.getBytes(), column.getBytes(), value.getBytes());
+            table.put(put);
+        }
     }
 }

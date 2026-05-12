@@ -1,21 +1,13 @@
 global:
   scrape_interval: 15s
-  scrape_timeout: 10s
   evaluation_interval: 15s
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets: [ ]
-      scheme: http
-      timeout: 10s
-      api_version: v1
+
 scrape_configs:
-  - job_name: prometheus
-    honor_timestamps: true
-    scrape_interval: 15s
-    scrape_timeout: 10s
-    metrics_path: /metrics
-    scheme: http
+  - job_name: 'prometheus'
     static_configs:
-      - targets:
-          - localhost:9090
+      - targets: ['localhost:9090']
+
+  - job_name: 'spring-boot'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:6661', 'host.docker.internal:6662']

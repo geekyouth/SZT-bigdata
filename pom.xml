@@ -7,30 +7,38 @@
 
     <groupId>cn.java666</groupId>
     <artifactId>SZT-bigdata</artifactId>
-    <version>0.1</version>
+    <version>2.0</version>
 
     <properties>
-        <!--基础部分 通用配置-->
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- 核心版本尽量保持不变 -->
-        <scala.version>2.11.12</scala.version>
-        <scala.binary.version>2.11</scala.binary.version>
-        <!--<flink.version>1.7.2</flink.version>-->
-        <flink.version>1.10.0</flink.version>
-        <spark.version>2.4.3</spark.version>
-        <!--<cdh.spark.version>2.4.0-cdh6.2.1</cdh.spark.version>-->
-        <hbase.version>2.1.0</hbase.version>
-
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.7.15</slf4j.version>
-        <junit.version>4.12</junit.version>
-
-        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <scala.version>2.13.14</scala.version>
+        <scala.binary.version>2.13</scala.binary.version>
+        <flink.version>1.20.0</flink.version>
+        <spark.version>3.5.3</spark.version>
+        <hbase.version>2.6.0</hbase.version>
+        <kafka.version>3.9.0</kafka.version>
+        <elasticsearch.version>8.17.0</elasticsearch.version>
+        <clickhouse-jdbc.version>0.7.1</clickhouse-jdbc.version>
+        <jackson.version>2.18.2</jackson.version>
+        <spring-boot.version>3.4.1</spring-boot.version>
+        <hutool.version>5.8.34</hutool.version>
+        <fastjson2.version>2.0.53</fastjson2.version>
+        <lombok.version>1.18.36</lombok.version>
+        <junit.version>5.11.4</junit.version>
+        <slf4j.version>2.0.16</slf4j.version>
+        <logback.version>1.5.15</logback.version>
+        <guava.version>33.4.0-jre</guava.version>
+        <commons-lang3.version>3.17.0</commons-lang3.version>
+        <springdoc.version>2.8.4</springdoc.version>
+        <jedis.version>5.2.0</jedis.version>
+        <maven-shade.version>3.6.0</maven-shade.version>
+        <maven-compiler.version>3.13.0</maven-compiler.version>
+        <scala-maven.version>4.9.2</scala-maven.version>
     </properties>
 
     <modules>
@@ -40,5 +48,27 @@
         <module>SZT-kafka-hbase</module>
         <module>SZT-flink</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

@@ -2,12 +2,6 @@ package cn.java666.sztcommon.enums;
 
 import java.util.StringJoiner;
 
-/**
- * @author Geek
- * @date 2020-04-29 21:39:26
- *
- * 常用字段枚举
- */
 public enum SztEnum {
 
     SZT_NAME_SPACE("szt", "hbase 命名空间"),
@@ -28,8 +22,8 @@ public enum SztEnum {
 
     SZT_CL_CARD_NO_REVERSE("card_no_re", "反转卡号，9位字母");
 
-    private String val;
-    private String desc;
+    private final String val;
+    private final String desc;
 
     public String value() {
         return val;
@@ -39,7 +33,7 @@ public enum SztEnum {
         return desc;
     }
 
-    private SztEnum(String val, String desc) {
+    SztEnum(String val, String desc) {
         this.val = val;
         this.desc = desc;
     }

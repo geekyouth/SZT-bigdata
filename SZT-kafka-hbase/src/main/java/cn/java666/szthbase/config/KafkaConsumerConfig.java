@@ -1,8 +1,5 @@
 package cn.java666.szthbase.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,12 +12,9 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
-/**
- * @author Geek
- * @date 2020-04-30 22:10:05
- *
- * kafka消费者配置
- */
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 @EnableKafka
 public class KafkaConsumerConfig {
@@ -40,7 +34,7 @@ public class KafkaConsumerConfig {
     @Value("${kafka.consumer.concurrency}")
     private int concurrency;
     @Value("${kafka.consumer.max.poll.records}")
-    private int poll_records;
+    private int pollRecords;
 
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
@@ -64,9 +58,8 @@ public class KafkaConsumerConfig {
         prop.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         prop.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         prop.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        prop.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);// 由 group 自动维护
-        prop.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, poll_records);
+        prop.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
+        prop.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, pollRecords);
         return prop;
     }
-
 }

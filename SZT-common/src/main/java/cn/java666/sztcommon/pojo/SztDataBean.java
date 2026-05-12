@@ -2,24 +2,21 @@ package cn.java666.sztcommon.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * @author Geek
- * @date 2020-04-29 23:15:45
- */
-// @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class SztDataBean {
-    private String deal_date;
-    private String close_date;
-    private String card_no;
-    private String deal_value;
-    private String deal_type;
-    private String company_name;
-    private String car_no;
+    private String dealDate;
+    private String closeDate;
+    private String cardNo;
+    private String dealValue;
+    private String dealType;
+    private String companyName;
+    private String carNo;
     private String station;
-    private String conn_mark;
-    private String deal_money;
-    private String equ_no;
+    private String connMark;
+    private String dealMoney;
+    private String equNo;
 }

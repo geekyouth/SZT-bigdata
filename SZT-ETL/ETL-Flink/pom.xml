@@ -7,157 +7,101 @@
     <parent>
         <groupId>cn.java666</groupId>
         <artifactId>SZT-ETL</artifactId>
-        <version>0.1</version>
+        <version>2.0</version>
     </parent>
 
     <artifactId>ETL-Flink</artifactId>
-
-    <description>
-        该模块涉及技术栈：
-        flink-1.10
-        kafka-2.1
-        elasticsearch-7.0
-        hbase-1.4 (兼容 cdh-6.2 hbase-2.1)
-        redis-2.8 (兼容 redis-3.5)
-
-        主要实现 flink 各种连接器的读写和 ETL
-    </description>
 
     <dependencies>
         <dependency>
             <groupId>cn.java666</groupId>
             <artifactId>SZT-common</artifactId>
-            <version>0.1</version>
+            <version>2.0</version>
         </dependency>
 
-        <!-- flink 核心依赖 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-scala_${scala.binary.version}</artifactId>
+            <artifactId>flink-streaming-java</artifactId>
             <version>${flink.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>scala-library</artifactId>
-                    <groupId>org.scala-lang</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>scala-parser-combinators_2.11</artifactId>
-                    <groupId>org.scala-lang.modules</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+            <artifactId>flink-clients</artifactId>
             <version>${flink.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
-        <!-- 各种连接器 -->
-        <!-- redis 官方连接器，只能写不能读 -->
-        <dependency>
-            <groupId>org.apache.bahir</groupId>
-            <artifactId>flink-connector-redis_2.11</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <!-- ES7 支持 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-elasticsearch7_${scala.binary.version}</artifactId>
-            <version>${flink.version}</version>
-        </dependency>
-        <!-- https://stackoverflow.com/questions/48313461/elasticsearch-6-0-1-nosuchfielderror-lucene-6-0-0/60613430#60613430 -->
-        <!-- 解决 lucene 兼容问题 -->
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-            <version>8.1.0</version>
+            <artifactId>flink-connector-kafka</artifactId>
+            <version>3.3.0-1.20</version>
         </dependency>
 
-        <!-- Kafka 最佳 CP -->
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.11 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka-0.11_${scala.binary.version}</artifactId>
-            <version>${flink.version}</version>
+            <artifactId>flink-connector-elasticsearch8</artifactId>
+            <version>3.0.0-1.17</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-hbase -->
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-hbase_${scala.binary.version}</artifactId>
-            <version>${flink.version}</version>
+            <artifactId>flink-connector-hbase-2.2</artifactId>
+            <version>3.0.0-1.17</version>
         </dependency>
 
-        <!-- 工具类 -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.2.5</version>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.83</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <!--<scope>compile</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.5</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
-            <version>3.0.3</version>
+            <version>3.4.1</version>
         </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
-            <!-- 该插件用于将Scala代码编译成class文件 -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.4.6</version>
-                <executions>
-                    <execution>
-                        <!-- 声明绑定到maven的compile阶段 -->
-                        <goals>
-                            <goal>testCompile</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-shade.version}</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
@@ -169,17 +113,13 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <!-- 主类 -->
-                                    <!--<mainClass>cn.java666.etlflink.sink.Jsons2Redis</mainClass>-->
-                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>reference.conf</resource>
                                 </transformer>
                             </transformers>
                             <filters>
                                 <filter>
-                                    <!--不要拷贝 META-INF 目录下的签名，否则会引起 SecurityExceptions 。 -->
                                     <artifact>*:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/*.SF</exclude>
@@ -188,12 +128,10 @@
                                     </excludes>
                                 </filter>
                             </filters>
-
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

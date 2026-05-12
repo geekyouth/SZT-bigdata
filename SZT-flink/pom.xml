@@ -7,104 +7,57 @@
     <parent>
         <groupId>cn.java666</groupId>
         <artifactId>SZT-bigdata</artifactId>
-        <version>0.1</version>
+        <version>2.0</version>
     </parent>
 
     <artifactId>SZT-flink</artifactId>
 
-    <description>
-        本模块用于 flink 实时读取 kafka 数据流，结果集写入到 clickhouse
-    </description>
-
-    <properties>
-        <!--<flink.version>1.9.3</flink.version>-->
-        <flink.version>1.10.0</flink.version>
-    </properties>
-
     <dependencies>
-
-        <!-- flink 核心依赖 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-scala_${scala.binary.version}</artifactId>
+            <artifactId>flink-streaming-java</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+            <artifactId>flink-clients</artifactId>
             <version>${flink.version}</version>
         </dependency>
 
-        <!-- Kafka 最佳 CP -->
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.11 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka-0.11_${scala.binary.version}</artifactId>
-            <version>${flink.version}</version>
+            <artifactId>flink-connector-kafka</artifactId>
+            <version>3.3.0-1.20</version>
         </dependency>
 
         <dependency>
-            <groupId>ru.yandex.clickhouse</groupId>
+            <groupId>com.clickhouse</groupId>
             <artifactId>clickhouse-jdbc</artifactId>
-            <version>0.2.4</version>
+            <version>${clickhouse-jdbc.version}</version>
         </dependency>
 
-        <!-- 暂不可用 -->
-        <!-- https://mvnrepository.com/artifact/com.github.housepower/clickhouse-native-jdbc -->
-        <!--<dependency>
-            <groupId>com.github.housepower</groupId>
-            <artifactId>clickhouse-native-jdbc</artifactId>
-            <version>2.1-stable</version>
-        </dependency>-->
-
-        <!-- 暂不可用 -->
-        <!--<dependency>
-            <groupId>ru.ivi.opensource</groupId>
-            <artifactId>flink-clickhouse-sink</artifactId>
-            <version>1.1.0</version>
-        </dependency>-->
-
-        <!-- 工具类 -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <!--<scope>test</scope>-->
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- 该插件用于将Scala代码编译成class文件 -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.4.6</version>
-                <executions>
-                    <execution>
-                        <!-- 声明绑定到maven的compile阶段 -->
-                        <goals>
-                            <goal>testCompile</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-shade.version}</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
@@ -117,7 +70,6 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <!-- 主类 -->
                                     <mainClass>cn.java666.sztflink.realtime.Kafka2MyCH</mainClass>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
@@ -126,7 +78,6 @@
                             </transformers>
                             <filters>
                                 <filter>
-                                    <!--不要拷贝 META-INF 目录下的签名，否则会引起 SecurityExceptions 。 -->
                                     <artifact>*:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/*.SF</exclude>
@@ -135,12 +86,10 @@
                                     </excludes>
                                 </filter>
                             </filters>
-
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

@@ -6,27 +6,16 @@
     <parent>
         <groupId>cn.java666</groupId>
         <artifactId>SZT-bigdata</artifactId>
-        <version>0.1</version>
+        <version>2.0</version>
     </parent>
 
     <artifactId>SZT-kafka-hbase</artifactId>
-
-    <description>
-        SZT-kafka-hbase project for Spring Boot2
-        看过开源的 spring-boot-starter-hbase、spring-data-hadoop-hbase，
-        基础依赖过于老旧，长期不更新；引入过程繁琐，而且 API 粒度受限；数据库连接没有复用，导致数据库服务读写成本太高。
-
-        于是自己实现了 hbase-2.1 + springboot-2.1.13 + kafka-2.0 的集成，一个长会话完成 hbase 连续的增删改查👑👑👑，降低服务器资源的开销。
-    </description>
-
-    <properties>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.java666</groupId>
             <artifactId>SZT-common</artifactId>
-            <version>0.1</version>
+            <version>2.0</version>
         </dependency>
 
         <dependency>
@@ -48,23 +37,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <!--<scope>test</scope>-->
+            <scope>test</scope>
         </dependency>
 
-        <!-- API 管理  -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>2.0.2</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>20.0</version>
-            <scope>compile</scope>
+            <version>${guava.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
@@ -75,17 +61,12 @@
                     <groupId>com.google.guava</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-                <exclusion>
                     <artifactId>slf4j-log4j12</artifactId>
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
 
-        <!-- kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -110,9 +91,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -120,6 +102,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

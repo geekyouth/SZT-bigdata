@@ -1,35 +1,32 @@
 services:
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v3.1.0
     container_name: prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
-      - 9090:9090
-    restart: unless-stopped
+      - "9090:9090"
     volumes:
-      - ./prometheus:/etc/prometheus
-      - prom_data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
     networks:
-      - szt-network
+      - monitoring
+
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:11.4.0
     container_name: grafana
     ports:
-      - 3000:3000
-    restart: unless-stopped
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=grafana
+      - "3000:3000"
     volumes:
-      - ./grafana:/etc/grafana/provisioning/datasources
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
     networks:
-      - szt-network
+      - monitoring
 
 volumes:
-  prom_data:
+  prometheus-data:
+  grafana-data:
 
 networks:
-  szt-network:
+  monitoring:
     driver: bridge
-    name: szt-network
